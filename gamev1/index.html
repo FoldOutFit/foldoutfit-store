@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Morgan &amp; Quinn · ACS Revenue Coaching Workspace</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%231E3A8A%27/%3E%3Ctext x=%2716%27 y=%2722%27 font-size=%2716%27 text-anchor=%27middle%27 fill=%27white%27 font-family=%27Arial%27 font-weight=%27700%27%3EM%3C/text%3E%3C/svg%3E">
+<meta name="description" content="Morgan (sales manager AI) and Quinn (AE call and email coach) for Aetheris Cloud Systems. NISC 2026 Bryant AI Revenue Challenge concept with sample data.">
+<style>
+:root{
+  --bg:#F5F6F8; --surface:#FFFFFF; --sunken:#F9FAFB; --border:#E4E7EC; --border2:#D0D5DD;
+  --text:#101828; --text2:#344054; --muted:#667085; --faint:#98A2B3;
+  --navy:#0F1B2D; --navy2:#16243A; --slate:#475467;
+  --accent:#2563EB; --accent2:#1D4ED8; --accentbg:#EFF4FF; --accentline:#C7D7FE;
+  --red:#D92D20; --redbg:#FEF3F2; --redline:#FECDCA;
+  --amber:#B54708; --amberbg:#FFFAEB; --amberline:#FEDF89;
+  --green:#067647; --greenbg:#ECFDF3; --greenline:#ABEFC6;
+  --r:10px; --r2:14px;
+  --sh:0 1px 2px rgba(16,24,40,.05);
+  --sh2:0 4px 12px -2px rgba(16,24,40,.08),0 2px 4px -2px rgba(16,24,40,.04);
+  --sh3:0 20px 40px -8px rgba(16,24,40,.18),0 8px 12px -6px rgba(16,24,40,.06);
+  --font:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--font);font-size:14px;line-height:1.5;color:var(--text);background:var(--bg);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3,h4{margin:0;color:var(--text);letter-spacing:-.01em}
+h1{font-size:24px;font-weight:650;line-height:1.25}
+h2{font-size:18px;font-weight:650}
+h3{font-size:15px;font-weight:600}
+h4{font-size:13px;font-weight:600}
+p{margin:0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.muted{color:var(--muted)}
+.small{font-size:12.5px}
+.tiny{font-size:11.5px}
+.mono{font-family:var(--mono)}
+.nowrap{white-space:nowrap}
+.hidden{display:none!important}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:34px;padding:0 13px;border-radius:8px;border:1px solid var(--border2);background:var(--surface);color:var(--text2);font-size:13px;font-weight:550;cursor:pointer;box-shadow:var(--sh);white-space:nowrap;transition:background .12s,border-color .12s,color .12s}
+.btn:hover{background:var(--sunken);text-decoration:none}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--accent2)}
+.btn.dark{background:var(--navy);border-color:var(--navy);color:#fff}
+.btn.ghost{border-color:transparent;box-shadow:none;background:transparent;color:var(--text2)}
+.btn.ghost:hover{background:#EEF0F3}
+.btn.sm{height:28px;padding:0 10px;font-size:12.5px;border-radius:7px}
+.btn.danger{color:var(--red);border-color:var(--redline)}
+.linkbtn{background:none;border:0;padding:0;color:var(--accent);cursor:pointer;font-weight:550;font-size:inherit;text-align:left}
+.linkbtn:hover{text-decoration:underline}
+.iconbtn{width:32px;height:32px;display:inline-grid;place-items:center;border-radius:8px;border:1px solid var(--border);background:var(--surface);cursor:pointer;color:var(--slate)}
+.iconbtn:hover{background:var(--sunken)}
+
+/* ---------- top bar ---------- */
+.top{position:sticky;top:0;z-index:40;background:var(--navy);color:#E6EAF0;border-bottom:1px solid #0A1322}
+.top .in{max-width:1320px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:0 20px;height:56px}
+.brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:650;font-size:14px;white-space:nowrap}
+.brand:hover{text-decoration:none}
+.brand .lg{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#3B82F6,#1E3A8A);display:grid;place-items:center;font-size:12px;font-weight:700;color:#fff;letter-spacing:.02em}
+.brand small{display:block;font-size:11px;font-weight:500;color:#94A3B8;line-height:1.1}
+.nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;min-width:0;flex:1}
+.nav::-webkit-scrollbar{display:none}
+.nav a{color:#B6C2D3;font-size:13px;font-weight:500;padding:7px 10px;border-radius:7px;white-space:nowrap}
+.nav a:hover{background:rgba(255,255,255,.07);color:#fff;text-decoration:none}
+.nav a.on{background:rgba(255,255,255,.12);color:#fff}
+.topr{display:flex;align-items:center;gap:8px;margin-left:auto}
+.pill{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:500;background:rgba(255,255,255,.08);color:#CBD5E1;white-space:nowrap}
+.dot{width:7px;height:7px;border-radius:50%;background:#94A3B8;display:inline-block;flex:none}
+.dot.live{background:#22C55E;box-shadow:0 0 0 3px rgba(34,197,94,.2)}
+.userbtn{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#fff;border-radius:999px;padding:3px 10px 3px 3px;cursor:pointer;white-space:nowrap}
+.userbtn:hover{background:rgba(255,255,255,.12)}
+.av{width:28px;height:28px;border-radius:50%;display:inline-grid;place-items:center;font-size:11px;font-weight:650;color:#fff;background:#475467;flex:none}
+.av.lg{width:40px;height:40px;font-size:14px}
+.av.xl{width:52px;height:52px;font-size:17px}
+.av.q{background:#0E7490}.av.m{background:#1E3A8A}
+.userbtn .meta{font-size:12px;line-height:1.15;text-align:left}
+.userbtn .meta small{display:block;color:#94A3B8;font-size:10.5px}
+.menu{position:absolute;right:20px;top:52px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:10px;box-shadow:var(--sh3);min-width:230px;padding:6px;display:none;z-index:60}
+.menu.show{display:block}
+.menu button{display:flex;width:100%;text-align:left;background:none;border:0;padding:8px 10px;border-radius:7px;cursor:pointer;font-size:13px;gap:8px;align-items:center}
+.menu button:hover{background:var(--sunken)}
+.menu .mh{padding:8px 10px 6px;border-bottom:1px solid var(--border);margin-bottom:4px}
+
+/* ---------- layout ---------- */
+.view{display:none}
+.view.on{display:block}
+.wrap{max-width:1320px;margin:0 auto;padding:24px 20px 48px}
+.phead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.phead .eyebrow{font-size:12px;font-weight:600;color:var(--accent);margin-bottom:4px}
+.phead p{color:var(--muted);margin-top:4px;max-width:760px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);box-shadow:var(--sh);min-width:0}
+.card>.ch{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.card>.ch p{color:var(--muted);font-size:12.5px;margin-top:2px}
+.card>.cb{padding:16px}
+.grid{display:grid;gap:16px}
+.g-main{grid-template-columns:minmax(0,1.75fr) minmax(0,1fr)}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.stack{display:grid;gap:16px;align-content:start;min-width:0}
+.row{display:flex;align-items:center;gap:10px}
+.between{justify-content:space-between}
+.wrapf{flex-wrap:wrap}
+.mt8{margin-top:8px}.mt12{margin-top:12px}.mt16{margin-top:16px}.mt24{margin-top:24px}
+
+/* ---------- KPI ---------- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:16px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:13px 14px;box-shadow:var(--sh);min-width:0}
+.kpi .k{font-size:12px;color:var(--muted);font-weight:500}
+.kpi .v{font-size:22px;font-weight:650;margin-top:2px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi .s{font-size:11.5px;color:var(--muted);margin-top:1px}
+.delta{font-size:11.5px;font-weight:600}
+.delta.up{color:var(--green)}.delta.dn{color:var(--red)}
+
+/* ---------- badges ---------- */
+.badge{display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px;border-radius:999px;font-size:11.5px;font-weight:550;border:1px solid var(--border);background:var(--sunken);color:var(--text2);white-space:nowrap}
+.badge.red{background:var(--redbg);border-color:var(--redline);color:var(--red)}
+.badge.amber{background:var(--amberbg);border-color:var(--amberline);color:var(--amber)}
+.badge.green{background:var(--greenbg);border-color:var(--greenline);color:var(--green)}
+.badge.blue{background:var(--accentbg);border-color:var(--accentline);color:var(--accent2)}
+.badge.dark{background:var(--navy);border-color:var(--navy);color:#fff}
+.tag{font-size:11px;font-weight:600;color:var(--muted);text-transform:none}
+.demo{font-size:11.5px;color:var(--muted);display:flex;gap:6px;align-items:center}
+.demo::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--faint)}
+
+/* ---------- login ---------- */
+#v-login{min-height:100vh;background:radial-gradient(1200px 500px at 50% -10%,#1E3A8A 0%,var(--navy) 55%)}
+.login{max-width:980px;margin:0 auto;padding:56px 20px 40px;color:#E2E8F0}
+.login .lb{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:26px}
+.login h1{color:#fff;font-size:30px;text-align:center}
+.login .sub{text-align:center;color:#A5B4CB;margin:8px auto 28px;max-width:620px}
+.wscards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ws{background:#fff;color:var(--text);border-radius:16px;padding:22px;border:1px solid #E4E7EC;cursor:pointer;text-align:left;transition:transform .12s,box-shadow .12s;box-shadow:var(--sh2);display:flex;flex-direction:column;gap:10px}
+.ws:hover{transform:translateY(-2px);box-shadow:var(--sh3)}
+.ws .wt{display:flex;align-items:center;gap:12px}
+.ws .wt b{font-size:17px}
+.ws .wt small{display:block;color:var(--muted);font-size:12.5px}
+.ws ul{margin:0;padding-left:18px;color:var(--text2);font-size:13px}
+.ws ul li{margin:3px 0}
+.ws .go{margin-top:auto;align-self:flex-start}
+.loginpanel{max-width:520px;margin:0 auto;background:#fff;color:var(--text);border-radius:16px;padding:26px;box-shadow:var(--sh3)}
+.loginpanel h2{font-size:20px}
+.loginpanel label{display:block;font-size:13px;font-weight:550;color:var(--text2);margin:16px 0 6px}
+.field{display:flex;gap:8px}
+.input{width:100%;height:40px;border:1px solid var(--border2);border-radius:9px;padding:0 12px;background:#fff;outline:none;font-size:14px;transition:border-color .12s,box-shadow .12s}
+.input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.15)}
+textarea.input{height:auto;padding:10px 12px;resize:vertical;line-height:1.5}
+select.input{padding:0 8px}
+.err{display:none;margin-top:10px;background:var(--redbg);border:1px solid var(--redline);color:#912018;border-radius:9px;padding:9px 12px;font-size:13px}
+.err.show{display:block}
+.examples{margin-top:18px}
+.examples .eh{font-size:12px;font-weight:600;color:var(--muted);margin-bottom:8px}
+.ex{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.exu{display:flex;align-items:center;gap:9px;text-align:left;padding:8px 10px;border:1px solid var(--border);border-radius:9px;background:var(--sunken);cursor:pointer;min-width:0}
+.exu:hover{border-color:var(--accentline);background:var(--accentbg)}
+.exu .av{width:26px;height:26px;font-size:10px}
+.exu code{font-family:var(--mono);font-size:12.5px;color:var(--text);display:block}
+.exu small{display:block;color:var(--muted);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.exu>span{min-width:0}
+.continue{display:flex;justify-content:center;margin-top:18px}
+.backlink{background:none;border:0;color:var(--muted);cursor:pointer;padding:0;font-size:13px;margin-bottom:10px}
+.backlink:hover{color:var(--text)}
+.login .foot{color:#7D8BA3;text-align:center;font-size:12px;margin-top:26px}
+
+/* ---------- prospecting ---------- */
+.pros-h{display:flex;align-items:center;gap:16px;padding:16px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.ring{--p:0;width:58px;height:58px;border-radius:50%;background:conic-gradient(var(--accent) calc(var(--p)*1%),#E4E7EC 0);display:grid;place-items:center;flex:none;transition:--p .4s}
+.ring::before{content:"";width:46px;height:46px;border-radius:50%;background:#fff;grid-area:1/1}
+.ring b{grid-area:1/1;font-size:12.5px;z-index:1;font-variant-numeric:tabular-nums}
+.pros-count{font-size:15px;font-weight:600}
+.pros-count .big{font-size:22px;font-weight:700;letter-spacing:-.02em}
+.pros-stats{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
+.pros-stats b{color:var(--text);font-variant-numeric:tabular-nums}
+.plist{list-style:none;margin:0;padding:0}
+.pitem{display:grid;grid-template-columns:28px minmax(0,1.1fr) minmax(0,1fr) minmax(0,1.6fr);gap:12px;align-items:start;padding:12px 16px;border-bottom:1px solid var(--border);max-height:220px;overflow:hidden;transition:opacity .28s ease,transform .28s ease,max-height .32s ease .12s,padding .32s ease .12s,border-color .3s}
+.pitem:last-child{border-bottom:0}
+.pitem.out{opacity:0;transform:translateX(24px);max-height:0;padding-top:0;padding-bottom:0;border-color:transparent}
+.pitem.in{animation:pin .35s ease}
+@keyframes pin{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.ck{appearance:none;-webkit-appearance:none;width:20px;height:20px;border:1.5px solid var(--border2);border-radius:6px;margin:2px 0 0;cursor:pointer;display:grid;place-items:center;background:#fff;transition:background .12s,border-color .12s;flex:none}
+.ck:hover{border-color:var(--accent)}
+.ck:checked{background:var(--accent);border-color:var(--accent)}
+.ck:checked::after{content:"";width:9px;height:5px;border:2px solid #fff;border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
+.pname b{display:block;font-size:13.5px}
+.pname span{display:block;color:var(--muted);font-size:12.5px}
+.pcontact{font-size:12.5px;display:grid;gap:2px;min-width:0}
+.pcontact a{color:var(--text2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+.pangle{font-size:12.5px;color:var(--text2)}
+.pangle .row{gap:6px;margin-bottom:4px;flex-wrap:wrap}
+.pempty{padding:28px 16px;text-align:center;color:var(--muted)}
+.donelist{padding:10px 16px;border-top:1px solid var(--border);background:var(--sunken);border-radius:0 0 var(--r2) var(--r2);font-size:12.5px}
+.donelist summary{cursor:pointer;color:var(--text2);font-weight:550}
+.donelist ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:4px}
+.donelist li{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.donelist li s{color:var(--muted)}
+
+/* ---------- lists / tables ---------- */
+.tbl-wrap{overflow-x:auto}
+table.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{text-align:left;font-weight:550;font-size:12px;color:var(--muted);background:var(--sunken);padding:9px 12px;border-bottom:1px solid var(--border);white-space:nowrap}
+.tbl td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:0}
+.tbl tr.click{cursor:pointer}
+.tbl tr.click:hover td{background:#FAFBFC}
+.tbl td.num,.tbl th.num{text-align:right;font-variant-numeric:tabular-nums}
+.who{display:flex;align-items:center;gap:9px;min-width:0}
+.who b{font-weight:550;display:block;white-space:nowrap}
+.who small{display:block;color:var(--muted);font-size:11.5px;font-family:var(--mono)}
+.bar{height:6px;background:#EEF0F3;border-radius:99px;overflow:hidden;min-width:60px}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.bar.red i{background:var(--red)}.bar.amber i{background:#F79009}.bar.green i{background:#17B26A}
+.li{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--border)}
+.li:last-child{border-bottom:0}
+.li.click{cursor:pointer}.li.click:hover{background:#FAFBFC}
+
+/* ---------- red flag checklist ---------- */
+.flag{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:12px;align-items:center;padding:11px 16px;border-bottom:1px solid var(--border);transition:opacity .25s,background .2s}
+.flag:last-child{border-bottom:0}
+.flag:hover{background:#FCFCFD}
+.flag .fbtn{display:flex;align-items:center;gap:10px;background:none;border:0;padding:0;text-align:left;cursor:pointer;min-width:0}
+.flag .fbtn:hover .fn{color:var(--accent)}
+.flag .fn{font-weight:600;white-space:nowrap}
+.flag .fp{color:var(--text2)}
+.flag .fbtn .txt{min-width:0}
+.flag .fbtn small{display:block;color:var(--muted);font-size:11.5px}
+.sev{width:8px;height:8px;border-radius:50%;flex:none}
+.sev.high{background:var(--red)}.sev.med{background:#F79009}.sev.low{background:var(--faint)}
+.flag.res{opacity:.75}
+.flag.res .fp{text-decoration:line-through;color:var(--muted)}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.fchip{height:28px;padding:0 10px;border-radius:999px;border:1px solid var(--border);background:var(--surface);font-size:12.5px;cursor:pointer;color:var(--text2)}
+.fchip.on{background:var(--navy);border-color:var(--navy);color:#fff}
+
+/* ---------- drawer / modal ---------- */
+.ov{position:fixed;inset:0;z-index:80;display:none}
+.ov.show{display:block}
+.scrim{position:absolute;inset:0;background:rgba(15,23,42,.45);animation:fade .2s}
+@keyframes fade{from{opacity:0}}
+.drawer{position:absolute;right:0;top:0;bottom:0;width:min(860px,100%);background:var(--bg);box-shadow:var(--sh3);display:flex;flex-direction:column;animation:slide .25s ease}
+@keyframes slide{from{transform:translateX(30px);opacity:.4}}
+.dh{background:var(--surface);border-bottom:1px solid var(--border);padding:16px 20px;display:flex;gap:12px;align-items:flex-start}
+.dh .t{flex:1;min-width:0}
+.dh .t .k{font-size:12px;color:var(--muted);font-weight:500}
+.dh h2{font-size:18px;margin-top:2px}
+.db{flex:1;overflow-y:auto;padding:18px 20px 40px;overflow-x:hidden}
+.modal{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(560px,calc(100% - 24px));max-height:calc(100% - 40px);overflow-y:auto;background:var(--surface);border-radius:14px;box-shadow:var(--sh3);animation:fade .2s}
+.modal .mh{padding:16px 20px;border-bottom:1px solid var(--border)}
+.modal .mb{padding:16px 20px}
+.modal .mf{padding:12px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;background:var(--sunken);border-radius:0 0 14px 14px}
+.radio{display:flex;gap:10px;align-items:flex-start;padding:9px 11px;border:1px solid var(--border);border-radius:9px;cursor:pointer;margin-bottom:6px}
+.radio:hover{background:var(--sunken)}
+.radio input{margin-top:3px;accent-color:var(--accent)}
+.radio b{font-weight:550;display:block;font-size:13px}
+.radio small{color:var(--muted);font-size:12px}
+
+/* ---------- examples ---------- */
+.exlist{display:grid;gap:14px}
+.excard{background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--sh);overflow:hidden}
+.exh{display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.exh .n{width:22px;height:22px;border-radius:6px;background:var(--navy);color:#fff;font-size:11.5px;font-weight:650;display:grid;place-items:center;flex:none}
+.exh b{font-size:13.5px}
+.exh .meta{color:var(--muted);font-size:12px;margin-left:auto}
+.exb{padding:14px}
+.mail{border:1px solid var(--border);border-radius:9px;overflow:hidden;background:#fff}
+.mail .mh2{padding:9px 12px;background:var(--sunken);border-bottom:1px solid var(--border);font-size:12px;color:var(--muted);display:grid;gap:2px}
+.mail .mh2 b{color:var(--text);font-weight:550}
+.mail .mbody{padding:12px;white-space:pre-wrap;font-size:13px;color:var(--text2);overflow-wrap:anywhere}
+mark.hl{background:#FEE4E2;color:#7A271A;border-bottom:2px solid #F97066;padding:0 1px;border-radius:2px}
+mark.hl sup{font-size:9.5px;font-weight:700;color:var(--red);margin-left:1px}
+.notes{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:6px}
+.notes li{display:grid;grid-template-columns:20px 1fr;gap:6px;font-size:12.5px;color:var(--text2)}
+.notes li i{font-style:normal;width:18px;height:18px;border-radius:50%;background:var(--redbg);color:var(--red);font-size:10.5px;font-weight:700;display:grid;place-items:center;border:1px solid var(--redline)}
+.qnote{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;color:#0E4F5C;background:#ECFDFF;border:1px solid #A5F0FC;border-radius:9px;padding:8px 10px;margin-top:10px}
+.qnote .av{width:20px;height:20px;font-size:9.5px}
+.better{margin-top:10px;border:1px solid var(--greenline);background:var(--greenbg);border-radius:9px;padding:10px 12px}
+.better .bt{font-size:11.5px;font-weight:650;color:var(--green);margin-bottom:4px}
+.better .bb{white-space:pre-wrap;font-size:13px;color:#074D31;overflow-wrap:anywhere}
+.player{border:1px solid var(--border);border-radius:9px;padding:10px 12px;background:var(--sunken)}
+.player .pt{display:flex;align-items:center;gap:10px}
+.playbtn{width:32px;height:32px;border-radius:50%;border:0;background:var(--navy);color:#fff;display:grid;place-items:center;cursor:pointer;flex:none}
+.wave{position:relative;flex:1;overflow:hidden;height:36px;display:flex;align-items:center;gap:2px;cursor:pointer;min-width:0}
+.wave i{flex:1;background:#B9C0CB;border-radius:2px;min-width:1px}
+.wave i.on{background:var(--accent)}
+.wave i.bad{background:#F97066}
+.wave i.bad.on{background:var(--red)}
+.wave .ph{position:absolute;top:0;bottom:0;width:2px;background:var(--navy);left:0;pointer-events:none}
+.ptime{flex:none;font-family:var(--mono);font-size:11.5px;color:var(--muted);white-space:nowrap}
+.pfoot{display:flex;justify-content:space-between;gap:8px;margin-top:6px;font-size:11.5px;color:var(--muted);flex-wrap:wrap}
+.tx{margin-top:10px;border:1px solid var(--border);border-radius:9px;overflow:hidden}
+.tl{display:grid;grid-template-columns:52px 74px 1fr;gap:8px;padding:7px 12px;font-size:12.8px;border-bottom:1px solid var(--border);color:var(--text2)}
+.tl:last-child{border-bottom:0}
+.tl .ts{font-family:var(--mono);font-size:11.5px;color:var(--muted);padding-top:1px}
+.tl .sp{font-weight:600;color:var(--text);font-size:12px;padding-top:1px}
+.tl.bad{background:#FEF3F2;box-shadow:inset 3px 0 0 var(--red)}
+.tl.bad .sp{color:var(--red)}
+
+/* ---------- composer / messages ---------- */
+.tpls{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tpl{height:30px;padding:0 11px;border-radius:8px;border:1px solid var(--border2);background:#fff;font-size:12.5px;cursor:pointer;color:var(--text2);font-weight:550}
+.tpl:hover,.tpl.on{border-color:var(--accent);color:var(--accent2);background:var(--accentbg)}
+.thread{display:grid;gap:8px;margin-top:12px}
+.msg{border:1px solid var(--border);border-radius:10px;padding:10px 12px;background:#fff}
+.msg .mm{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted);margin-bottom:4px;flex-wrap:wrap}
+.msg .mm b{color:var(--text);font-weight:600}
+.msg .mt{white-space:pre-wrap;font-size:13px;color:var(--text2);overflow-wrap:anywhere}
+.msg.new{border-color:var(--accentline);box-shadow:inset 3px 0 0 var(--accent)}
+.msg .links{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.planbox{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:#fff;cursor:pointer}
+.planbox.done{border-color:var(--greenline);background:var(--greenbg)}
+.section-t{font-size:12px;font-weight:650;color:var(--muted);letter-spacing:.02em;margin:20px 0 10px;text-transform:uppercase}
+.section-t:first-child{margin-top:0}
+
+/* ---------- admin ---------- */
+.switch{position:relative;width:36px;height:20px;flex:none;display:inline-block}
+.switch input{opacity:0;width:0;height:0;position:absolute}
+.switch span{position:absolute;inset:0;background:#D0D5DD;border-radius:99px;cursor:pointer;transition:background .15s}
+.switch span::after{content:"";position:absolute;left:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:transform .15s}
+.switch input:checked+span{background:var(--accent)}
+.switch input:checked+span::after{transform:translateX(16px)}
+.switch input:focus-visible+span{box-shadow:0 0 0 3px rgba(37,99,235,.25)}
+tr.off td{background:#FCFCFD}
+tr.off .ctitle{color:var(--muted);text-decoration:line-through}
+.typeic{width:28px;height:28px;border-radius:7px;background:var(--accentbg);color:var(--accent2);display:grid;place-items:center;flex:none}
+
+/* ---------- AI / chat ---------- */
+.ask{padding:16px}
+.inputrow{display:flex;gap:8px;align-items:flex-end}
+.inputrow textarea{flex:1;min-height:40px;max-height:160px;border:1px solid var(--border2);border-radius:9px;padding:9px 12px;resize:none;outline:none;line-height:1.45;background:#fff}
+.inputrow textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(37,99,235,.15)}
+.inputrow .btn{height:40px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.chip{border:1px solid var(--border);background:var(--sunken);border-radius:999px;padding:5px 11px;font-size:12.5px;color:var(--text2);cursor:pointer;text-align:left}
+.chip:hover{border-color:var(--accentline);background:var(--accentbg)}
+.answer{display:none;margin-top:12px;border-top:1px solid var(--border);padding-top:12px}
+.answer.show{display:block}
+.md{font-size:13.5px;color:var(--text2)}
+.md h4{font-size:13.5px;margin:10px 0 4px;color:var(--text)}
+.md h4:first-child{margin-top:0}
+.md p{margin:6px 0}
+.md ul,.md ol{margin:6px 0;padding-left:20px}
+.md li{margin:3px 0}
+.md strong{color:var(--text);font-weight:600}
+.md code{font-family:var(--mono);font-size:12px;background:var(--sunken);padding:1px 4px;border-radius:4px}
+.md .quinn{border-left:3px solid #06AED4;background:#ECFDFF;padding:7px 10px;border-radius:0 8px 8px 0;margin:4px 0 8px;color:#0E4F5C}
+.typing{display:inline-flex;gap:4px;padding:6px 0}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--faint);animation:blink 1.2s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes blink{0%,80%,100%{opacity:.3}40%{opacity:1}}
+.chatwrap{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px}
+.chatbox{display:flex;flex-direction:column;height:min(70vh,680px)}
+.msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.cm{display:flex;gap:10px;max-width:92%}
+.cm .who2{font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px}
+.cm .bub{background:var(--sunken);border:1px solid var(--border);border-radius:4px 12px 12px 12px;padding:9px 12px}
+.cm.me{align-self:flex-end}
+.cm.me .bub{background:var(--accent);border-color:var(--accent);color:#fff;border-radius:12px 4px 12px 12px;white-space:pre-wrap}
+.chatin{border-top:1px solid var(--border);padding:12px 16px}
+.toggle{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text2);cursor:pointer}
+
+/* ---------- misc ---------- */
+.flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.step{border:1px solid var(--border);border-radius:12px;padding:14px;background:var(--sunken)}
+.step .n{font-size:11px;font-weight:650;color:var(--accent);letter-spacing:.03em}
+.step h4{margin:4px 0;font-size:14px}
+.step p{font-size:12.5px;color:var(--muted)}
+.bullets{margin:8px 0 0;padding-left:18px;color:var(--text2);font-size:13px}
+.bullets li{margin:4px 0}
+.issue{padding:14px 16px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:12px;align-items:start}
+.issue:last-child{border-bottom:0}
+.issue .rk{width:26px;height:26px;border-radius:7px;background:var(--sunken);border:1px solid var(--border);display:grid;place-items:center;font-weight:650;font-size:12px}
+.issue .ev{margin-top:6px;font-size:12.5px;color:var(--muted);font-style:italic}
+.issue .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.ipick{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tcard{padding:16px;display:flex;flex-direction:column;gap:8px}
+.tcard p{color:var(--muted);font-size:12.5px;flex:1}
+.lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.libitem{border:1px solid var(--border);border-radius:12px;background:var(--surface);padding:14px;display:flex;flex-direction:column;gap:6px;box-shadow:var(--sh)}
+.libitem p{font-size:12.5px;color:var(--muted);flex:1}
+.libitem.done{border-color:var(--greenline)}
+.progress{display:flex;gap:14px;align-items:center}
+.toasts{position:fixed;right:16px;bottom:16px;z-index:120;display:grid;gap:8px;max-width:min(380px,calc(100vw - 32px))}
+.toast{background:var(--navy);color:#fff;border-radius:10px;padding:11px 14px;box-shadow:var(--sh3);font-size:13px;display:flex;gap:12px;align-items:center;animation:fade .2s}
+.toast b{display:block;font-weight:600}
+.toast span{color:#B6C2D3;font-size:12.5px}
+.toast button{margin-left:auto;background:rgba(255,255,255,.12);border:0;color:#fff;border-radius:6px;padding:5px 9px;cursor:pointer;font-weight:550;font-size:12.5px}
+.empty{padding:22px;text-align:center;color:var(--muted);font-size:13px}
+.inbox-new{width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block}
+footer.foot{border-top:1px solid var(--border);color:var(--muted);font-size:12px}
+footer.foot .in{max-width:1320px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.quiz .opt{display:block;width:100%;text-align:left;border:1px solid var(--border2);background:#fff;border-radius:9px;padding:10px 12px;margin-bottom:8px;cursor:pointer;font-size:13.5px}
+.quiz .opt:hover{background:var(--sunken)}
+.quiz .opt.right{border-color:var(--green);background:var(--greenbg)}
+.quiz .opt.wrong{border-color:var(--red);background:var(--redbg)}
+.quiz .say{background:var(--sunken);border:1px solid var(--border);border-radius:9px;padding:10px 12px;margin:10px 0 14px;font-size:13.5px}
+
+@media (max-width:1600px){
+  #quinnPill{display:none}
+}
+@media (max-width:1100px){
+  .g-main{grid-template-columns:1fr}
+  .flow{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pill.hide-md{display:none}
+}
+@media (max-width:760px){
+  .top .in{height:auto;flex-wrap:wrap;padding:8px 14px;gap:8px}
+  .nav{order:3;flex-basis:100%;margin:0 -4px}
+  .pill{display:none}
+  .userbtn .meta{display:none}
+  .userbtn{padding:3px}
+  .wrap{padding:18px 14px 40px}
+  h1{font-size:21px}
+  .g2,.g3,.wscards,.chatwrap,.flow{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pitem{grid-template-columns:24px minmax(0,1fr);gap:8px 10px}
+  .pitem .pcontact,.pitem .pangle{grid-column:2}
+  .flag{grid-template-columns:22px minmax(0,1fr);}
+  .flag .fact{grid-column:2}
+  .flag .fn{white-space:normal}
+  .tl{grid-template-columns:44px 1fr;}
+  .wave{gap:1px}
+  .ptime{font-size:10.5px}
+  .tl .sp{grid-column:2}
+  .tl .tt{grid-column:1/-1}
+  .drawer{width:100%}
+  .db{padding:14px 12px 40px}
+  .dh{padding:12px}
+  .login{padding-top:32px}
+  .login h1{font-size:24px}
+  .loginpanel{padding:18px}
+  .chatbox{height:70vh}
+  .exh .meta{margin-left:0;flex-basis:100%}
+  .hide-sm{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+</style>
+</head>
+<body>
+<!-- ============ TOP BAR ============ -->
+<header class="top hidden" id="top"><div class="in">
+  <a class="brand" href="#home" id="brand"><span class="lg" id="brandMark">M</span><span><span id="brandName">Morgan</span><small id="brandSub">ACS Sales Manager Workspace</small></span></a>
+  <nav class="nav" id="nav" aria-label="Main"></nav>
+  <div class="topr">
+    <span class="pill hide-md" id="quinnPill" title="Quinn is the rep-side AI that reviews recorded calls and outbound emails"><span class="dot live"></span><span id="quinnPillTxt">Quinn synced</span></span>
+    <span class="pill" id="aiStatus"><span class="dot"></span>Connecting…</span>
+    <button class="btn sm" id="switchPath" type="button" title="Switch between the Quinn (rep) and Morgan (manager) workspaces" style="background:transparent;color:#E2E8F0;border-color:rgba(255,255,255,.2);box-shadow:none">Switch workspace</button>
+    <button class="userbtn" id="userBtn" type="button" aria-haspopup="true"><span class="av" id="userAv">--</span><span class="meta"><span id="userName">—</span><small id="userHandle"></small></span></button>
+  </div>
+</div>
+<div class="menu" id="userMenu" role="menu">
+  <div class="mh"><b id="menuName">—</b><div class="tiny muted mono" id="menuHandle"></div></div>
+  <button type="button" id="mSwitchUser">Switch user</button>
+  <button type="button" id="mSwitchWs">Switch workspace (Quinn / Morgan)</button>
+  <button type="button" id="mReset">Reset demo data</button>
+  <button type="button" id="mLogout">Sign out</button>
+</div>
+</header>
+
+<!-- ============ LOGIN ============ -->
+<section class="view" id="v-login">
+  <div class="login">
+    <div class="lb"><span class="brand"><span class="lg">AC</span><span>Aetheris Cloud Systems<small>Revenue Coaching Workspace</small></span></span></div>
+    <div id="loginStep1">
+      <h1>Choose your workspace</h1>
+      <p class="sub">Two AI coaches, one revenue team. Quinn reviews every recorded call and outbound email for reps. Morgan turns those reviews into coaching for frontline managers.</p>
+      <div class="wscards">
+        <button class="ws" id="pcQuinn" type="button">
+          <div class="wt"><span class="av lg q">Q</span><div><b>Quinn</b><small>Account Executive workspace</small></div></div>
+          <ul><li>Today's prospecting checklist with AI-suggested, supply-chain-specific angles</li><li>Reviews of your recorded calls and AI-drafted emails</li><li>Messages and coaching plans from your manager</li></ul>
+          <span class="btn primary go">Continue as an AE</span>
+        </button>
+        <button class="ws" id="pcMorgan" type="button">
+          <div class="wt"><span class="av lg m">M</span><div><b>Morgan</b><small>Sales Manager workspace</small></div></div>
+          <ul><li>Your team of 8–9 AEs with value metrics, not activity counts</li><li>Red-flag checklist with 5 real examples per concern and message templates</li><li>Admin controls over the coaching content Quinn uses</li></ul>
+          <span class="btn dark go">Continue as a manager</span>
+        </button>
+      </div>
+      <div class="continue" id="lastUserWrap"></div>
+    </div>
+    <div id="loginStep2" class="hidden">
+      <div class="loginpanel">
+        <button class="backlink" id="loginBack" type="button">← Choose a different workspace</button>
+        <div class="row"><span class="av lg" id="loginAv">Q</span><div><h2 id="loginTitle">Sign in to Quinn</h2><p class="muted small" id="loginSub">Account Executive workspace</p></div></div>
+        <form id="loginForm" autocomplete="off">
+          <label for="username">Username</label>
+          <div class="field"><input class="input" id="username" name="username" placeholder="e.g. jrivera.ae" autocapitalize="none" spellcheck="false"><button class="btn primary" id="loginGo" type="submit" style="height:40px">Go</button></div>
+        </form>
+        <div class="err" id="loginErr" role="alert"></div>
+        <div class="examples"><div class="eh" id="exHead">Example usernames</div><div class="ex" id="exList"></div></div>
+        <p class="demo mt16">Sample data for demonstration. All people, companies, phone numbers and emails are fictional.</p>
+      </div>
+    </div>
+    <p class="foot">NISC 2026 · Bryant AI Revenue Challenge · Gartner case · Concept prototype with sample data</p>
+  </div>
+</section>
+
+<!-- ============ HOME (role specific) ============ -->
+<section class="view" id="v-home"><div class="wrap" id="homeRoot"></div></section>
+<section class="view" id="v-team"><div class="wrap" id="teamRoot"></div></section>
+<section class="view" id="v-reviews"><div class="wrap" id="reviewsRoot"></div></section>
+<section class="view" id="v-admin"><div class="wrap" id="adminRoot"></div></section>
+<section class="view" id="v-leaderboard"><div class="wrap" id="lbRoot"></div></section>
+<section class="view" id="v-how"><div class="wrap" id="howRoot"></div></section>
+
+<!-- ============ ISSUES ============ -->
+<section class="view" id="v-issues"><div class="wrap">
+  <div class="phead"><div><div class="eyebrow">Morgan · Team issues</div><h1>Current issues</h1><p id="issuesSub">Compiled by Morgan from Quinn's reviews of recorded calls and outbound emails over the last 30 days, ranked most common to least.</p></div></div>
+  <div class="grid g-main">
+    <div class="card" id="issueList"></div>
+    <div class="stack">
+      <div class="card"><div class="ch"><div class="row"><span class="av m">M</span><div><h3>Morgan's read</h3><p>Summary of this month's issues</p></div></div></div>
+        <div class="cb"><div class="md" id="issueSummary"><div class="typing"><i></i><i></i><i></i></div></div>
+        <div class="row mt12 wrapf"><button class="btn" id="refreshSummary" type="button">Regenerate</button><a class="btn primary" href="#trainings">Build a training</a></div></div></div>
+      <p class="demo">Sample team data for demonstration.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============ TRAININGS ============ -->
+<section class="view" id="v-trainings"><div class="wrap" id="trainRoot">
+  <div class="phead"><div><div class="eyebrow" id="trEyebrow">Morgan · Trainings</div><h1 id="trTitle">Trainings</h1><p id="trSub">Pick an issue and Morgan builds the training on the spot.</p></div></div>
+  <div id="genBlock">
+    <div class="ipick" id="issuePick"></div>
+    <div class="grid g3">
+      <div class="card tcard"><h3>Micro-video script</h3><p>A 5–7 minute training video with scenes, on-screen text and talk track, using Quinn's call and email evidence.</p><div class="row between"><span class="badge">~6 min</span><button class="btn sm primary" data-gen="video" type="button">Generate</button></div></div>
+      <div class="card tcard"><h3>Curriculum</h3><p>A 3-session plan with goals, exercises and how Quinn will measure progress on the next calls and emails.</p><div class="row between"><span class="badge">2 weeks</span><button class="btn sm primary" data-gen="curriculum" type="button">Generate</button></div></div>
+      <div class="card tcard"><h3>AI roleplay</h3><p>A supply-chain buyer persona and scenario for reps to practice against, with a scoring guide.</p><div class="row between"><span class="badge">15 min</span><button class="btn sm primary" data-gen="roleplay" type="button">Generate</button></div></div>
+    </div>
+    <div class="card mt16 hidden" id="genOut"><div class="ch"><div class="row"><span class="av m">M</span><b id="genTitle">Training</b></div><button class="btn sm" id="copyGen" type="button">Copy</button></div><div class="cb"><div class="md" id="genBody"></div></div></div>
+  </div>
+  <div class="section-t mt24" id="libHead">Coaching library</div>
+  <div class="lib" id="libList"></div>
+</div></section>
+
+<!-- ============ CHAT ============ -->
+<section class="view" id="v-chat"><div class="wrap">
+  <div class="phead"><div><div class="eyebrow">Morgan · Chat</div><h1>Chat with Morgan</h1><p>Ask follow-ups, plan coaching, and loop in Quinn when you want evidence from recorded calls and outbound emails.</p></div></div>
+  <div class="chatwrap">
+    <div class="card chatbox">
+      <div class="msgs" id="msgs"></div>
+      <div class="chatin">
+        <form class="inputrow" id="chatForm"><textarea id="chatQ" rows="1" placeholder="Message Morgan…"></textarea><button class="btn primary" id="chatSend" type="submit">Send</button></form>
+        <div class="row between mt8 wrapf"><label class="toggle"><span class="switch"><input type="checkbox" id="loopQuinn" checked><span></span></span>Loop in Quinn (call and email evidence)</label><button class="btn sm ghost" id="clearChat" type="button">New chat</button></div>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="card"><div class="ch"><h3>Try asking</h3></div><div class="cb" id="sideChips" style="display:grid;gap:6px">
+        <button class="chip" type="button">Which AE needs the most help with buying-group coverage?</button>
+        <button class="chip" type="button">Write a roleplay for a CFO decision meeting at a 3PL</button>
+        <button class="chip" type="button">Draft a Monday huddle on reinvesting Copilot time</button>
+        <button class="chip" type="button">What should I measure in a $10K pilot?</button>
+      </div></div>
+      <div class="card"><div class="ch"><h3>In this chat</h3></div><div class="cb" style="display:grid;gap:10px">
+        <div class="row"><span class="av m">M</span><div><b>Morgan</b><div class="tiny muted">Manager coach · always on</div></div></div>
+        <div class="row"><span class="av q">Q</span><div><b>Quinn</b><div class="tiny muted" id="quinnState">Call and email reviewer · on</div></div></div>
+      </div></div>
+    </div>
+  </div>
+</div></section>
+
+<footer class="foot hidden" id="foot"><div class="in"><span>Morgan &amp; Quinn · AI revenue coaching concept for Aetheris Cloud Systems · NISC 2026 AI Revenue Challenge</span><span>All people, companies and contact details are fictional sample data · no real emails are sent</span></div></footer>
+
+<!-- overlays -->
+<div class="ov" id="drawerOv" role="dialog" aria-modal="true"><div class="scrim" data-close="drawer"></div><div class="drawer" id="drawer"></div></div>
+<div class="ov" id="modalOv" role="dialog" aria-modal="true"><div class="scrim" data-close="modal"></div><div class="modal" id="modal"></div></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script>
+/* ===================== CASE CONTEXT (Aetheris Cloud Systems) ===================== */
+const CASE = {company:'Aetheris Cloud Systems', short:'ACS', aes:300, managers:35, acv:120000, cycle:'6 months', group:'5–10',
+  adoption:78, hoursSaved:4.8, emailsBefore:100, emailsAfter:135, pipeline:4, winBefore:18.5, win:18.2, winTarget:25, adminShare:72, buyerReject:73, mgrGap:82, pilot:10000};
+
+/* ===================== RED-FLAG TYPES ===================== */
+const FLAGS = [
+  {id:'generic',   name:'Generic outreach with no supply-chain context', short:'Generic outreach', sev:'high', metric:'Emails with supply-chain context',
+   desc:'AI-drafted emails and call openers that never mention the buyer\'s network, KPIs or season. Buyers at enterprise retail and manufacturing accounts have complained.',
+   ev:'"I hope this email finds you well… companies like yours" was sent to a VP of Supply Chain whose 4-DC network had 2.5 extra days of dwell last quarter.'},
+  {id:'single',    name:'Single-threaded deals', short:'Single-threaded', sev:'high', metric:'Buying-group coverage',
+   desc:'Only one contact engaged in a 5–10 person buying group. No economic buyer, IT/ERP owner or procurement mapped.',
+   ev:'Champion said, "I\'ll have to run it by our CFO." The AE replied, "Great, let me know what she says." (Brightwater Manufacturing)'},
+  {id:'blast',     name:'Saved time going to cold email blasts', short:'Email blasts', sev:'high', metric:'Saved time reinvested',
+   desc:'Copilot\'s 4.8 saved hours go into more sequences and volume instead of account work. Activity rises, pipeline doesn\'t.',
+   ev:'Sequence step 4 of 7 went to 220 contacts with the same body. Reply rate 0.4%. Two unsubscribes came from an open opportunity.'},
+  {id:'noplan',    name:'No account plan', short:'No account plan', sev:'med', metric:'Top accounts with a plan',
+   desc:'No whitespace map, site list or org chart for top accounts, so outreach repeats what the customer already owns.',
+   ev:'Buyer: "We have eleven warehouses, not four." The AE pitched a module Calder Foods already licenses.'},
+  {id:'pushy',     name:'Pushy or premature close', short:'Pushy close', sev:'med', metric:'Balanced talk ratio',
+   desc:'Discounts and deadlines before the business case is built. Talk ratio above 65%, buyers interrupted.',
+   ev:'Talk ratio 74/26. At minute 7 the AE offered "15% off if you sign by the 30th" before any pain was confirmed.'},
+  {id:'norehearse',name:'No decision rehearsal before exec meetings', short:'No rehearsal', sev:'med', metric:'Decision meetings rehearsed',
+   desc:'AEs walk into CFO and steering-committee meetings without rehearsing payback, risk or objections.',
+   ev:'CFO asked for the payback period on a $240K rollout. The AE said, "I\'d have to get back to you." The decision slipped a quarter.'}
+];
+const FLAG = Object.fromEntries(FLAGS.map(f=>[f.id,f]));
+
+/* ===================== FIVE EXAMPLES PER RED FLAG ({rep} = rep first name) ===================== */
+const EXAMPLES = {
+generic:[
+ {type:'email', title:'Cold email to a retail VP of Supply Chain', acct:'Halvorsen Retail Group', when:'Nov 10 · 7:42 AM', to:'Dana Whitfield, VP Supply Chain', subject:'Quick question',
+  body:'Hi Dana,\n\nI hope this email finds you well! I wanted to reach out because Aetheris helps companies like yours streamline operations and unlock efficiency with AI-powered solutions.\n\nWould you be open to a quick 15-minute call next week to explore synergies?\n\nBest,\n{rep}',
+  notes:[{q:'I hope this email finds you well!',n:'Filler opener. Quinn sees it in 61% of this AE\'s Copilot drafts.'},{q:'companies like yours',n:'No mention of retail, the DC network or peak season. Nothing shows we know Halvorsen.'},{q:'explore synergies',n:'Vague ask with no reason to reply. 73% of buyers reject outreach like this.'}],
+  quinn:'Copilot draft sent unedited. Opened once, no reply. Halvorsen is an open $120K opportunity owned by another AE.',
+  betterSubject:'Columbus DC dwell during the holiday ramp', better:'Dana, your team mentioned 2.5 extra days of inbound dwell at the Columbus DC during back-to-school. Brightline Apparel runs a similar 4-DC network and cut dwell 31% by re-slotting inbound appointments in AetherisFlow.\n\nWorth 20 minutes Tuesday to see if the same fix fits your holiday ramp? I\'ll bring their before/after dock schedule.\n\n{rep}'},
+ {type:'email', title:'Post-demo follow-up with no recap', acct:'Calder Foods', when:'Nov 6 · 4:15 PM', to:'Marcus Lee, Director of Distribution', subject:'Following up',
+  body:'Hi Marcus,\n\nJust circling back to see if you had any thoughts on our conversation. Let me know if you have any questions!\n\nAs a reminder, our platform offers end-to-end visibility, real-time analytics and seamless integrations.\n\nThanks,\n{rep}',
+  notes:[{q:'Just circling back',n:'No recap of what Marcus said. He spent 10 minutes on reefer spoilage during the demo.'},{q:'end-to-end visibility, real-time analytics and seamless integrations',n:'Feature list that could go to any company in any industry.'},{q:'Let me know if you have any questions!',n:'Puts the work on the buyer. No next step, no date.'}],
+  quinn:'Sent 9 days after the demo. Buyer\'s top pain (3.2% spoilage on reefer loads) never mentioned.',
+  betterSubject:'Reefer spoilage: the 3.2% we talked about', better:'Marcus, recap from Tuesday in your words: spoilage on reefer loads is running 3.2%, mostly on loads that sit more than 4 hours at the Joliet cross-dock.\n\nNext step we agreed: a 45-minute working session with your QA lead on temperature-excursion alerts. Does Thursday 10:00 CT work? I\'ll send a draft agenda tomorrow.\n\n{rep}'},
+ {type:'email', title:'Template error sent to a manufacturer', acct:'Ironbridge Components', when:'Nov 4 · 9:03 AM', to:'Priya Raman, Head of Procurement', subject:'Transforming retail supply chains',
+  body:'Hi {FirstName},\n\nAs a leader in the retail space, you know how hard it is to keep shelves stocked during the holidays. Aetheris helps retailers predict demand and avoid stockouts.\n\nCan I send over a case study?\n\n{rep}',
+  notes:[{q:'{FirstName}',n:'Merge field never filled. The buyer forwarded this to our CRO as an example of "disjointed AI emails."'},{q:'As a leader in the retail space',n:'Ironbridge makes precision components. Wrong industry entirely.'},{q:'keep shelves stocked',n:'Their pain is supplier lead-time variance, not shelf availability.'}],
+  quinn:'One of 3 complaints logged by enterprise manufacturing accounts this quarter.',
+  betterSubject:'Supplier lead-time variance on castings', better:'Priya, your Q3 supplier review showed castings lead times swinging from 6 to 14 weeks, which forces Ironbridge to carry extra safety stock at both plants.\n\nPinecrest Auto Parts used AetherisPlan to flag late suppliers 3 weeks earlier. Would a 20-minute look at their supplier scorecard be useful before your Q1 sourcing review?\n\n{rep}'},
+ {type:'call', title:'Discovery call: buyer names a pain, AE pitches features', acct:'Northfreight Logistics', when:'Nov 9 · 32:40 call', dur:1960, at:552,
+  lines:[['08:51','Buyer','Our biggest headache right now is our retail customers fining us for late ASN data. We ate about $180K in chargebacks last quarter.'],['09:12','{rep}','Got it. So Aetheris has a lot of great AI features. Let me show you the dashboard. We do visibility, analytics, forecasting…',true],['10:05','Buyer','Sure, but does any of that fix the ASN timing?'],['10:09','{rep}','Yeah, I think so. It does a lot of things.',true]],
+  quinn:'The buyer named a $180K pain and a specific failure. The AE never asked a follow-up question and pitched the whole platform.',
+  better:'Say instead at 09:12: "$180K in a quarter is real money. Which customers are fining you most, and where does the ASN get stuck: the WMS, the carrier hand-off, or the EDI translation?" Then show only the ASN timing workflow.'},
+ {type:'call', title:'Buyer calls out duplicate AI emails', acct:'Tidewell Grocers', when:'Nov 3 · 18:05 call', dur:1085, at:95,
+  lines:[['01:31','Buyer','Before we start, I got three emails from your team last week that said basically the same thing. None of them mentioned we\'re a grocer.'],['01:44','{rep}','Ha, yeah, our Copilot helps us stay in touch! So anyway, I wanted to walk you through our platform.',true],['02:10','Buyer','…Okay. I have about ten minutes.']],
+  quinn:'Buyer complaint about generic AI outreach, brushed off. The meeting was cut from 30 to 10 minutes.',
+  better:'Say instead at 01:44: "That\'s fair, and I\'m sorry. That\'s not the experience we want. Can I ask what would actually be useful? I\'d rather spend these 30 minutes on your fresh-food shrink problem than on a generic demo."'}
+],
+single:[
+ {type:'call', title:'Champion defers to CFO, AE doesn\'t ask to include her', acct:'Brightwater Manufacturing', when:'Nov 10 · 41:22 call', dur:2482, at:2290,
+  lines:[['38:02','Champion','I like it. I\'ll have to run it by our CFO, Elaine. She signs anything over $100K.'],['38:10','{rep}','Great, let me know what she says!',true],['38:14','Champion','Will do. I\'ll circle back after the holidays.']],
+  quinn:'The economic buyer was named and then dropped. Deal is $240K ARR with 1 contact engaged after 4 months.',
+  better:'Say instead at 38:10: "Makes sense. What will Elaine care about most: payback, risk or the plant rollout timeline? Could we put 20 minutes on her calendar together so you\'re not carrying this alone? I\'ll build the one-page business case with you first."'},
+ {type:'email', title:'Pricing sent to one contact on a $240K deal', acct:'Summit Cold Chain', when:'Nov 7 · 3:30 PM', to:'Tom Becker, Operations Manager', subject:'Pricing for Summit',
+  body:'Hi Tom,\n\nAttached is pricing for all 6 facilities: $240K ARR. Let me know if this works and we can get paperwork going.\n\nThanks!\n{rep}',
+  notes:[{q:'Hi Tom',n:'Only contact on the opportunity for 142 days. No VP Ops, IT, finance or procurement in CRM.'},{q:'$240K ARR',n:'Price sent to a manager who can\'t approve it, with no business case attached.'},{q:'get paperwork going',n:'Procurement hasn\'t been identified. Paperwork will stall.'}],
+  quinn:'Buying groups at ACS average 5–10 people. This opportunity has 1.',
+  betterSubject:'Summit rollout: business case and who else should see it', better:'Tom, before I send numbers, I want to make sure this lands with everyone who has to say yes. From our calls, that sounds like your VP Operations (budget), Raj in IT (WMS integration) and procurement.\n\nCould we spend 20 minutes Thursday mapping who needs what? I\'ll bring a draft business case you can take to your VP.\n\n{rep}'},
+ {type:'call', title:'IT owner mentioned, never engaged', acct:'Pinecrest Auto Parts', when:'Nov 5 · 29:10 call', dur:1750, at:1312,
+  lines:[['21:40','Buyer','IT will need to review the SAP integration before anything moves forward.'],['21:52','{rep}','Totally. So, on timing, could we target a December signature?',true],['22:01','Buyer','Maybe. Depends on IT.']],
+  quinn:'Third time this buyer has mentioned IT. No IT contact exists on the opportunity.',
+  better:'Say instead at 21:52: "Who on the IT side owns SAP integrations? Let\'s get them a 30-minute technical session with our solutions engineer next week, so they\'re an ally instead of a blocker."'},
+ {type:'email', title:'Sixth "any update?" email to the same champion', acct:'Kestrel 3PL', when:'Nov 11 · 8:10 AM', to:'Jenna Ortiz, Warehouse Systems Lead', subject:'Any update?',
+  body:'Hi Jenna,\n\nAny update on your side? Just want to keep this moving before year-end.\n\n{rep}',
+  notes:[{q:'Any update on your side?',n:'Sixth follow-up to the same person in 3 weeks. No reply since Oct 20.'},{q:'keep this moving before year-end',n:'Our deadline, not theirs. Nothing about Kestrel\'s goals.'}],
+  quinn:'Deal stalled with a single champion. Two other Kestrel stakeholders opened earlier emails but were never contacted.',
+  betterSubject:'Helping you make the case to Mike', better:'Jenna, I know year-end is crushing for a 3PL. Rather than another check-in: would it help if I put together a 1-page summary of the labor-hours savings for Mike (VP Operations) and Carla in finance? I can draft it and you can edit before anything goes to them.\n\n{rep}'},
+ {type:'call', title:'Procurement surprises the AE at the final meeting', acct:'Marlow Home Goods', when:'Nov 2 · 47:00 call', dur:2820, at:1838,
+  lines:[['30:20','Procurement','Hi, I\'m Steve from procurement. We\'ll need three competitive bids and a security questionnaire before any award.'],['30:35','{rep}','Oh, I didn\'t know procurement was involved. Who are you again?',true],['30:41','Champion','Sorry, I should have mentioned Steve.']],
+  quinn:'Procurement, security and finance were never mapped. Close date pushed from Nov 30 to Q1.',
+  better:'Before the meeting: map the buying group with the champion ("Who else signs off, and what do they need?"). At 30:35 say: "Thanks, Steve. What does your process need from us, and by when? I\'ll send our security pack today."'}
+],
+blast:[
+ {type:'email', title:'Sequence step 4 of 7, sent to 220 contacts', acct:'220 contacts · 3 industries', when:'Nov 12 · 6:00 AM', to:'220 recipients (sequence)', subject:'Is supply chain visibility a priority for 2027?',
+  body:'Hi {FirstName},\n\nIs supply chain visibility a priority for 2027? Many leaders tell us it is.\n\nAetheris can help. Worth a quick chat?\n\n{rep}',
+  notes:[{q:'220 recipients',n:'Same body to manufacturing, retail and 3PL contacts.'},{q:'Many leaders tell us it is.',n:'No proof, no specific outcome, no reason to believe it applies to them.'},{q:'Worth a quick chat?',n:'0.4% reply rate. 2 unsubscribes came from an open opportunity.'}],
+  quinn:'This AE\'s emails rose from 104 to 168 a week after Copilot. Their pipeline rose 1%.',
+  betterSubject:'(Replace the sequence with 5 researched emails)', better:'Instead of 220 generic emails, pick the 5 accounts with live triggers (new DC, ERP migration, leadership change) and write one specific email each. Use the hours saved to map 2 more stakeholders per account. Our top 10% send fewer emails than average.'},
+ {type:'email', title:'2 AM Copilot email to 48 people at one account', acct:'Halvorsen Retail Group', when:'Nov 8 · 2:13 AM', to:'48 contacts @halvorsen.example', subject:'Unlock AI-powered efficiency',
+  body:'Hi there,\n\nAetheris is helping retailers unlock AI-powered efficiency across the supply chain. Our customers see results fast.\n\nWould you be the right person to talk to about this?\n\n{rep}',
+  notes:[{q:'48 contacts',n:'Sent to everyone at the account Copilot could find, including the CFO and two store managers.'},{q:'Would you be the right person',n:'Asks the buyer to do our stakeholder mapping for us.'}],
+  quinn:'Reply from Halvorsen\'s VP Supply Chain: "Please stop. Three of us got this." Now logged as a brand-risk complaint.',
+  betterSubject:'(One researched note to the right person)', better:'Dana, we work with two retailers your size on peak-season DC labor planning. Before I reach out to anyone else on your team, is there someone in DC operations you\'d want looped in, or should I keep this with you?\n\n{rep}'},
+ {type:'email', title:'Fake "Re:" thread to force an open', acct:'Kestrel 3PL', when:'Nov 6 · 11:20 AM', to:'Victor Lam, COO', subject:'Re: Re: our conversation',
+  body:'Hi Victor,\n\nFollowing up on my last few notes. I know you\'re busy! Did you get a chance to look?\n\n{rep}',
+  notes:[{q:'Re: Re: our conversation',n:'There was no prior conversation. Fake reply threads damage trust with a COO.'},{q:'Following up on my last few notes',n:'Fourth unanswered sequence touch, with no new information.'}],
+  quinn:'Copilot sequence template. Open rate high, reply rate 0%, and the COO marked it as spam.',
+  betterSubject:'Kestrel\'s new Reno facility', better:'Victor, congratulations on the Reno facility opening in February. Standing up a new site usually means 8–10 weeks of slotting and labor tuning. If useful, I can share how another 3PL cut that ramp to 5 weeks. No need to reply if the timing\'s wrong.\n\n{rep}'},
+ {type:'call', title:'Buyer counts the emails on a live call', acct:'Corvane Industrial', when:'Nov 9 · 22:30 call', dur:1350, at:64,
+  lines:[['00:58','Buyer','I\'ll be honest. I\'ve gotten seven emails from Aetheris this month and not one mentioned that we\'re a manufacturer.'],['01:04','{rep}','Ha, sorry about that! We\'re just excited to work with you. So, let me tell you about the platform.',true],['01:20','Buyer','Right. Let\'s keep this short.']],
+  quinn:'Volume is now hurting the brand. This buyer is on an open $120K opportunity.',
+  better:'Say instead at 01:04: "That\'s on us, and I\'ve stopped the sequence. You won\'t get another automated note from me. I\'d like to earn this conversation. What\'s the one supply-chain problem you\'d want solved by Q2?"'},
+ {type:'call', title:'Cold call driven by an email blast', acct:'Summit Cold Chain', when:'Nov 12 · 4:10 call', dur:250, at:22,
+  lines:[['00:15','{rep}','Hi, I\'m calling because I sent you an email about supply chain visibility.'],['00:19','Buyer','Which one? I get about thirty of those a week.'],['00:22','{rep}','Ha, the one from Aetheris! So, is visibility a priority for you?',true],['00:28','Buyer','Not really. I have to run.']],
+  quinn:'Call made from a blast list, with no research on the account. 4 minutes, no next step.',
+  better:'Say instead: "I\'m calling because you just added a third reefer facility in Fresno. Teams usually struggle with temperature compliance across sites in the first 90 days. Is that on your radar, or am I off?"'}
+],
+noplan:[
+ {type:'email', title:'Pitching a module the customer already owns', acct:'Calder Foods', when:'Nov 9 · 10:02 AM', to:'Sarah Kim, VP Operations', subject:'Introducing AetherisFlow',
+  body:'Hi Sarah,\n\nI\'d love to introduce you to AetherisFlow, our yard and dock management module. It could be a great fit for Calder!\n\n{rep}',
+  notes:[{q:'Introducing AetherisFlow',n:'Calder has licensed AetherisFlow since 2024 at 3 sites. No account plan or install-base check.'},{q:'could be a great fit',n:'The whitespace is the 8 sites without Flow, not Flow itself.'}],
+  quinn:'Buyer reply: "We already use this. Do you talk to each other over there?"',
+  betterSubject:'Rolling Flow out to the other 8 Calder sites', better:'Sarah, your 3 Flow sites cut trailer dwell 27% this year. The 8 sites without it are still on spreadsheets for dock scheduling. Would it be worth a 30-minute review with your site leads to rank which 2 sites to add first?\n\n{rep}'},
+ {type:'call', title:'QBR where the AE doesn\'t know the footprint', acct:'Northfreight Logistics', when:'Nov 4 · 51:00 call', dur:3060, at:325,
+  lines:[['05:10','{rep}','So across your four warehouses, how is adoption going?',true],['05:15','Buyer','We have eleven warehouses, not four. You\'re only live in four.'],['05:20','{rep}','Oh, right, sorry.']],
+  quinn:'No account plan on file. The 7 sites without ACS are the biggest expansion opportunity on this AE\'s list.',
+  better:'Prep a one-page account plan before every QBR: sites, live vs. not live, owners and their KPIs. Then open with: "You\'re live in 4 of 11 sites. Here\'s what the 4 achieved. Which of the other 7 is under the most pressure?"'},
+ {type:'email', title:'Generic intro to a new VP already introduced', acct:'Ironbridge Components', when:'Nov 3 · 1:45 PM', to:'Alan Price, new VP Supply Chain', subject:'Introduction to Aetheris',
+  body:'Hi Alan,\n\nCongrats on the new role! Aetheris is a leading supply chain platform. I\'d love to give you a general overview of what we do.\n\n{rep}',
+  notes:[{q:'general overview of what we do',n:'Ironbridge has been a customer for 2 years. Alan\'s team already uses ACS daily.'},{q:'Congrats on the new role!',n:'Good instinct, but no mention of the results his team already has.'}],
+  quinn:'New executive sponsor. Highest-risk moment for renewal, handled like a cold prospect.',
+  betterSubject:'What your team got from Aetheris this year', better:'Alan, congratulations on the new role. Before you\'re asked about tools, here\'s what your team got from ACS this year: supplier late-alerts 3 weeks earlier and $410K less expediting. I\'d like 30 minutes to hear your priorities and show where we could support them next.\n\n{rep}'},
+ {type:'call', title:'Can\'t answer the expansion ROI question', acct:'Pinecrest Auto Parts', when:'Nov 8 · 36:00 call', dur:2160, at:1230,
+  lines:[['20:18','Buyer','If we roll this out to the Monterrey and Saltillo plants, what\'s the ROI?'],['20:30','{rep}','Great question. I\'d have to look into that. It\'s probably similar to what you have now?',true],['20:41','Buyer','Okay. Get back to me.']],
+  quinn:'No account plan, so no data on the Mexico plants\' volume or pain. Momentum lost.',
+  better:'Build the plan before the call: site volumes, current tools and the owner at each plant. Then answer: "Monterrey ships about 40% of your volume, so the expediting savings should be roughly $160K. Let\'s validate that with the plant manager next week."'},
+ {type:'email', title:'First contact in 7 months, 60 days before renewal', acct:'Tidewell Grocers', when:'Nov 12 · 9:30 AM', to:'Greg Nolan, Director of Logistics', subject:'Checking in!',
+  body:'Hi Greg,\n\nJust checking in to see how things are going with Aetheris! Your renewal is coming up, so let me know if you have any questions.\n\n{rep}',
+  notes:[{q:'Just checking in',n:'First touch since April. No QBR, no success plan, no exec sponsor engaged.'},{q:'Your renewal is coming up',n:'Leads with our renewal, not their results.'}],
+  quinn:'$120K renewal with no account plan. Usage is down 18% at two DCs.',
+  betterSubject:'Before we talk renewal: your DC results', better:'Greg, before renewal comes up, I want to review results with you. Your Lakeland DC cut out-of-stocks 12%, but usage is down at Ocala and Tampa. Could we spend 30 minutes next week on what changed there and what a year-2 plan should look like?\n\n{rep}'}
+],
+pushy:[
+ {type:'call', title:'Discount offered before any pain is confirmed', acct:'Marlow Home Goods', when:'Nov 10 · 28:30 call', dur:1710, at:425,
+  lines:[['06:40','Buyer','We\'re just starting to look at options for next year.'],['07:05','{rep}','Totally. And if you sign by the 30th, I can get you 15% off. That deal goes away in December.',true],['07:15','Buyer','We haven\'t even talked about what we need yet.']],
+  quinn:'Talk ratio 74/26. Pricing came up at minute 7 of 28.',
+  better:'Say instead at 07:05: "Then let\'s make sure next year\'s plan is built on the right problem. What\'s the one thing in your DC network you most need to fix by peak season?"'},
+ {type:'call', title:'Dismissing competitors and pushing for the order form', acct:'Corvane Industrial', when:'Nov 6 · 33:00 call', dur:1980, at:1502,
+  lines:[['24:50','Buyer','We\'re mid-evaluation with two other vendors.'],['25:02','{rep}','Honestly, they can\'t do what we do. Can we get the order form going today?',true],['25:10','Buyer','We\'ll stick to our process.']],
+  quinn:'Buyer stated their process. AE pushed past it and lost credibility.',
+  better:'Say instead at 25:02: "That makes sense. What criteria will you use to decide, and who weighs in? I\'d like to make sure we\'re tested on what matters most to you."'},
+ {type:'email', title:'"Final notice" pricing deadline', acct:'Halvorsen Retail Group', when:'Nov 11 · 5:55 PM', to:'Dana Whitfield, VP Supply Chain', subject:'FINAL NOTICE: pricing expires Friday',
+  body:'Hi Dana,\n\nThis is your final notice that our special pricing expires this Friday. After that, I can\'t guarantee these numbers.\n\nCan you sign by Friday?\n\n{rep}',
+  notes:[{q:'FINAL NOTICE',n:'Reads like a collections letter to a VP.'},{q:'Can you sign by Friday?',n:'No business case has been shared. The CFO hasn\'t seen anything.'}],
+  quinn:'Artificial urgency on an opportunity at stage 2. The buyer stopped responding.',
+  betterSubject:'Timeline that works for your holiday freeze', better:'Dana, I know your team has a change freeze from Nov 20. If a February go-live is the goal, working back means a decision in mid-December. Does that match your process? If not, tell me what does and I\'ll plan around it.\n\n{rep}'},
+ {type:'email', title:'Guilt-trip breakup email to a CFO', acct:'Brightwater Manufacturing', when:'Nov 5 · 8:20 AM', to:'Elaine Ford, CFO', subject:'Did I lose you?',
+  body:'Hi Elaine,\n\nI haven\'t heard back, which usually means one of three things: you\'re not interested, you\'re too busy, or you\'ve been eaten by an alligator. Which is it?\n\n{rep}',
+  notes:[{q:'Did I lose you?',n:'Breakup-email template from Copilot. Wrong tone for a CFO.'},{q:'eaten by an alligator',n:'Joke template that buyers report as unprofessional.'}],
+  quinn:'CFO had never been engaged before this email. First impression for the economic buyer.',
+  betterSubject:'Payback on the plant rollout', better:'Elaine, your operations team is evaluating ACS for the Dayton and Toledo plants. I\'ve put together a 1-page payback summary (about 7 months on expediting savings). Happy to walk through it with you and Mark for 20 minutes, or I can send it for your review.\n\n{rep}'},
+ {type:'call', title:'Interrupting the buyer 4 times in 2 minutes', acct:'Ridgeline Apparel', when:'Nov 3 · 31:10 call', dur:1870, at:740,
+  lines:[['12:05','Buyer','The issue with returns is that our stores and our e-commerce DC…'],['12:09','{rep}','Right, right, and that\'s exactly what our returns module does. So—',true],['12:13','Buyer','Well, it\'s more that the stores…'],['12:15','{rep}','Yep, and we also integrate with your WMS, which—',true]],
+  quinn:'4 interruptions between 12:00 and 14:00. Talk ratio 71/29 on this call.',
+  better:'Let the buyer finish, pause 2 seconds, then ask: "Say more about how the stores and the e-commerce DC handle returns differently. Where does it break?"'}
+],
+norehearse:[
+ {type:'call', title:'CFO asks for payback, AE has no answer', acct:'Brightwater Manufacturing', when:'Nov 11 · 38:00 call', dur:2280, at:861,
+  lines:[['14:10','CFO','Before we go further, what\'s the payback period on $240K?'],['14:21','{rep}','Um, I\'d have to get back to you on that. It\'s pretty fast, though.',true],['14:30','CFO','Let\'s reconvene when you have numbers.']],
+  quinn:'Decision meeting with the economic buyer, not rehearsed. Close date slipped one quarter.',
+  better:'Rehearse with Quinn\'s CFO roleplay first. Then answer: "About 7 months. Expediting fell $410K at a similar plant, and that alone covers the cost. Here\'s the math, and I\'d like your team to check it."'},
+ {type:'call', title:'COO raises a past failed rollout, AE gets defensive', acct:'Corvane Industrial', when:'Nov 7 · 44:00 call', dur:2640, at:1585,
+  lines:[['26:20','COO','We tried a visibility tool in 2023 and it failed. Why would this be different?'],['26:25','{rep}','Well, that was a different vendor. Ours is much better, honestly.',true],['26:33','COO','That\'s what they said too.']],
+  quinn:'Predictable objection (noted in CRM since August), never rehearsed.',
+  better:'Say instead: "That\'s the right question. What went wrong in 2023: adoption, data quality or integration? Here\'s how we de-risk each one, and I can introduce you to a COO who had the same history."'},
+ {type:'email', title:'Pre-meeting note with no agenda or pre-read', acct:'Marlow Home Goods', when:'Nov 9 · 6:40 PM', to:'Steering committee (6 people)', subject:'Looking forward to tomorrow!',
+  body:'Hi all,\n\nLooking forward to tomorrow\'s meeting! See you then.\n\n{rep}',
+  notes:[{q:'Looking forward to tomorrow\'s meeting!',n:'No agenda, no decision ask, no pre-read for a 6-person committee.'}],
+  quinn:'Committee arrived without context. 20 of 45 minutes spent re-explaining scope.',
+  betterSubject:'Tomorrow: agenda, pre-read and the decision we\'re asking for', better:'Hi all, for tomorrow (45 min):\n1. Results from the 2-site pilot (5 min, pre-read attached)\n2. Rollout plan and risks (20 min)\n3. Decision: approve phase 1 for 4 DCs (15 min)\n\nIf any of you have concerns you\'d rather raise beforehand, reply to me directly.\n\n{rep}'},
+ {type:'call', title:'Security review surfaces at the steering committee', acct:'Halvorsen Retail Group', when:'Nov 5 · 52:00 call', dur:3120, at:2410,
+  lines:[['40:05','IT Director','Has this gone through our vendor security review? We need SOC 2 and a data-residency answer.'],['40:10','{rep}','I\'m not sure. I can find out.',true],['40:16','Champion','Then we can\'t approve today.']],
+  quinn:'IT\'s requirements were never mapped or rehearsed. Approval pushed to Q1.',
+  better:'Rehearse every exec meeting with the champion: "Who could say no, and why?" Bring the SOC 2 report and the data-residency one-pager, and pre-brief the IT director a week before.'},
+ {type:'email', title:'Recap that misstates the decision criteria', acct:'Kestrel 3PL', when:'Nov 10 · 5:15 PM', to:'Victor Lam, COO; Jenna Ortiz', subject:'Great meeting!',
+  body:'Thanks for the great meeting today! Sounds like price is the main thing, so I\'ll see what I can do on discounting.\n\n{rep}',
+  notes:[{q:'Sounds like price is the main thing',n:'The COO said labor productivity and go-live risk were the top criteria. Price was third.'},{q:'see what I can do on discounting',n:'Discounting against the wrong criterion, with no mutual action plan.'}],
+  quinn:'Recap misread the room. No mutual action plan, owners or dates.',
+  betterSubject:'Recap + mutual action plan', better:'Victor, Jenna, thanks for today. What we heard: (1) labor productivity at Reno, (2) go-live risk before peak, (3) price. Proposed plan: Nov 17 site visit, Nov 24 labor model review, Dec 4 decision. Did we get the order right?\n\n{rep}'}
+]
+};
+
+/* ===================== MANAGERS & AEs (sample data · 5 of ACS's 35 frontline managers) ===================== */
+const MANAGERS = [
+  {u:'mchen.mgr',   name:'Maya Chen',   team:'Manufacturing East', seg:'Manufacturing',
+   aes:['Jordan Rivera','Priya Shah','Marcus Bell','Elena Novak','Owen Hart','Grace Kim','Luis Ortega','Hannah Price','Theo Grant']},
+  {u:'dokafor.mgr', name:'David Okafor',team:'Retail & CPG',       seg:'Retail',
+   aes:['Aisha Bello','Ryan Cole','Mei Lin','Carter Reed','Nora Walsh','Isaac Ford','Zoe Park','Daniel Ruiz']},
+  {u:'sbrooks.mgr', name:'Sofia Brooks',team:'3PL & Logistics',    seg:'3PL',
+   aes:['Kevin Doyle','Fatima Khan','Liam Foster','Rosa Mendes','Ben Archer','Chloe Dunn','Victor Hale','Jade Morrow','Sam Ito']},
+  {u:'tnguyen.mgr', name:'Tom Nguyen',  team:'Enterprise Manufacturing West', seg:'Manufacturing',
+   aes:['Alex Romero','Brooke Lane','Devin Shaw','Imani Scott','Felix Wong','Megan Tate','Noah Pierce','Tara Quinlan']},
+  {u:'lpatel.mgr',  name:'Lena Patel',  team:'Mid-Market Central', seg:'Mixed',
+   aes:['Chris Vale','Dana Weller','Eli Moss','Gina Torres','Henry Lowe','Ivy Brennan','Jon Kerr','Kara Fields','Leo Marsh']}
+];
+/* hand-tuned showcase reps (others are generated deterministically) */
+const OVERRIDES = {
+  'jrivera.ae':{win:14.6,bg:1.8,plans:30,personal:28,reinvest:22,rehearse:40,talk:58,emailsWk:162,calls30:24,emails30:148},
+  'pshah.ae':  {win:29.4,bg:5.6,plans:92,personal:86,reinvest:71,rehearse:78,talk:44,emailsWk:96,calls30:27,emails30:104},
+  'mbell.ae':  {win:16.2,bg:3.1,plans:55,personal:52,reinvest:41,rehearse:18,talk:69,emailsWk:131},
+  'abello.ae': {win:15.1,bg:2.1,plans:48,personal:33,reinvest:30,rehearse:44,talk:55,emailsWk:155},
+  'zpark.ae':  {win:28.1,bg:5.2,plans:88,personal:81,reinvest:68,rehearse:72,talk:46,emailsWk:99},
+  'kdoyle.ae': {win:15.8,bg:2.2,plans:35,personal:62,reinvest:38,rehearse:22,talk:67,emailsWk:128},
+  'fkhan.ae':  {win:27.6,bg:5.0,plans:85,personal:79,reinvest:66,rehearse:70,talk:47,emailsWk:102}
+};
+
+/* ===================== PROSPECTING POOLS (fictional) ===================== */
+const COMPANIES = [
+  {n:'Northfreight Logistics',d:'northfreight.example',seg:'3PL'},{n:'Calder Foods',d:'calderfoods.example',seg:'Manufacturing'},
+  {n:'Halvorsen Retail Group',d:'halvorsen.example',seg:'Retail'},{n:'Brightwater Manufacturing',d:'brightwatermfg.example',seg:'Manufacturing'},
+  {n:'Ironbridge Components',d:'ironbridge.example',seg:'Manufacturing'},{n:'Kestrel 3PL',d:'kestrel3pl.example',seg:'3PL'},
+  {n:'Marlow Home Goods',d:'marlowhome.example',seg:'Retail'},{n:'Summit Cold Chain',d:'summitcold.example',seg:'3PL'},
+  {n:'Pinecrest Auto Parts',d:'pinecrestauto.example',seg:'Manufacturing'},{n:'Tidewell Grocers',d:'tidewell.example',seg:'Retail'},
+  {n:'Corvane Industrial',d:'corvane.example',seg:'Manufacturing'},{n:'Ridgeline Apparel',d:'ridgeline.example',seg:'Retail'},
+  {n:'Bluestem Distribution',d:'bluestem.example',seg:'3PL'},{n:'Harborview Beverages',d:'harborview.example',seg:'Manufacturing'},
+  {n:'Oakmont Pharmacy Supply',d:'oakmontrx.example',seg:'Retail'},{n:'Granite Peak Freight',d:'granitepeak.example',seg:'3PL'}
+];
+const FIRSTS = ['Alicia','Ben','Carmen','Derek','Erin','Frank','Gwen','Hector','Irene','Jamal','Kelly','Lars','Monica','Nate','Olga','Pete','Rachel','Sanjay','Tina','Umar','Vera','Wes','Yara','Zack','Bianca','Colin','Diane','Ethan'];
+const LASTS = ['Albright','Brennan','Castillo','Dawson','Ellison','Fischer','Goodwin','Hayes','Iverson','Jacobs','Keller','Lindqvist','Mercer','Nakamura','Olsen','Prescott','Quintero','Ramsey','Sorensen','Thornton','Underwood','Vasquez','Whitaker','Yoder'];
+const TITLES = [
+  {t:'VP Supply Chain',k:'OTIF'},{t:'Director of Logistics',k:'freight spend'},{t:'CFO',k:'cost-to-serve'},{t:'Plant Operations Manager',k:'line downtime'},
+  {t:'Head of Procurement',k:'supplier lead times'},{t:'Director of Distribution',k:'DC throughput'},{t:'IT Director, ERP',k:'ERP-to-WMS sync'},{t:'VP Operations',k:'inventory turns'},
+  {t:'Transportation Manager',k:'carrier on-time %'},{t:'Inventory Planning Lead',k:'fill rate'},{t:'COO',k:'margin per order'},{t:'Controller',k:'detention & demurrage fees'}
+];
+const PAINS = ['OTIF slipping to 88% with two big-box customers','peak-season dock congestion at their main DC','carrier rate volatility on LTL lanes','excess safety stock across 4 DCs','stockouts on top-200 SKUs','ERP-to-WMS sync gaps after their SAP migration','$300K+ a year in detention & demurrage fees','supplier lead-time variance on imported parts','a new DC opening in Q1','temperature excursions on reefer loads'];
+const ANGLES = [
+  {tag:'Missing buying-group member', tpl:(p,c,pain)=>`Open opportunity at ${c.n} has only operations engaged. ${p.t} owns the ${p.k} number. Bring them in by leading with ${pain}.`},
+  {tag:'Stakeholder mapping', tpl:(p,c,pain)=>`Map how the ${p.t} ranks ${pain} versus budget before the evaluation committee meets.`},
+  {tag:'Decision rehearsal', tpl:(p,c,pain)=>`Pre-brief the ${p.t} on payback before next week's steering meeting. Ask which objection could stall it.`},
+  {tag:'Re-engage with context', tpl:(p,c,pain)=>`Last reply mentioned ${pain}. Lead with that and one peer result, not a generic follow-up.`},
+  {tag:'Consensus building', tpl:(p,c,pain)=>`Champion supports ACS. Ask the ${p.t} what they need to see to back a ${c.seg==='3PL'?'multi-site':'plant'} rollout.`},
+  {tag:'Account plan gap', tpl:(p,c,pain)=>`${c.n} is live at 3 sites. Confirm which of the remaining sites feels ${pain} most.`}
+];
+
+/* ===================== COACHING CONTENT (what Quinn recommends to reps) ===================== */
+const CONTENT = [
+  {id:'v1', type:'Training video', title:'Writing outreach a supply-chain buyer will answer', flag:'generic', dur:'12 min', desc:'Before/after rewrites of real Copilot drafts using the buyer\'s network, KPIs and season.'},
+  {id:'mv1',type:'Micro-video', title:'The 3-line email: trigger, peer proof, specific ask', flag:'generic', dur:'4 min', desc:'One formula that replaces "I hope this finds you well."'},
+  {id:'mv2',type:'Micro-video', title:'Volume vs. value: what our top 10% do with saved time', flag:'blast', dur:'5 min', desc:'How top AEs reinvest Copilot\'s 4.8 hours in stakeholder mapping and account strategy.'},
+  {id:'mv3',type:'Micro-video', title:'"Close by Friday" discount scripts', flag:'pushy', dur:'3 min', desc:'Legacy end-of-quarter urgency scripts and discount framing.'},
+  {id:'rp1',type:'Roleplay', title:'CFO payback challenge at a manufacturer', flag:'norehearse', dur:'15 min', desc:'Rehearse the payback, risk and rollout questions a CFO asks on a $240K decision.'},
+  {id:'rp2',type:'Roleplay', title:'Champion says "I\'ll run it by my VP"', flag:'single', dur:'10 min', desc:'Practice offering help to the champion and getting the economic buyer in the room.'},
+  {id:'rp3',type:'Roleplay', title:'Buyer complains about generic AI emails', flag:'generic', dur:'10 min', desc:'Recover trust when a buyer calls out repetitive automated outreach.'},
+  {id:'rp4',type:'Roleplay', title:'Steering committee with IT and procurement', flag:'norehearse', dur:'20 min', desc:'Run a decision meeting where IT raises security and procurement asks for bids.'},
+  {id:'cu1',type:'Curriculum', title:'Multi-threading a 5–10 person buying group', flag:'single', dur:'3 sessions', desc:'Map, engage and build consensus across operations, IT, finance and procurement.'},
+  {id:'cu2',type:'Curriculum', title:'Account planning for top 10 accounts', flag:'noplan', dur:'2 weeks', desc:'Whitespace maps, site lists and org charts for each strategic account.'},
+  {id:'cu3',type:'Curriculum', title:'Reinvest your saved hours', flag:'blast', dur:'2 weeks', desc:'Turn 4.8 hours a week into stakeholder mapping, account strategy and decision rehearsal.'},
+  {id:'et1',type:'Email template', title:'Trigger-based first touch (new DC / ERP migration)', flag:'generic', dur:'Template', desc:'A short first email built around a real account event.'},
+  {id:'et2',type:'Email template', title:'Mutual action plan recap', flag:'norehearse', dur:'Template', desc:'Recap decision criteria in the buyer\'s order, with owners and dates.'},
+  {id:'et3',type:'Email template', title:'7-step "bump" sequence', flag:'blast', dur:'Template', desc:'High-volume follow-up sequence: "Any update?", "Did I lose you?" and similar.'},
+  {id:'tt1',type:'Talk track', title:'Slowing down: the 2-second pause', flag:'pushy', dur:'Talk track', desc:'Questions that keep the talk ratio near 45/55 and hold price until value is confirmed.'},
+  {id:'tt2',type:'Talk track', title:'Opening a QBR with an account plan', flag:'noplan', dur:'Talk track', desc:'Lead with sites live vs. not live and the KPI each owner cares about.'},
+  {id:'tt3',type:'Talk track', title:'Inviting the CFO without going around the champion', flag:'single', dur:'Talk track', desc:'Language that arms the champion and widens the deal.'}
+];
+const RISKS = [
+  {id:'tone',   l:'Off-brand / generic tone', d:'Sounds like the generic AI outreach buyers are complaining about.'},
+  {id:'claim',  l:'Inaccurate product claim', d:'Says something ACS products don\'t do, or overstates results.'},
+  {id:'legal',  l:'Compliance / legal risk', d:'Pricing promises, contract terms or data claims legal hasn\'t approved.'},
+  {id:'price',  l:'Outdated pricing', d:'References old list prices, discounts or packaging.'},
+  {id:'volume', l:'Encourages volume over value', d:'Rewards more emails and calls instead of buying-group coverage and account work.'},
+  {id:'other',  l:'Other', d:'Describe the risk below.'}
+];
+
+/* ===================== PRACTICE DRILLS (2 per red flag) ===================== */
+const DRILLS = {
+  generic:[{say:'Dana (VP Supply Chain, 4-DC retailer) has not replied to 2 Copilot emails.',q:'Which first line is most likely to get a reply?',opts:['"I hope this email finds you well!"','"Your Columbus DC added 2.5 days of dwell during back-to-school. Here\'s how a similar retailer cut that 31%."','"Aetheris is a leading AI-powered supply chain platform."'],a:1,why:'Lead with their trigger and a peer result. 73% of buyers reject generic automated outreach.'},
+           {say:'A buyer says: "I got three emails from your team that said the same thing."',q:'Best response?',opts:['"Our Copilot helps us stay in touch!"','"That\'s fair, and I\'m sorry. What would actually be useful for you to hear about?"','Ignore it and start the demo.'],a:1,why:'Own it, stop the noise and earn the conversation back with their problem.'}],
+  single:[{say:'Champion: "I\'ll have to run it by our CFO."',q:'Best move?',opts:['"Great, let me know what she says."','"What will she care about most? Could we brief her together for 20 minutes? I\'ll draft the business case with you."','"Can you sign without her?"'],a:1,why:'Arm the champion and get the economic buyer in the room, without going around anyone.'},
+          {say:'Your $240K opportunity has 1 contact after 4 months.',q:'Which roles should you map first?',opts:['Only the champion: don\'t overwhelm them','Economic buyer, IT/ERP owner, procurement and site operations leads','Everyone Copilot can find at the company'],a:1,why:'ACS buying groups have 5–10 people. Map the ones who can say yes or no.'}],
+  blast:[{say:'Copilot saved you 4.8 hours this week.',q:'What do ACS\'s top 10% do with that time?',opts:['Send more sequences','Stakeholder mapping, account strategy, decision rehearsal and consensus building','Log more calls to hit activity targets'],a:1,why:'The top 10% don\'t use AI more. They reinvest the saved time in strategic work.'},
+         {say:'Your sequence has a 0.4% reply rate across 220 contacts.',q:'Best fix?',opts:['Add 3 more steps','Replace it with 5 researched emails to accounts with live triggers','Send at 2 AM to beat the inbox'],a:1,why:'Fewer, specific emails beat volume. Pipeline grew only 4% while email rose 35%.'}],
+  noplan:[{say:'QBR tomorrow with Northfreight (live in 4 of 11 warehouses).',q:'How should you open?',opts:['"How\'s adoption going across your four warehouses?"','"You\'re live in 4 of 11 sites. Here\'s what the 4 achieved. Which of the other 7 is under the most pressure?"','A product roadmap demo'],a:1,why:'An account plan turns a QBR into an expansion conversation.'},
+          {say:'Calder Foods already licenses AetherisFlow at 3 sites.',q:'What\'s the whitespace?',opts:['Sell them AetherisFlow','Expand Flow to the 8 sites still on spreadsheets','Offer a discount on renewal'],a:1,why:'Know the install base before you reach out. Pitching what they own erodes trust.'}],
+  pushy:[{say:'Minute 7. The buyer says they\'re "just starting to look at options."',q:'Best reply?',opts:['"Sign by the 30th and I can get you 15% off."','"What\'s the one thing in your DC network you most need fixed by peak?"','Walk through all pricing tiers'],a:1,why:'Price before pain anchors the deal on cost and makes you sound pushy.'},
+          {say:'The buyer is mid-sentence explaining returns.',q:'What do you do?',opts:['Jump in with the returns module','Let them finish, pause 2 seconds, ask "Where does it break?"','Change topics to integrations'],a:1,why:'Aim for a 45/55 talk ratio. The pause pulls out the real story.'}],
+  norehearse:[{say:'CFO meeting tomorrow on a $240K rollout.',q:'What must you rehearse?',opts:['The product demo','Payback math, rollout risk and the objection most likely to stall the decision','Nothing: be natural'],a:1,why:'Top performers rehearse decisions. CFOs decide on payback and risk.'},
+              {say:'COO: "We tried a visibility tool in 2023 and it failed."',q:'Best response?',opts:['"That was a different vendor. Ours is better."','"What went wrong: adoption, data or integration? Here\'s how we de-risk each."','"Let me send a case study."'],a:1,why:'A rehearsed answer turns a predictable objection into a reason to trust you.'}]
+};
+
+/* ===================== UTILITIES ===================== */
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function hashSeed(s){let h=1779033703^s.length;for(let i=0;i<s.length;i++){h=Math.imul(h^s.charCodeAt(i),3432918353);h=h<<13|h>>>19;}h=Math.imul(h^h>>>16,2246822507);h=Math.imul(h^h>>>13,3266489909);return (h^h>>>16)>>>0;}
+function rng(seed){let a=hashSeed(seed);return ()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+const pick=(r,arr)=>arr[Math.floor(r()*arr.length)];
+const todayStr=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+const dstr=ts=>{const d=new Date(ts);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+function weekStart(){const d=new Date();d.setHours(0,0,0,0);const w=(d.getDay()+6)%7;d.setDate(d.getDate()-w);return d.getTime();}
+const fmtTs=ts=>new Date(ts).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+const fmtDay=d=>d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+const fmtN=n=>Number(n).toLocaleString('en-US');
+const initials=n=>n.split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase();
+const shortName=n=>{const p=n.split(' ');return p[0][0]+'. '+p.slice(1).join(' ');};
+const mmss=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');};
+function greet(){const h=new Date().getHours();return h<12?'Good morning':h<17?'Good afternoon':'Good evening';}
+function nextBizDays(n){const out=[];const d=new Date();d.setHours(12,0,0,0);while(out.length<n){d.setDate(d.getDate()+1);const w=d.getDay();if(w>0&&w<6)out.push(new Date(d));}return out;}
+const ICON={
+  call:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>',
+  mail:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>',
+  play:'<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg>',
+  pause:'<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>',
+  x:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+  video:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3z"/></svg>',
+  doc:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h6"/></svg>',
+  users:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6M16 4.5a3.5 3.5 0 0 1 0 7M22 20c0-2.6-1.8-4.8-4.5-5.6"/></svg>',
+  mic:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg>'
+};
+const TYPE_ICON={'Training video':ICON.video,'Micro-video':ICON.video,'Roleplay':ICON.users,'Curriculum':ICON.doc,'Email template':ICON.mail,'Talk track':ICON.mic};
+
+/* ===================== BUILD PEOPLE (sample data) ===================== */
+const PEOPLE={}, AES=[];
+const TERR={Manufacturing:['Ohio Valley','Great Lakes','Mid-Atlantic','Carolinas','Upstate NY','Pennsylvania','New England','Michigan','Kentucky'],Retail:['Northeast','Southeast','Midwest','Texas','Mountain','Pacific','Florida','Chicago'],'3PL':['Inland Empire','Dallas–Fort Worth','Atlanta','Memphis','Columbus','Chicagoland','Savannah','Reno','Harrisburg'],Mixed:['Central','Plains','Ozarks','Twin Cities','Wisconsin','Indiana','Iowa','Kansas City','St. Louis']};
+function valueScore(a){return Math.round(Math.min(a.bg/5,1)*25+a.plans*.2+a.personal*.2+a.reinvest*.2+a.rehearse*.15);}
+function computeFlags(a){const f=[];if(a.personal<45)f.push('generic');if(a.bg<2.5)f.push('single');if(a.emailsWk>=145&&a.reinvest<35)f.push('blast');if(a.plans<40)f.push('noplan');if(a.talk>=64)f.push('pushy');if(a.rehearse<25)f.push('norehearse');return f;}
+MANAGERS.forEach(m=>{
+  m.first=m.name.split(' ')[0]; m.role='mgr'; m.team_=[]; PEOPLE[m.u]=m;
+  m.aes.forEach((nm,i)=>{
+    const p=nm.split(' '), u=(p[0][0]+p[1]).toLowerCase()+'.ae', r=rng(u);
+    const R=(a,b,d=0)=>+(a+r()*(b-a)).toFixed(d);
+    const a={u,name:nm,first:p[0],role:'ae',mgr:m.u,title:i<2?'Senior Account Executive':'Account Executive',terr:(TERR[m.seg]||TERR.Mixed)[i%9],
+      bg:R(1.6,5.2,1),plans:R(22,92),personal:R(26,88),reinvest:R(18,72),rehearse:R(12,78),talk:R(42,71),emailsWk:R(98,170),
+      calls30:R(17,29),emails30:R(96,158),pipe:R(0.9,2.6,2),prosDaily:R(5,10),prosBase:R(140,420),preDone:Math.floor(r()*5),streak:R(2,14),tenure:R(1,7)};
+    Object.assign(a,OVERRIDES[u]||{});
+    if(u==='jrivera.ae') a.preDone=3;
+    a.score=valueScore(a);
+    if(a.win==null) a.win=+(11+a.score*.18+r()*3).toFixed(1);
+    a.flags=computeFlags(a);
+    PEOPLE[u]=a; AES.push(a); m.team_.push(a);
+  });
+});
+AES.slice().sort((x,y)=>y.score-x.score).slice(0,Math.round(AES.length*.1)).forEach(a=>a.top=true);
+const teamOf=mgrU=>PEOPLE[mgrU].team_;
+function teamStats(mgrU){const t=teamOf(mgrU);const s=k=>t.reduce((x,a)=>x+a[k],0);return{n:t.length,calls:s('calls30'),emails:s('emails30'),win:+(s('win')/t.length).toFixed(1),bg:(s('bg')/t.length).toFixed(1),reinvest:Math.round(s('reinvest')/t.length),plans:Math.round(s('plans')/t.length),emailsWk:Math.round(s('emailsWk')/t.length)};}
+
+/* ===================== STATE (localStorage) ===================== */
+const SKEY='acsCoachWorkspace.v2';
+function fresh(){
+  const t=new Date(2026,10,9,16,20).getTime();
+  return {v:2,session:null,last:null,pros:{},msgs:[],flags:{},progress:{},
+    content:{'mchen.mgr':{et3:{off:true,reason:'volume',note:'Bump sequences are what buyers are complaining about.',ts:t,by:'Maya Chen'}}},
+    audit:[{mgr:'mchen.mgr',ts:t,by:'Maya Chen',action:'Turned off',cid:'et3',reason:'volume',note:'Bump sequences are what buyers are complaining about.'}]};
+}
+let ST=(()=>{try{const raw=localStorage.getItem(SKEY);if(raw){const s=JSON.parse(raw);if(s&&s.v===2)return Object.assign(fresh(),s);}}catch(e){}return fresh();})();
+function save(){try{localStorage.setItem(SKEY,JSON.stringify(ST));}catch(e){}}
+let ME=null;
+
+/* ---- prospecting ---- */
+const AREAS=['412','570','614','313','216','717','312','404','901','775','469','317'];
+function prospectsFor(u,date){
+  const r=rng(u+'|'+date), out=[], usedPhone=new Set(), usedCo=new Set();
+  for(let i=0;i<12;i++){
+    let c; do{c=pick(r,COMPANIES);}while(usedCo.has(c.n)&&usedCo.size<COMPANIES.length); usedCo.add(c.n);
+    const t=pick(r,TITLES), f=pick(r,FIRSTS), l=pick(r,LASTS), pain=pick(r,PAINS), ang=pick(r,ANGLES);
+    let ph; do{ph='('+pick(r,AREAS)+') 555-01'+String(Math.floor(r()*100)).padStart(2,'0');}while(usedPhone.has(ph)); usedPhone.add(ph);
+    const ch=pick(r,['Call','Email','Call + email','Call + email']);
+    out.push({id:u+'|'+date+'|'+i,name:f+' '+l,title:t.t,company:c.n,phone:ph,email:(f+'.'+l).toLowerCase()+'@'+c.d,channel:ch,tag:ang.tag,angle:ang.tpl(t,c,pain)});
+  }
+  return out;
+}
+function prosLog(u){return ST.pros[u]||(ST.pros[u]=[]);}
+function prosStats(u){
+  const a=PEOPLE[u], d=todayStr(), log=prosLog(u), ws=weekStart();
+  const todayLog=log.filter(e=>e.date===d).length;
+  const today=a.preDone+todayLog;
+  const daysBefore=Math.max(0,Math.round((new Date().setHours(0,0,0,0)-ws)/864e5));
+  const week=a.prosDaily*daysBefore+today+log.filter(e=>e.ts>=ws&&e.date!==d).length;
+  const total=a.prosBase+a.preDone+log.length;
+  return {today,of:12,week,total,streak:a.streak+(today>=6?1:0)};
+}
+
+/* ---- content state per manager ---- */
+function cState(mgrU,cid){return ((ST.content[mgrU]||{})[cid])||{off:false};}
+function contentOn(mgrU,cid){return !cState(mgrU,cid).off;}
+function enabledContent(mgrU){return CONTENT.filter(c=>contentOn(mgrU,c.id));}
+const riskLabel=id=>(RISKS.find(r=>r.id===id)||{l:id}).l;
+
+/* ---- flags ---- */
+const fkey=(u,f)=>u+'|'+f;
+function flagResolved(u,f){return ST.flags[fkey(u,f)]||null;}
+function teamFlags(mgrU){const out=[];teamOf(mgrU).forEach(a=>a.flags.forEach(f=>out.push({a,f,res:flagResolved(a.u,f)})));const sv={high:0,med:1,low:2};return out.sort((x,y)=>sv[FLAG[x.f].sev]-sv[FLAG[y.f].sev]||FLAGS.findIndex(q=>q.id===x.f)-FLAGS.findIndex(q=>q.id===y.f)||x.a.name.localeCompare(y.a.name));}
+function flagMetric(a,f){return {generic:a.personal+'% of emails with supply-chain context',single:a.bg+' buying-group contacts per open deal (target 5+)',blast:a.emailsWk+' emails/wk · '+a.reinvest+'% of saved time reinvested',noplan:a.plans+'% of top accounts have a plan',pushy:'Talk ratio '+a.talk+'/'+(100-a.talk),norehearse:a.rehearse+'% of decision meetings rehearsed'}[f];}
+
+/* ===================== UI HELPERS ===================== */
+function toast(title,sub,action){
+  const el=document.createElement('div');el.className='toast';
+  el.innerHTML=`<div><b>${esc(title)}</b>${sub?`<span>${esc(sub)}</span>`:''}</div>${action?`<button type="button">${esc(action.label)}</button>`:''}`;
+  if(action) el.querySelector('button').addEventListener('click',()=>{action.fn();el.remove();});
+  $('#toasts').appendChild(el); setTimeout(()=>el.remove(),action?6500:3800);
+}
+function autosize(t){t.style.height='auto';t.style.height=Math.min(t.scrollHeight,160)+'px';}
+function enterSubmits(t,f){t.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();f.requestSubmit();}});t.addEventListener('input',()=>autosize(t));}
+function copy(text,btn){try{navigator.clipboard.writeText(text);}catch(e){}const o=btn.textContent;btn.textContent='Copied';setTimeout(()=>btn.textContent=o,1200);}
+const barCls=(v,lo,hi)=>v<lo?'red':v<hi?'amber':'green';
+function bar(pct,cls){return `<div class="bar ${cls||''}"><i style="width:${Math.max(2,Math.min(100,pct))}%"></i></div>`;}
+let drawerCleanup=null;
+function openDrawer(html,after){if(drawerCleanup){drawerCleanup();drawerCleanup=null;}$('#drawer').innerHTML=html;$('#drawerOv').classList.add('show');document.body.style.overflow='hidden';$('#drawer .db')&&($('#drawer .db').scrollTop=0);if(after)after($('#drawer'));}
+function closeDrawer(){if(drawerCleanup){drawerCleanup();drawerCleanup=null;}$('#drawerOv').classList.remove('show');if(!$('#modalOv').classList.contains('show'))document.body.style.overflow='';}
+function openModal(html,after){$('#modal').innerHTML=html;$('#modalOv').classList.add('show');document.body.style.overflow='hidden';if(after)after($('#modal'));}
+function closeModal(){$('#modalOv').classList.remove('show');if(!$('#drawerOv').classList.contains('show'))document.body.style.overflow='';if(modalOnClose){const f=modalOnClose;modalOnClose=null;f();}}
+let modalOnClose=null;
+document.addEventListener('click',e=>{const c=e.target.closest('[data-close]');if(!c)return;if(c.dataset.close==='drawer')closeDrawer();else closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($('#modalOv').classList.contains('show'))closeModal();else if($('#drawerOv').classList.contains('show'))closeDrawer();$('#userMenu').classList.remove('show');}});
+
+/* ===================== AI (wiring kept from the original Morgan page) ===================== */
+function systemBrief(){
+  const m=ME&&ME.role==='mgr'?ME:(ME?PEOPLE[ME.mgr]:PEOPLE['mchen.mgr']); const ts=teamStats(m.u); const tf=teamFlags(m.u);
+  const counts=FLAGS.map(f=>({f,n:tf.filter(x=>x.f===f.id&&!x.res).length})).sort((a,b)=>b.n-a.n);
+  return `You are Morgan, an AI sales manager copilot at Aetheris Cloud Systems (ACS), which sells enterprise supply-chain and logistics SaaS (ACV $120K ARR, 6-month cycle, buying groups of 5–10) to manufacturing, retail and 3PL companies. You coach ${m.name}, a frontline Sales Manager (${m.team}) with ${ts.n} Account Executives, one of ACS's 35 managers over 300 AEs.
+Case facts: AetherisCopilot rolled out 6 months ago with 78% weekly adoption and 4.8 hours saved per rep per week, but email volume rose 35% (100 to 135/wk) while pipeline grew only 4%, win rate is 18.2% (was 18.5%, target 25%) and deal size is flat. 72% of saved time goes to admin and generic email blasts; 73% of buyers reject generic automated outreach; enterprise retail and manufacturing clients complained about disjointed AI emails with no supply-chain context. ACS's top 10% of AEs don't use AI more; they reinvest saved time in stakeholder mapping, account strategy, decision rehearsal and consensus building. 82% of managers don't know how to coach AI-augmented selling and still audit emails sent and calls made. Pilot budget: $10K.
+You work with Quinn, the rep-side AI that reviews every recorded call AND every outbound email. Quinn reviewed ${ts.calls} calls and ${ts.emails} emails from this team in the last 30 days. Team averages: win rate ${ts.win}%, ${ts.bg} buying-group contacts per open deal, ${ts.reinvest}% of saved time reinvested in strategic work, ${ts.emailsWk} emails per rep per week.
+Open red flags on this team: ${counts.map(c=>`${c.f.name}: ${c.n} AEs`).join('; ')}.
+Coach value behaviors (buying-group coverage, account plans, rehearsal, specific outreach), never activity volume. Style: confident, practical, specific. Keep answers under ~180 words unless asked to build a training. Use short markdown: **bold**, bullets, numbered steps, "#### " headings. No tables. All people are sample data; use first names from the roster only when asked about a specific AE.`;
+}
+let sampleFn = null, aiReady = false;
+const statusEl = document.getElementById('aiStatus');
+function setStatus(live){
+  statusEl.innerHTML = live ? '<span class="dot live"></span>Morgan live' : '<span class="dot"></span>Morgan · demo mode';
+  statusEl.title = live ? 'Responses are generated live by Claude' : 'Live AI is unavailable in this view, so Morgan uses built-in demo answers';
+}
+(async()=>{
+  try{
+    if(window.claude && typeof window.claude.use==='function'){
+      sampleFn = await window.claude.use('sample');
+    }
+  }catch(e){ sampleFn = null; }
+  aiReady = !!sampleFn; setStatus(aiReady);
+})();
+setTimeout(()=>{ if(!aiReady && statusEl.textContent.includes('Connecting')) setStatus(false); }, 11000);
+
+async function askMorgan(messages, onText, opts={}){
+  const msgs = messages.map((m,i)=> i===0 ? {role:'user', content: systemBrief() + (opts.extra||'') + '\n\n---\nManager: ' + m.content} : m);
+  if(sampleFn){
+    try{
+      const r = await sampleFn(msgs, {onText:({text})=>onText(text), cache:false, modelTier: opts.tier||'quick'});
+      onText(r.text); return r.text;
+    }catch(e){
+      if(e && e.code==='not_granted'){ sampleFn=null; aiReady=false; setStatus(false); }
+    }
+  }
+  const text = fallback(messages[messages.length-1].content, opts);
+  return streamFake(text, onText);
+}
+function streamFake(text, onText){
+  return new Promise(res=>{
+    const words = text.split(/(\s+)/); let i=0, out='';
+    const t = setInterval(()=>{
+      for(let k=0;k<6 && i<words.length;k++) out += words[i++];
+      onText(out);
+      if(i>=words.length){ clearInterval(t); res(text); }
+    }, 28);
+  });
+}
+
+/* ---- demo-mode answers (used only if live AI is unavailable) ---- */
+function fallback(q, opts={}){
+  const s=q.toLowerCase(); const m=ME&&ME.role==='mgr'?ME:PEOPLE['mchen.mgr']; const ts=teamStats(m.u); const tf=teamFlags(m.u).filter(x=>!x.res);
+  const cnt=id=>tf.filter(x=>x.f===id).length;
+  const worst=teamOf(m.u).slice().sort((a,b)=>a.score-b.score)[0], best=teamOf(m.u).slice().sort((a,b)=>b.score-a.score)[0];
+  const quinn = opts.quinn ? `**Quinn →** Across ${fmtN(ts.calls)} calls and ${fmtN(ts.emails)} emails, the AEs who engaged 4+ buying-group members won ${(ts.win+7.9).toFixed(1)}% of deals vs ${(ts.win-3.1).toFixed(1)}% for single-threaded deals.\n\n` : '';
+  if(opts.gen) return genFallback(opts.gen, opts.issue);
+  if(opts.summary) return `#### Where deals are slipping\n- **Activity is up, value isn't.** Your AEs average ${ts.emailsWk} emails a week, but only ${ts.reinvest}% of Copilot's saved time goes into account work.\n- **Generic outreach is a brand risk.** ${cnt('generic')} AEs have emails with no supply-chain context, and buyers are complaining.\n- **Deals are thin.** ${cnt('single')} AEs are single-threaded, averaging well under the 5–10 people in a real buying group.\n\n**My recommendation:** stop auditing email counts. This week, have every AE map 2 more stakeholders on their top deal, and pair the lowest scorers with ${best.first}, your top-10% performer.`;
+  if(/generic|outreach|personali|context|email/.test(s)) return quinn+`#### Fixing generic AI outreach\n1. **Trigger first:** every first touch names a real event: new DC, ERP migration, peak-season pain.\n2. **Peer proof:** one result from a similar manufacturer, retailer or 3PL.\n3. **Specific ask:** a 20-minute session on *their* problem, with a date.\n4. **Edit every Copilot draft:** Quinn flags drafts sent unedited.\n\n**Coach it:** ${cnt('generic')} AEs are flagged. Assign the 3-line email micro-video and review 3 rewritten emails each in 1:1s.`;
+  if(/buying.group|stakeholder|multi|single|thread|cfo|economic/.test(s)) return quinn+`#### Multi-threading the buying group\n1. **Map it in week 1:** economic buyer, IT/ERP owner, procurement, site ops.\n2. **Arm the champion:** co-build a 1-page business case for their VP or CFO.\n3. **Offer, don't bypass:** "Could we brief your CFO together for 20 minutes?"\n4. **Inspect coverage, not activity:** no stage-3 deal with fewer than 4 contacts.\n\n**Coach it:** ${cnt('single')} AEs are single-threaded. Team average is ${ts.bg} contacts per deal; target 5+.`;
+  if(/blast|volume|saved time|reinvest|hours/.test(s)) return quinn+`#### Reinvesting Copilot's 4.8 hours\n- **Cap sequences:** no new sequence over 50 contacts without a trigger.\n- **Block the time:** 2 hours a week for stakeholder mapping, 1 for account strategy, 1 for decision rehearsal.\n- **Measure what matters:** contacts engaged per deal, account plans, win rate.\n\n**Coach it:** your team reinvests ${ts.reinvest}% of saved time. ACS's top 10% reinvest about 70%.`;
+  if(/account plan|whitespace|qbr/.test(s)) return quinn+`#### Account plans that create pipeline\n1. Sites live vs. not live\n2. Owner and KPI at each site\n3. Whitespace ranked by pain\n4. Next 2 stakeholders to meet\n\n**Coach it:** ${cnt('noplan')} AEs lack plans. Build one together in each 1:1 this month.`;
+  if(/push|discount|close|talk ratio|interrupt/.test(s)) return quinn+`#### Slowing down pushy closes\n- **No price before pain:** pricing waits until the buyer confirms a business problem.\n- **45/55 talk ratio:** pause 2 seconds after every answer.\n- **Ask about their process:** "What criteria will you use, and who weighs in?"\n\n**Coach it:** ${cnt('pushy')} AEs flagged. Run the 2-second-pause talk track and review one call each.`;
+  if(/rehears|decision|steering|exec|payback/.test(s)) return quinn+`#### Decision rehearsal\n1. **Who could say no, and why?** Ask the champion before every exec meeting.\n2. **Payback in one line:** months to payback, with the math.\n3. **Run Quinn's CFO roleplay** the day before.\n\n**Coach it:** ${cnt('norehearse')} AEs skip rehearsal. Make it a standing 20-minute slot before any CFO meeting.`;
+  if(/pilot|measure|10k|metric|kpi|worked/.test(s)) return `#### A $10K pilot that proves it\n- **Scope:** 3 managers and their AEs for 90 days vs. a matched control group\n- **Measure value, not volume:** win rate, buying-group contacts per deal, pipeline from qualified meetings, buyer complaints\n- **Budget:** fits inside the existing Copilot and Quinn tooling\n\n**The math:** moving 100 opportunities from 18.2% to 25% is 6.8 more wins, about $816K in ARR. One extra $120K deal pays for the pilot 12 times over.`;
+  if(/huddle|agenda|monday/.test(s)) return `#### Monday huddle (20 min)\n1. **Top-10% habit** (5 min): ${best.first} shows how they spent last week's saved hours\n2. **Rewrite drill** (7 min): fix one generic Copilot email live\n3. **Buying-group check** (5 min): each AE names the next stakeholder on their top deal\n4. **Commit** (3 min): one account plan update by Friday`;
+  if(/which (ae|rep)|who needs/.test(s)) return quinn+`**${worst.name}** needs the most help right now: value score ${worst.score}, ${worst.bg} contacts per deal and ${worst.emailsWk} emails a week. Start with a 1:1 on one live deal, then have ${worst.first} shadow ${best.first}.`;
+  return quinn+`#### Your team's top 3 problems\n1. **Generic outreach:** ${cnt('generic')} AEs. Buyers are complaining about disjointed AI emails.\n2. **Single-threaded deals:** ${cnt('single')} AEs, ${ts.bg} contacts per deal vs. 5–10 in a buying group.\n3. **Saved time going to volume:** ${ts.emailsWk} emails/wk per AE, ${ts.reinvest}% reinvested in account work.\n\n**Fix first:** buying-group coverage. It's the habit that separates ACS's top 10%.`;
+}
+function genFallback(kind, issue){
+  const n=issue.name;
+  if(kind==='video') return `#### Micro-video: ${n}\n**Length:** about 6 minutes · **Audience:** all AEs\n\n**Scene 1 · The cost (0:00–1:00)**\nOn screen: "Email up 35%. Pipeline up 4%." What this habit costs a $120K deal.\n\n**Scene 2 · What it looks like (1:00–2:30)**\nAn anonymized example from Quinn: ${issue.ev}\n\n**Scene 3 · The fix (2:30–5:00)**\n- One framework in 3 steps on screen\n- Before-and-after of the same email or call moment\n\n**Scene 4 · Your move (5:00–6:00)**\nApply it to one live account this week. Quinn checks your next calls and emails.`;
+  if(kind==='curriculum') return `#### Curriculum: ${n}\n**Format:** 3 sessions over 2 weeks · **Owner:** Sales Manager\n\n**Session 1 · Diagnose (45 min)**\n- Review 3 Quinn-flagged calls and 3 emails as a team\n- Name the exact moment it went wrong\n\n**Session 2 · Practice (60 min)**\n- AI roleplay with a supply-chain buyer persona\n- Target score of 7/10 or higher\n\n**Session 3 · Apply (30 min + field work)**\n- Apply it on 3 live accounts\n- Quinn re-scores those calls and emails\n\n**Success metric:** buying-group coverage and win rate, not activity.`;
+  return `#### AI roleplay: ${n}\n**Buyer persona:** Elaine, CFO at a 4-plant manufacturer. Skeptical, focused on payback.\n\n**Scenario:** Minute 15 of a decision meeting on a $240K rollout.\n\n**What Elaine will do**\n- Ask for payback in months\n- Mention a failed 2023 visibility project\n\n**AE's goal:** answer with numbers, de-risk the rollout, and agree on a dated next step with IT and procurement.\n\n**Scoring (0–10)**\n- Payback answered with math (4)\n- Risk addressed specifically (3)\n- Buying group mapped for next step (3)`;
+}
+
+/* ===================== MARKDOWN ===================== */
+function inline(s){return esc(s).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/`([^`]+)`/g,'<code>$1</code>').replace(/(^|[^*])\*([^*\n]+)\*/g,'$1<em>$2</em>')}
+function md(text){
+  const lines=text.replace(/\r/g,'').split('\n'); let html='', list=null;
+  const close=()=>{if(list){html+=`</${list}>`;list=null;}};
+  for(const raw of lines){const l=raw.trimEnd();let m;
+    if(/^\s*$/.test(l)){close();continue;}
+    if(m=l.match(/^#{1,6}\s+(.*)/)){close();html+=`<h4>${inline(m[1])}</h4>`;continue;}
+    if(m=l.match(/^\s*[-*•]\s+(.*)/)){if(list!=='ul'){close();html+='<ul>';list='ul';}html+=`<li>${inline(m[1])}</li>`;continue;}
+    if(m=l.match(/^\s*\d+[.)]\s+(.*)/)){if(list!=='ol'){close();html+='<ol>';list='ol';}html+=`<li>${inline(m[1])}</li>`;continue;}
+    close(); html+=/^\*\*Quinn/.test(l)?`<div class="quinn">${inline(l)}</div>`:`<p>${inline(l)}</p>`;
+  }
+  close(); return html;
+}
+const TYPING='<div class="typing"><i></i><i></i><i></i></div>';
+
+/* ===================== EXAMPLE RENDERING (emails + call recordings) ===================== */
+function hl(text,notes,marked){
+  let html=esc(text);
+  notes.forEach((n,k)=>{ if(marked.has(k)) return; const q=esc(n.q); const i=html.indexOf(q); if(i>=0){ html=html.slice(0,i)+`<mark class="hl">${q}<sup>${k+1}</sup></mark>`+html.slice(i+q.length); marked.add(k);} });
+  return html;
+}
+function renderExample(ex,i,a){
+  const sub=s=>String(s||'').split('{rep}').join(a.first);
+  const head=`<div class="exh"><span class="n">${i+1}</span><span class="badge ${ex.type==='email'?'blue':'dark'}">${ex.type==='email'?ICON.mail+' Email':ICON.call+' Call recording'}</span><b>${esc(ex.title)}</b><span class="meta">${esc(ex.acct)} · ${esc(ex.when)}</span></div>`;
+  let body='';
+  if(ex.type==='email'){
+    const marked=new Set(), notes=ex.notes||[];
+    const from=a.first.toLowerCase()+'.'+a.name.split(' ')[1].toLowerCase()+'@aetheris.example';
+    body=`<div class="mail"><div class="mh2"><span>From <b>${esc(a.name)}</b> &lt;${esc(from)}&gt;</span><span>To <b>${hl(ex.to,notes,marked)}</b></span><span>Subject <b>${hl(ex.subject,notes,marked)}</b></span></div><div class="mbody">${hl(sub(ex.body),notes,marked)}</div></div>
+    <ul class="notes">${notes.map((n,k)=>`<li><i>${k+1}</i><span>${esc(n.n)}</span></li>`).join('')}</ul>
+    <div class="qnote"><span class="av q">Q</span><span><b>Quinn:</b> ${esc(sub(ex.quinn))}</span></div>
+    <div class="better"><div class="bt">Better version${ex.betterSubject?' · Subject: '+esc(ex.betterSubject):''}</div><div class="bb">${esc(sub(ex.better))}</div></div>`;
+  }else{
+    const r=rng(ex.title), bars=Array.from({length:72},(_,k)=>{const pos=k/72, bad=Math.abs(pos-ex.at/ex.dur)<.035;return `<i class="${bad?'bad':''}" style="height:${Math.round(18+r()*78)}%"></i>`;}).join('');
+    body=`<div class="player" data-dur="${ex.dur}" data-at="${ex.at}"><div class="pt"><button class="playbtn" type="button" aria-label="Play sample">${ICON.play}</button><div class="wave" title="Click to seek">${bars}<span class="ph"></span></div><span class="ptime"><span class="cur">00:00</span> / ${mmss(ex.dur)}</span></div>
+      <div class="pfoot"><span>Sample audio · simulated recording for demonstration</span><button class="linkbtn" type="button" data-jump>Jump to flagged moment (${mmss(ex.at)})</button></div></div>
+    <div class="tx">${ex.lines.map(l=>`<div class="tl ${l[3]?'bad':''}"><span class="ts">${esc(l[0])}</span><span class="sp">${esc(sub(l[1]))}</span><span class="tt">${esc(sub(l[2]))}</span></div>`).join('')}</div>
+    <div class="qnote"><span class="av q">Q</span><span><b>Quinn:</b> ${esc(sub(ex.quinn))}</span></div>
+    <div class="better"><div class="bt">What to say instead</div><div class="bb">${esc(sub(ex.better))}</div></div>`;
+  }
+  return `<div class="excard">${head}<div class="exb">${body}</div></div>`;
+}
+let playTimer=null;
+function stopPlayers(){if(playTimer){clearInterval(playTimer);playTimer=null;}$$('.player.playing').forEach(p=>{p.classList.remove('playing');p.querySelector('.playbtn').innerHTML=ICON.play;});}
+function setPlayer(p,t){const dur=+p.dataset.dur;t=Math.max(0,Math.min(dur,t));p._t=t;const pct=t/dur;p.querySelector('.ph').style.left=(pct*100)+'%';const bars=p.querySelectorAll('.wave i');bars.forEach((b,k)=>b.classList.toggle('on',k/bars.length<=pct));p.querySelector('.cur').textContent=mmss(t);}
+function wirePlayers(root){
+  $$('.player',root).forEach(p=>{
+    p._t=0;
+    p.querySelector('.playbtn').addEventListener('click',()=>{
+      const was=p.classList.contains('playing'); stopPlayers(); if(was) return;
+      p.classList.add('playing'); p.querySelector('.playbtn').innerHTML=ICON.pause;
+      const dur=+p.dataset.dur;
+      playTimer=setInterval(()=>{setPlayer(p,p._t+dur/400);if(p._t>=dur)stopPlayers();},50);
+    });
+    p.querySelector('.wave').addEventListener('click',e=>{const r=e.currentTarget.getBoundingClientRect();setPlayer(p,(e.clientX-r.left)/r.width*(+p.dataset.dur));});
+    p.querySelector('[data-jump]').addEventListener('click',()=>{setPlayer(p,+p.dataset.at-6);const bad=p.parentElement.querySelector('.tl.bad');if(bad){bad.scrollIntoView({block:'nearest',behavior:'smooth'});}});
+  });
+}
+
+/* ===================== LOGIN ===================== */
+const EXAMPLES_AE=['jrivera.ae','pshah.ae','abello.ae','kdoyle.ae','aromero.ae','cvale.ae'];
+let loginRole='ae';
+function showLoginStep1(){ $('#loginStep1').classList.remove('hidden'); $('#loginStep2').classList.add('hidden');
+  const l=ST.last&&PEOPLE[ST.last];
+  $('#lastUserWrap').innerHTML=l?`<button class="btn" type="button" id="contLast" style="height:40px">Continue as ${esc(l.name)} <span class="mono muted" style="margin-left:4px">${esc(l.u)}</span></button>`:'';
+  if(l) $('#contLast').addEventListener('click',()=>login(l.u));
+}
+function showLoginStep2(role,msg){
+  loginRole=role; $('#loginStep1').classList.add('hidden'); $('#loginStep2').classList.remove('hidden');
+  const q=role==='ae';
+  $('#loginAv').textContent=q?'Q':'M'; $('#loginAv').className='av lg '+(q?'q':'m');
+  $('#loginTitle').textContent=q?'Sign in to Quinn':'Sign in to Morgan';
+  $('#loginSub').textContent=q?'Account Executive workspace':'Sales Manager workspace';
+  $('#username').placeholder=q?'e.g. jrivera.ae':'e.g. mchen.mgr';
+  $('#exHead').textContent=q?'Example AE usernames (click to sign in)':'Example manager usernames (click to sign in)';
+  const list=q?EXAMPLES_AE.map(u=>PEOPLE[u]):MANAGERS;
+  $('#exList').innerHTML=list.map(p=>`<button class="exu" type="button" data-u="${p.u}"><span class="av ${q?'q':'m'}">${initials(p.name)}</span><span><code>${p.u}</code><small>${esc(p.name)} · ${q?'reports to '+esc(PEOPLE[p.mgr].name):esc(p.team)+' · '+p.team_.length+' AEs'}</small></span></button>`).join('');
+  $$('#exList .exu').forEach(b=>b.addEventListener('click',()=>{$('#username').value=b.dataset.u;login(b.dataset.u);}));
+  const e=$('#loginErr'); if(msg){e.innerHTML=msg;e.classList.add('show');}else{e.classList.remove('show');}
+  $('#username').value=''; setTimeout(()=>$('#username').focus(),30);
+}
+function resolveUser(v){v=v.trim().toLowerCase().replace(/^@/,'');if(PEOPLE[v])return PEOPLE[v];if(PEOPLE[v+'.ae'])return PEOPLE[v+'.ae'];if(PEOPLE[v+'.mgr'])return PEOPLE[v+'.mgr'];return null;}
+$('#pcQuinn').addEventListener('click',()=>showLoginStep2('ae'));
+$('#pcMorgan').addEventListener('click',()=>showLoginStep2('mgr'));
+$('#loginBack').addEventListener('click',showLoginStep1);
+$('#loginForm').addEventListener('submit',e=>{
+  e.preventDefault(); const v=$('#username').value; const err=$('#loginErr');
+  if(!v.trim()){err.innerHTML='Type a username, or pick one of the examples below.';err.classList.add('show');return;}
+  const p=resolveUser(v);
+  if(!p){err.innerHTML=`We couldn't find <b>${esc(v.trim())}</b>. Usernames look like <code>jrivera.ae</code> for AEs or <code>mchen.mgr</code> for managers. Try one of the examples below.`;err.classList.add('show');return;}
+  if(p.role!==loginRole){err.innerHTML=`<b>${esc(p.u)}</b> is ${p.role==='mgr'?'a manager account (Morgan)':'an AE account (Quinn)'}. <button class="linkbtn" type="button" id="swRole">Sign in to ${p.role==='mgr'?'Morgan':'Quinn'} instead</button>`;err.classList.add('show');$('#swRole').addEventListener('click',()=>login(p.u));return;}
+  login(p.u);
+});
+function login(u){
+  const p=PEOPLE[u]; if(!p) return;
+  ME=p; ST.session=u; ST.last=u; save();
+  $('#loginErr').classList.remove('show');
+  renderChrome(); history_.length=0; renderChat(); summaryLoaded=false;
+  if(location.hash==='#home') route(); else location.hash='#home';
+}
+function logout(){ME=null;ST.session=null;save();$('#userMenu').classList.remove('show');closeDrawer();location.hash='#login';showLoginStep1();route();}
+
+/* ===================== CHROME / NAV / ROUTER ===================== */
+const NAV={ae:[['home','My dashboard'],['reviews','Reviews'],['trainings','Coaching'],['leaderboard','Leaderboard'],['how','How Quinn works']],
+          mgr:[['home','Overview'],['team','Team'],['issues','Issues'],['trainings','Trainings'],['admin','Admin'],['chat','Chat'],['leaderboard','Leaderboard'],['how','How it works']]};
+function renderChrome(){
+  if(!ME) return; const q=ME.role==='ae';
+  $('#brandMark').textContent=q?'Q':'M'; $('#brandMark').style.background=q?'linear-gradient(135deg,#06AED4,#0E7490)':'';
+  $('#brandName').textContent=q?'Quinn':'Morgan';
+  $('#brandSub').textContent=q?'ACS Account Executive Workspace':'ACS Sales Manager Workspace';
+  $('#nav').innerHTML=NAV[ME.role].map(([h,l])=>`<a href="#${h}" data-v="${h}">${l}</a>`).join('');
+  const mg=q?PEOPLE[ME.mgr]:ME, ts=teamStats(mg.u);
+  $('#quinnPillTxt').textContent=q?`Quinn synced · ${ME.calls30} calls · ${ME.emails30} emails`:`Quinn synced · ${fmtN(ts.calls)} calls · ${fmtN(ts.emails)} emails`;
+  $('#userAv').textContent=initials(ME.name); $('#userAv').className='av '+(q?'q':'m');
+  $('#userName').textContent=ME.name; $('#userHandle').textContent=ME.u;
+  $('#menuName').textContent=ME.name; $('#menuHandle').textContent=ME.u+(q?' · reports to '+PEOPLE[ME.mgr].name:' · '+ME.team);
+  document.title=(q?'Quinn':'Morgan')+' · ACS Revenue Coaching Workspace';
+}
+$('#userBtn').addEventListener('click',e=>{e.stopPropagation();$('#userMenu').classList.toggle('show');});
+document.addEventListener('click',e=>{if(!e.target.closest('#userMenu'))$('#userMenu').classList.remove('show');});
+$('#mSwitchUser').addEventListener('click',()=>{const r=ME?ME.role:'ae';ME=null;ST.session=null;save();$('#userMenu').classList.remove('show');location.hash='#login';route();showLoginStep2(r);});
+function switchWs(){const r=ME&&ME.role==='ae'?'mgr':'ae';ME=null;ST.session=null;save();$('#userMenu').classList.remove('show');closeDrawer();location.hash='#login';route();showLoginStep2(r);}
+$('#mSwitchWs').addEventListener('click',switchWs);
+$('#switchPath').addEventListener('click',switchWs);
+$('#mLogout').addEventListener('click',logout);
+$('#mReset').addEventListener('click',()=>{if(!confirm('Reset all demo data (prospecting, messages, plans, admin changes)?'))return;const s=ST.session;ST=fresh();ST.session=s;ST.last=s;save();$('#userMenu').classList.remove('show');route();toast('Demo data reset','Everything is back to the starting sample data.');});
+
+const VIEWS=['login','home','team','reviews','issues','trainings','chat','admin','leaderboard','how'];
+let summaryLoaded=false;
+function route(){
+  let v=(location.hash||'#home').slice(1).split('?')[0]||'home';
+  if(!ME||v==='login'){ v='login'; }
+  else if(!NAV[ME.role].some(n=>n[0]===v)) v='home';
+  VIEWS.forEach(x=>{const el=$('#v-'+x);if(el)el.classList.toggle('on',x===v);});
+  const auth=v!=='login';
+  $('#top').classList.toggle('hidden',!auth); $('#foot').classList.toggle('hidden',!auth);
+  if(!auth){ if($('#loginStep2').classList.contains('hidden')) showLoginStep1(); return; }
+  $$('#nav a').forEach(a=>a.classList.toggle('on',a.dataset.v===v));
+  const R={home:renderHome,team:renderTeam,reviews:renderReviews,issues:renderIssues,trainings:renderTrainings,admin:renderAdmin,leaderboard:renderLeaderboard,how:renderHow,chat:()=>{}};
+  (R[v]||(()=>{}))();
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',route);
+function refresh(){const v=(location.hash||'#home').slice(1);if(ME&&v!=='login'){const R={home:renderHome,team:renderTeam,reviews:renderReviews,issues:renderIssues,trainings:renderTrainings,admin:renderAdmin,leaderboard:renderLeaderboard};(R[v]||(()=>{}))();}}
+
+/* ===================== QUINN · AE DASHBOARD ===================== */
+function renderHome(){ if(ME.role==='ae') renderQHome(); else renderMHome(); }
+function prosItemHtml(p,cls){
+  const showPhone=p.channel!=='Email', showMail=p.channel!=='Call';
+  return `<li class="pitem ${cls||''}" data-id="${esc(p.id)}">
+    <input type="checkbox" class="ck" aria-label="Mark ${esc(p.name)} as contacted">
+    <div class="pname"><b>${esc(p.name)}</b><span>${esc(p.title)}</span><span>${esc(p.company)}</span></div>
+    <div class="pcontact">${showPhone?`<a href="tel:${p.phone.replace(/\D/g,'')}">${ICON.call} ${esc(p.phone)}</a>`:''}${showMail?`<a href="mailto:${esc(p.email)}">${ICON.mail} ${esc(p.email)}</a>`:''}<span class="tiny muted">${esc(p.channel)}</span></div>
+    <div class="pangle"><div class="row"><span class="badge blue">${esc(p.tag)}</span><span class="tiny muted">Quinn's angle</span></div>${esc(p.angle)}</div>
+  </li>`;
+}
+function renderProspecting(){
+  const u=ME.u, d=todayStr(), all=prospectsFor(u,d), log=prosLog(u).filter(e=>e.date===d), doneIds=new Set(log.map(e=>e.id));
+  const pre=all.slice(0,ME.preDone), open=all.slice(ME.preDone).filter(p=>!doneIds.has(p.id)), st=prosStats(u);
+  const pct=Math.round(st.today/12*100);
+  $('#prosCard').innerHTML=`
+    <div class="pros-h">
+      <div class="ring" style="--p:${pct}"><b>${pct}%</b></div>
+      <div style="flex:1;min-width:220px">
+        <div class="tiny muted" style="font-weight:600">PROSPECTING · WHO TO CONTACT TODAY</div>
+        <div class="pros-count" id="prosCount"><span class="big" id="prosToday">${st.today}</span> of 12 contacted today</div>
+        <div class="pros-stats"><span>This week <b id="prosWeek">${st.week}</b></span><span>All-time <b id="prosTotal">${fmtN(st.total)}</b></span><span>Prospecting streak <b>${st.streak} days</b></span></div>
+      </div>
+      <div class="small muted" style="max-width:300px">Ranked by Quinn for buying-group gaps on your open deals. Check a contact off when you've reached out. <span class="tiny">Sample contacts · fictional 555-01xx numbers and .example emails.</span></div>
+    </div>
+    <ul class="plist" id="plist">${open.length?open.map(p=>prosItemHtml(p)).join(''):''}</ul>
+    ${open.length?'':'<div class="pempty"><b>All 12 contacts done for today.</b><br>Quinn will queue tomorrow\'s list overnight.</div>'}
+    <details class="donelist" ${log.length?'open':''}><summary>Completed today (${st.today})</summary><ul>
+      ${log.slice().reverse().map(e=>{const p=all.find(x=>x.id===e.id)||{name:e.id};return `<li><span><s>${esc(p.name)}</s> <span class="tiny muted">· ${esc(p.company||'')} · ${fmtTs(e.ts)}</span></span><button class="linkbtn" type="button" data-undo="${esc(e.id)}">Undo</button></li>`;}).join('')}
+      ${pre.map(p=>`<li><span><s>${esc(p.name)}</s> <span class="tiny muted">· ${esc(p.company)} · earlier today</span></span></li>`).join('')}
+    </ul></details>`;
+  $$('#plist .ck').forEach(ck=>ck.addEventListener('change',()=>{ if(ck.checked) completeProspect(ck.closest('.pitem')); }));
+  $$('#prosCard [data-undo]').forEach(b=>b.addEventListener('click',()=>undoProspect(b.dataset.undo)));
+}
+function completeProspect(li){
+  const id=li.dataset.id; if(prosLog(ME.u).some(e=>e.id===id)) return;
+  prosLog(ME.u).push({id,ts:Date.now(),date:todayStr()}); save();
+  const st=prosStats(ME.u); $('#prosToday').textContent=st.today; $('#prosWeek').textContent=st.week; $('#prosTotal').textContent=fmtN(st.total);
+  const pct=Math.round(st.today/12*100); const ring=$('#prosCard .ring'); ring.style.setProperty('--p',pct); ring.querySelector('b').textContent=pct+'%';
+  li.classList.add('out');
+  const name=li.querySelector('.pname b').textContent;
+  setTimeout(()=>{li.remove(); clearTimeout(window.__prosT); window.__prosT=setTimeout(()=>{ if($('#prosCard')&&!$('#plist .pitem.out')) {renderProspecting();renderProgress();} },900);},480);
+  toast(`${name} marked as contacted`,`${st.today} of 12 today · ${fmtN(st.total)} all-time`,{label:'Undo',fn:()=>undoProspect(id)});
+}
+function undoProspect(id){const log=prosLog(ME.u);const i=log.findIndex(e=>e.id===id);if(i<0)return;log.splice(i,1);save();renderProspecting();const li=$(`#plist .pitem[data-id="${CSS.escape(id)}"]`);if(li)li.classList.add('in');renderProgress();toast('Contact restored','It\'s back on today\'s list.');}
+
+function renderQHome(){
+  const a=ME, m=PEOPLE[a.mgr], mates=m.team_.filter(x=>x.u!==a.u), msgs=ST.msgs.filter(x=>x.to===a.u).sort((x,y)=>y.ts-x.ts), unread=msgs.filter(x=>!x.read).length;
+  const rec=enabledContent(a.mgr).filter(c=>a.flags.includes(c.flag)), extra=enabledContent(a.mgr).filter(c=>!a.flags.includes(c.flag));
+  const recList=(rec.length?rec:extra).slice(0,5);
+  $('#homeRoot').innerHTML=`
+  <div class="phead"><div><div class="eyebrow">Quinn · Account Executive workspace</div><h1>${greet()}, ${esc(a.first)}</h1>
+    <p>Quinn reviewed <b>${a.calls30} recorded calls</b> and <b>${a.emails30} outbound emails</b> from your last 30 days. ${a.title} · ${esc(a.terr)} · <span class="mono">${a.u}</span></p></div>
+    <div class="row wrapf">${unread?`<a class="badge blue" href="#inboxCard" id="unreadBadge"><span class="inbox-new"></span>${unread} new message${unread>1?'s':''} from ${esc(m.first)}</a>`:''}<span class="badge">${ICON.users} Team of ${m.team_.length} under ${esc(m.name)}</span></div></div>
+  <div class="card" id="prosCard"></div>
+  <div class="grid g-main mt16">
+    <div class="stack">
+      <div class="kpis" style="margin:0">
+        <div class="kpi"><div class="k">Reviewed by Quinn</div><div class="v">${a.calls30} · ${a.emails30}</div><div class="s">calls · emails (30 days)</div></div>
+        <div class="kpi"><div class="k">Win rate</div><div class="v">${a.win}%</div><div class="s">ACS ${CASE.win}% · target ${CASE.winTarget}%</div></div>
+        <div class="kpi"><div class="k">Buying-group coverage</div><div class="v">${a.bg}</div><div class="s">contacts per open deal (5+ goal)</div></div>
+        <div class="kpi"><div class="k">Account plans</div><div class="v">${a.plans}%</div><div class="s">of your top accounts</div></div>
+        <div class="kpi"><div class="k">Saved time reinvested</div><div class="v">${a.reinvest}%</div><div class="s">of Copilot's 4.8 hrs/wk</div></div>
+      </div>
+      <div class="card"><div class="ch"><div><h3>Quinn's latest reviews</h3><p>Recorded calls and outbound emails. Only you and ${esc(m.first)} can see these.</p></div><a class="btn sm" href="#reviews">All reviews</a></div><div id="qRevList"></div></div>
+      <div class="card"><div class="ch"><div><h3>Recommended coaching</h3><p>Matched to what Quinn found in your calls and emails. Curated by ${esc(m.name)}.</p></div><a class="btn sm" href="#trainings">Coaching library</a></div><div id="recoList">${recList.map(c=>`<div class="li"><span class="typeic">${TYPE_ICON[c.type]||ICON.doc}</span><div style="flex:1;min-width:0"><b class="small">${esc(c.title)}</b><div class="tiny muted">${esc(c.type)} · ${esc(c.dur)} · ${esc(FLAG[c.flag].short)}</div></div><button class="btn sm" type="button" data-start="${c.id}">${progressOf(a.u).done[c.id]?'Done ✓':'Start'}</button></div>`).join('')||'<div class="empty">No coaching assigned right now.</div>'}</div></div>
+    </div>
+    <div class="stack">
+      <div class="card" id="inboxCard"><div class="ch"><div><h3>From your manager</h3><p>Messages ${esc(m.first)} sends from Morgan land here (demo inbox, no real email).</p></div>${unread?'<button class="btn sm" type="button" id="markRead">Mark read</button>':''}</div>
+        <div class="cb" id="inbox">${msgs.length?`<div class="thread" style="margin:0">${msgs.map(x=>msgHtml(x,true)).join('')}</div>`:`<div class="empty" style="padding:8px">No messages yet. When ${esc(m.first)} sends coaching from Morgan, it shows up here.</div>`}</div></div>
+      <div class="card"><div class="ch"><div><h3>My team</h3><p>${m.team_.length} AEs under ${esc(m.name)} (${esc(m.team)}): you + ${mates.length} teammates</p></div></div>
+        <div>${[a,...mates].map(x=>`<div class="li"><span class="av ${x.u===a.u?'q':''}">${initials(x.name)}</span><div style="flex:1;min-width:0"><b class="small">${esc(x.name)}${x.u===a.u?' (you)':''}</b><div class="tiny muted mono">${x.u}</div></div>${x.top?'<span class="badge green">Top 10%</span>':''}</div>`).join('')}
+        <div class="li"><span class="av m">${initials(m.name)}</span><div><b class="small">${esc(m.name)}</b><div class="tiny muted">Sales Manager · ${esc(m.team)}</div></div></div></div></div>
+      <div class="card" id="progCard"></div>
+    </div>
+  </div>`;
+  renderProspecting(); renderProgress();
+  $('#qRevList').innerHTML=reviewItems(a).slice(0,5).map(reviewRow).join('');
+  wireReviewRows($('#qRevList'));
+  $$('#recoList [data-start]').forEach(b=>b.addEventListener('click',()=>startContent(b.dataset.start)));
+  wireMsgLinks($('#inbox'));
+  const mr=$('#markRead'); if(mr) mr.addEventListener('click',()=>{ST.msgs.forEach(x=>{if(x.to===a.u)x.read=true;});save();renderQHome();});
+  const ub=$('#unreadBadge'); if(ub) ub.addEventListener('click',e=>{e.preventDefault();$('#inboxCard').scrollIntoView({behavior:'smooth'});});
+}
+function progressOf(u){return ST.progress[u]||(ST.progress[u]={done:{},drills:{}});}
+function renderProgress(){
+  const el=$('#progCard'); if(!el) return; const a=ME, st=prosStats(a.u), pr=progressOf(a.u);
+  const doneC=Object.keys(pr.done).length, goals=[['Contact 12 prospects',Math.min(st.today,12),12],['Complete 2 coaching items',Math.min(doneC,2),2],['Map 2 new stakeholders',Math.min(Math.floor(st.today/4),2),2]];
+  const pct=Math.round(goals.reduce((s,g)=>s+g[1]/g[2],0)/goals.length*100);
+  el.innerHTML=`<div class="ch"><div><h3>Coaching progress</h3><p>Scored on value behaviors, not activity volume.</p></div></div><div class="cb"><div class="progress"><div class="ring" style="--p:${pct}"><b>${pct}%</b></div><div style="flex:1;display:grid;gap:8px">${goals.map(g=>`<div><div class="row between tiny"><span>${g[0]}</span><b>${g[1]}/${g[2]}</b></div>${bar(g[1]/g[2]*100)}</div>`).join('')}</div></div></div>`;
+}
+function msgHtml(x,forRep){
+  const f=FLAG[x.flag], from=PEOPLE[x.from], mg=forRep?PEOPLE[ME.mgr].u:x.from;
+  const links=(x.links||[]).map(id=>CONTENT.find(c=>c.id===id)).filter(Boolean);
+  const live=links.filter(c=>contentOn(mg,c.id));
+  return `<div class="msg ${forRep&&!x.read?'new':''}" data-mid="${x.id}"><div class="mm">${forRep?`<b>${esc(from?from.name:'Manager')}</b>`:`<b>To ${esc(PEOPLE[x.to].name)}</b>`}<span>· ${fmtTs(x.ts)}</span>${f?`<span class="badge">${esc(f.short)}</span>`:''}<span class="badge">${esc(x.tplLabel||'Message')}</span>${forRep&&!x.read?'<span class="badge blue">New</span>':''}</div><div class="mt">${esc(x.body)}</div>${live.length?`<div class="links">${live.map(c=>`<a class="btn sm" href="#trainings" data-open-content="${c.id}">Open in Quinn: ${esc(c.title)}</a>`).join('')}</div>`:''}<div class="tiny muted" style="margin-top:6px">Demo message · delivered in-app only</div></div>`;
+}
+function wireMsgLinks(root){ $$('[data-open-content]',root).forEach(b=>b.addEventListener('click',e=>{e.preventDefault();location.hash='#trainings';setTimeout(()=>startContent(b.dataset.openContent),60);})); }
+
+/* ---- reviews (calls + emails) ---- */
+const GOOD=[
+  {type:'call',title:'Multi-threaded discovery with ops and IT',acct:'Bluestem Distribution',when:'Nov 12',note:'Brought the IT/ERP owner into minute 20. Mapped 4 of 6 buying-group members.'},
+  {type:'email',title:'Trigger-based first touch on a new DC',acct:'Granite Peak Freight',when:'Nov 11',note:'Referenced their Q1 DC opening and a 3PL peer result. Reply within 3 hours.'},
+  {type:'email',title:'Mutual action plan recap',acct:'Harborview Beverages',when:'Nov 9',note:'Decision criteria in the buyer\'s order, with owners and dates.'}
+];
+function reviewItems(a){
+  const out=[]; a.flags.forEach(f=>EXAMPLES[f].slice(0,2).forEach((ex,k)=>out.push({flag:f,k,ex,bad:true})));
+  GOOD.forEach(g=>out.push({good:g}));
+  const r=rng(a.u+'rev'); return out.sort(()=>r()-.5);
+}
+function reviewRow(it,i){
+  if(it.good){const g=it.good;return `<div class="li"><span class="badge ${g.type==='email'?'blue':'dark'}">${g.type==='email'?ICON.mail+' Email':ICON.call+' Call'}</span><div style="flex:1;min-width:0"><b class="small">${esc(g.title)}</b><div class="tiny muted">${esc(g.acct)} · ${esc(g.when)} · ${esc(g.note)}</div></div><span class="badge green">Strong</span></div>`;}
+  const ex=it.ex;return `<div class="li click" data-rev="${it.flag}|${it.k}" tabindex="0"><span class="badge ${ex.type==='email'?'blue':'dark'}">${ex.type==='email'?ICON.mail+' Email':ICON.call+' Call'}</span><div style="flex:1;min-width:0"><b class="small">${esc(ex.title)}</b><div class="tiny muted">${esc(ex.acct)} · ${esc(ex.when)}</div></div><span class="badge red">${esc(FLAG[it.flag].short)}</span></div>`;
+}
+function wireReviewRows(root){$$('[data-rev]',root).forEach(r=>r.addEventListener('click',()=>{const [f,k]=r.dataset.rev.split('|');openReview(ME.role==='ae'?ME:PEOPLE[r.dataset.rep],f,+k);}));}
+function openReview(a,f,k){
+  const ex=EXAMPLES[f][k];
+  openDrawer(`<div class="dh"><div class="t"><div class="k">Quinn review · ${esc(FLAG[f].short)}</div><h2>${esc(ex.title)}</h2></div><button class="iconbtn" type="button" data-close="drawer" aria-label="Close">${ICON.x}</button></div>
+  <div class="db">${renderExample(ex,k,a)}<div class="row mt16 wrapf"><button class="btn primary" type="button" id="practiceBtn">Practice this (2-minute drill)</button></div></div>`,d=>{wirePlayers(d);drawerCleanup=stopPlayers;$('#practiceBtn').addEventListener('click',()=>openDrill(f));});
+}
+function renderReviews(){
+  const a=ME, items=reviewItems(a), flagged=items.filter(i=>i.bad);
+  $('#reviewsRoot').innerHTML=`<div class="phead"><div><div class="eyebrow">Quinn · Reviews</div><h1>Your call and email reviews</h1><p>Quinn reviewed <b>${a.calls30} recorded calls · ${a.emails30} outbound emails</b> in the last 30 days. ${flagged.length} need work. Private to you and ${esc(PEOPLE[a.mgr].name)}.</p></div></div>
+  <div class="kpis">
+    <div class="kpi"><div class="k">Calls reviewed</div><div class="v">${a.calls30}</div></div>
+    <div class="kpi"><div class="k">Emails reviewed</div><div class="v">${a.emails30}</div></div>
+    <div class="kpi"><div class="k">Emails with supply-chain context</div><div class="v">${a.personal}%</div></div>
+    <div class="kpi"><div class="k">Talk ratio</div><div class="v">${a.talk}/${100-a.talk}</div><div class="s">goal 45/55</div></div>
+  </div>
+  <div class="card"><div class="ch"><h3>Recent reviews</h3><span class="demo">Sample data</span></div><div id="revAll">${items.map(reviewRow).join('')}</div></div>`;
+  wireReviewRows($('#revAll'));
+}
+
+/* ===================== MORGAN · MANAGER OVERVIEW ===================== */
+let flagFilter='all';
+function renderMHome(){
+  const m=ME, t=m.team_, ts=teamStats(m.u), tf=teamFlags(m.u), open=tf.filter(x=>!x.res), done=tf.filter(x=>x.res);
+  const prosToday=t.reduce((s,a)=>s+prosStats(a.u).today,0);
+  $('#homeRoot').innerHTML=`
+  <div class="phead"><div><div class="eyebrow">Morgan · Sales Manager workspace</div><h1>${greet()}, ${esc(m.first)}</h1>
+    <p>${esc(m.team)} · <b>${t.length} Account Executives</b> report to you, in line with ACS's 300 AEs across 35 frontline managers. Quinn reviewed <b>${fmtN(ts.calls)} calls · ${fmtN(ts.emails)} emails</b> from your team in the last 30 days.</p></div>
+    <div class="row wrapf"><a class="btn" href="#admin">Content admin</a><a class="btn primary" href="#chat">Chat with Morgan</a></div></div>
+  <div class="kpis">
+    <div class="kpi"><div class="k">Reviewed by Quinn (30d)</div><div class="v">${fmtN(ts.calls)} · ${fmtN(ts.emails)}</div><div class="s">calls · emails</div></div>
+    <div class="kpi"><div class="k">Open red flags</div><div class="v" id="kOpenFlags">${open.length}</div><div class="s">${done.length} with a plan made</div></div>
+    <div class="kpi"><div class="k">Team win rate</div><div class="v">${ts.win}%</div><div class="s">ACS ${CASE.win}% · target ${CASE.winTarget}%</div></div>
+    <div class="kpi"><div class="k">Buying-group coverage</div><div class="v">${ts.bg}</div><div class="s">contacts per open deal · goal 5+</div></div>
+    <div class="kpi"><div class="k">Saved time reinvested</div><div class="v">${ts.reinvest}%</div><div class="s">top 10% at ~70%</div></div>
+    <div class="kpi"><div class="k">Prospects contacted today</div><div class="v">${prosToday}</div><div class="s">of ${t.length*12} queued by Quinn</div></div>
+  </div>
+  <div class="card" style="margin-bottom:16px"><div class="ask">
+    <div class="row" style="margin-bottom:10px"><span class="av m">M</span><div><h3>Ask Morgan about your team</h3><p class="small muted">Morgan has read every call and email Quinn reviewed.</p></div></div>
+    <form class="inputrow" id="homeForm"><textarea id="homeQ" rows="1" placeholder="e.g. Which AE should I coach first this week, and on what?"></textarea><button class="btn primary" id="homeSend" type="submit">Ask</button></form>
+    <div class="chips" id="homeChips"><button class="chip" type="button">What are my team's top 3 problems right now?</button><button class="chip" type="button">How do I coach AI-assisted selling instead of auditing activity?</button><button class="chip" type="button">What should I measure in a $10K pilot?</button></div>
+    <div class="answer" id="homeAnswer"><div class="md" id="homeAnsBody"></div><div class="row mt12 wrapf"><button class="btn sm primary" id="toChat" type="button">Continue in chat</button><button class="btn sm" id="copyAns" type="button">Copy</button></div></div>
+  </div></div>
+  <div class="grid g-main">
+    <div class="stack">
+      <div class="card" id="flagCard"><div class="ch"><div><h3>Red-flag checklist</h3><p>Who has which red flag. Click a name or problem to see 5 examples and message the AE. Check it off when a coaching plan is made.</p></div><span class="badge red" id="openCount">${open.length} open</span></div>
+        <div class="cb" style="padding:12px 16px;border-bottom:1px solid var(--border)"><div class="filters" id="flagFilters"></div></div>
+        <div id="flagList"></div></div>
+      <div class="card"><div class="ch"><div><h3>Plans made</h3><p>Resolved red flags, with when the plan was made.</p></div><span class="badge green" id="resCount">${done.length}</span></div><div id="resList"></div></div>
+    </div>
+    <div class="stack">
+      <div class="card"><div class="ch"><div><h3>Your team · ${t.length} AEs</h3><p>Click an AE to open their profile.</p></div><a class="btn sm" href="#team">Full table</a></div>
+        <div id="teamMini">${t.slice().sort((x,y)=>y.flags.filter(f=>!flagResolved(x.u,f)).length-x.flags.filter(f=>!flagResolved(x.u,f)).length||x.name.localeCompare(y.name)).map(a=>{const of=a.flags.filter(f=>!flagResolved(a.u,f)).length,ps=prosStats(a.u);return `<div class="li click" data-prof="${a.u}" tabindex="0"><span class="av">${initials(a.name)}</span><div style="flex:1;min-width:0"><b class="small">${esc(a.name)}</b><div class="tiny muted">${ps.today}/12 contacts today · win ${a.win}%</div></div>${a.top?'<span class="badge green">Top 10%</span>':''}${of?`<span class="badge red">${of} flag${of>1?'s':''}</span>`:'<span class="badge">No open flags</span>'}</div>`;}).join('')}</div></div>
+      <div class="card" id="covCard"></div>
+    </div>
+  </div>`;
+  renderFlagList(); renderCoverage();
+  $$('#teamMini [data-prof]').forEach(r=>r.addEventListener('click',()=>openProfile(r.dataset.prof)));
+  wireHomeAsk();
+}
+function renderFlagList(){
+  const tf=teamFlags(ME.u), open=tf.filter(x=>!x.res), done=tf.filter(x=>x.res).sort((a,b)=>b.res.resolved-a.res.resolved);
+  const types=FLAGS.filter(f=>open.some(x=>x.f===f.id));
+  if(flagFilter!=='all'&&!types.some(f=>f.id===flagFilter)) flagFilter='all';
+  $('#flagFilters').innerHTML=`<button class="fchip ${flagFilter==='all'?'on':''}" data-ff="all" type="button">All (${open.length})</button>`+types.map(f=>`<button class="fchip ${flagFilter===f.id?'on':''}" data-ff="${f.id}" type="button">${esc(f.short)} (${open.filter(x=>x.f===f.id).length})</button>`).join('');
+  const shown=open.filter(x=>flagFilter==='all'||x.f===flagFilter);
+  $('#flagList').innerHTML=shown.length?shown.map(x=>{const F=FLAG[x.f],k=fkey(x.a.u,x.f),sent=ST.msgs.filter(m=>m.to===x.a.u&&m.flag===x.f).length;return `<div class="flag" data-key="${k}">
+    <input type="checkbox" class="ck" data-plan="${k}" aria-label="Plan made for ${esc(x.a.name)}: ${esc(F.short)}" title="Check when a coaching plan has been made">
+    <button class="fbtn" type="button" data-open-flag="${k}"><span class="sev ${F.sev}"></span><span class="txt"><span class="fn">${esc(shortName(x.a.name))}</span> <span class="fp">— ${esc(F.name)}</span><small>${esc(flagMetric(x.a,x.f))} · 5 examples from calls and emails</small></span></button>
+    <div class="fact row">${sent?`<span class="badge blue">Messaged</span>`:''}<button class="btn sm" type="button" data-open-flag="${k}">Review &amp; message</button></div></div>`;}).join(''):'<div class="empty">No open red flags. Every flag on your team has a coaching plan.</div>';
+  $('#resList').innerHTML=done.length?done.map(x=>`<div class="flag res"><input type="checkbox" class="ck" checked data-unplan="${fkey(x.a.u,x.f)}" aria-label="Reopen" title="Uncheck to reopen"><button class="fbtn" type="button" data-open-flag="${fkey(x.a.u,x.f)}"><span class="sev low"></span><span class="txt"><span class="fn">${esc(shortName(x.a.name))}</span> <span class="fp">— ${esc(FLAG[x.f].name)}</span><small>Plan made ${fmtTs(x.res.resolved)} by ${esc(x.res.by)}${x.res.note?' · "'+esc(x.res.note)+'"':''}</small></span></button><div class="fact"><span class="badge green">Plan made</span></div></div>`).join(''):'<div class="empty">No plans made yet. Check a red flag off when you\'ve agreed on a plan.</div>';
+  $$('#flagFilters [data-ff]').forEach(b=>b.addEventListener('click',()=>{flagFilter=b.dataset.ff;renderFlagList();}));
+  $$('#flagCard [data-open-flag], #resList [data-open-flag]').forEach(b=>b.addEventListener('click',()=>{const [u,f]=b.dataset.openFlag.split('|');openFlag(u,f);}));
+  $$('#flagList [data-plan]').forEach(c=>c.addEventListener('change',()=>{if(c.checked){const [u,f]=c.dataset.plan.split('|');c.closest('.flag').style.opacity='.4';setTimeout(()=>setPlan(u,f,true),250);}}));
+  $$('#resList [data-unplan]').forEach(c=>c.addEventListener('change',()=>{if(!c.checked){const [u,f]=c.dataset.unplan.split('|');setPlan(u,f,false);}}));
+  const oc=$('#openCount'); if(oc) oc.textContent=open.length+' open'; const rc=$('#resCount'); if(rc) rc.textContent=done.length; const ko=$('#kOpenFlags'); if(ko) ko.textContent=open.length;
+}
+function setPlan(u,f,on,note){
+  const k=fkey(u,f);
+  if(on){ST.flags[k]={resolved:Date.now(),by:ME.name,note:note||''};toast('Plan made',`${PEOPLE[u].name} · ${FLAG[f].short} moved to Plans made`,{label:'Undo',fn:()=>setPlan(u,f,false)});}
+  else{delete ST.flags[k];toast('Red flag reopened',`${PEOPLE[u].name} · ${FLAG[f].short}`);}
+  save(); if($('#flagList')){renderFlagList();renderCoverage();}
+}
+function renderCoverage(){
+  const el=$('#covCard'); if(!el) return; const tf=teamFlags(ME.u), done=tf.filter(x=>x.res).length, pct=tf.length?Math.round(done/tf.length*100):100;
+  const msgs=ST.msgs.filter(x=>x.from===ME.u).length;
+  el.innerHTML=`<div class="ch"><div><h3>Coaching coverage</h3><p>How much of Quinn's findings you've acted on.</p></div></div><div class="cb"><div class="progress"><div class="ring" style="--p:${pct}"><b>${pct}%</b></div><div class="small" style="display:grid;gap:4px"><span><b>${done}</b> of ${tf.length} red flags have a plan</span><span><b>${msgs}</b> coaching messages sent</span><span><b>${ST.audit.filter(x=>x.mgr===ME.u).length}</b> content changes logged</span></div></div></div>`;
+}
+function wireHomeAsk(){
+  const f=$('#homeForm'), q=$('#homeQ'), ans=$('#homeAnswer'), body=$('#homeAnsBody'); let last='';
+  enterSubmits(q,f);
+  f.addEventListener('submit',async e=>{e.preventDefault();const v=q.value.trim();if(!v)return;$('#homeSend').disabled=true;ans.classList.add('show');body.innerHTML=TYPING;
+    last=await askMorgan([{role:'user',content:v}],t=>body.innerHTML=md(t)||TYPING);$('#homeSend').disabled=false;f.dataset.q=v;});
+  $$('#homeChips .chip').forEach(c=>c.addEventListener('click',()=>{q.value=c.textContent;f.requestSubmit();}));
+  $('#toChat').addEventListener('click',()=>{const v=f.dataset.q||q.value;if(v){history_.push({role:'user',content:v},{role:'assistant',content:last});renderChat();}location.hash='#chat';});
+  $('#copyAns').addEventListener('click',e=>copy(last,e.target));
+}
+
+/* ---- AE profile (manager view) ---- */
+function openProfile(u){
+  const a=PEOPLE[u], m=PEOPLE[a.mgr], ps=prosStats(u), ts=teamStats(m.u), sent=ST.msgs.filter(x=>x.to===u).sort((x,y)=>y.ts-x.ts);
+  const kp=(k,v,s)=>`<div class="kpi"><div class="k">${k}</div><div class="v">${v}</div>${s?`<div class="s">${s}</div>`:''}</div>`;
+  openDrawer(`<div class="dh"><span class="av xl">${initials(a.name)}</span><div class="t"><div class="k">AE profile · reports to ${esc(m.name)}</div><h2>${esc(a.name)} ${a.top?'<span class="badge green">Top 10%</span>':''}</h2><div class="small muted">${a.title} · ${esc(a.terr)} · <span class="mono">${a.u}</span> · ${a.tenure} yrs at ACS</div></div><button class="iconbtn" type="button" data-close="drawer" aria-label="Close">${ICON.x}</button></div>
+  <div class="db">
+    <div class="section-t">Prospecting (from Quinn's checklist)</div>
+    <div class="kpis" id="profPros">${kp('Contacts today',`<span id="ppToday">${ps.today}</span> of 12`)}${kp('This week',`<span id="ppWeek">${ps.week}</span>`)}${kp('All-time total',`<span id="ppTotal">${fmtN(ps.total)}</span>`)}${kp('Prospecting streak',ps.streak+' days')}</div>
+    <div class="section-t">Value metrics vs. team average</div>
+    <div class="kpis">${kp('Win rate',a.win+'%','team '+ts.win+'% · target 25%')}${kp('Buying-group coverage',a.bg,'team '+ts.bg+' · goal 5+')}${kp('Account plans',a.plans+'%','team '+ts.plans+'%')}${kp('Saved time reinvested',a.reinvest+'%','team '+ts.reinvest+'%')}${kp('Emails with context',a.personal+'%','')}${kp('Emails sent / week',a.emailsWk,'ACS avg 135')}${kp('Reviewed by Quinn',a.calls30+' · '+a.emails30,'calls · emails (30d)')}${kp('Value score',a.score,'out of 100')}</div>
+    <div class="section-t">Red flags</div>
+    <div class="card">${a.flags.length?a.flags.map(f=>{const r=flagResolved(u,f);return `<div class="flag ${r?'res':''}"><span class="sev ${r?'low':FLAG[f].sev}"></span><button class="fbtn" type="button" data-pf="${f}"><span class="txt"><span class="fp">${esc(FLAG[f].name)}</span><small>${esc(flagMetric(a,f))}${r?' · plan made '+fmtTs(r.resolved):''}</small></span></button><div class="fact"><button class="btn sm" type="button" data-pf="${f}">${r?'View':'Review & message'}</button></div></div>`;}).join(''):'<div class="empty">No red flags. Quinn sees top-10% habits in this AE\'s calls and emails.</div>'}</div>
+    <div class="section-t">Messages you've sent</div>
+    ${sent.length?`<div class="thread" style="margin:0">${sent.map(x=>msgHtml(x,false)).join('')}</div>`:'<div class="card"><div class="empty">No messages yet.</div></div>'}
+    <div class="row mt16 wrapf"><button class="btn primary" type="button" id="profMsg">Message ${esc(a.first)}</button></div>
+  </div>`,d=>{
+    $$('[data-pf]',d).forEach(b=>b.addEventListener('click',()=>openFlag(u,b.dataset.pf)));
+    $('#profMsg').addEventListener('click',()=>openFlag(u,a.flags[0]||'generic'));
+  });
+}
+
+/* ---- red-flag panel: 5 examples + composer + plan made ---- */
+const TPLS=[['meet','Meet with me'],['train','Try the trainings'],['motivate','Motivation & support'],['shadow','Shadow a top performer']];
+function tplText(kind,a,f){
+  const F=FLAG[f], mg=ME, d=nextBizDays(3), topA=(mg.team_.find(x=>x.top&&x.u!==a.u)||AES.find(x=>x.top&&x.u!==a.u));
+  const items=enabledContent(mg.u).filter(c=>c.flag===f).slice(0,2);
+  if(kind==='meet') return {body:`Hi ${a.first},\n\nCan we grab 30 minutes for a 1:1 on ${F.short.toLowerCase()}? Quinn flagged a few of your recent calls and emails that I'd like to walk through together. This isn't a performance review, just a working session on one live deal.\n\nDo any of these work?\n• ${fmtDay(d[0])} · 10:00–10:30 AM ET\n• ${fmtDay(d[1])} · 2:00–2:30 PM ET\n• ${fmtDay(d[2])} · 9:30–10:00 AM ET\n\nBring your top open opportunity and we'll apply it there.\n\n${mg.first}`,links:[]};
+  if(kind==='train') return {body:`Hi ${a.first},\n\nI've added ${items.length===1?'a short piece':'two short pieces'} to your Quinn dashboard for ${F.short.toLowerCase()}:\n${items.map(c=>'• '+c.title+' ('+c.type.toLowerCase()+', '+c.dur+')').join('\n')||'• (no active content for this flag; check Admin)'}\n\nThey take about 20 minutes total. Try them before Thursday, then use the approach on one live account. Quinn will re-score your next calls and emails so we can both see the change.\n\n${mg.first}`,links:items.map(c=>c.id)};
+  if(kind==='motivate') return {body:`Hi ${a.first},\n\nI want to say this clearly: the effort is there. You're putting in real work (${a.emailsWk} emails a week and ${a.calls30} calls this month), and that drive is exactly what this team needs.\n\nQuinn's reviews show the next step isn't more effort. It's pointing that effort at fewer, deeper accounts. Pick your two best opportunities and let's make them great together.\n\nI've got your back on this. You're closer than the numbers look.\n\n${mg.first}`,links:[]};
+  return {body:`Hi ${a.first},\n\n${topA.name} is in ACS's top 10% of AEs this half. What sets them apart isn't using Copilot more. It's how they spend the time it saves: stakeholder mapping, account strategy, rehearsing decision meetings and building consensus across the buying group.\n\nI've asked ${topA.first} if you can shadow their account-planning block on ${fmtDay(d[1])} at 1:00 PM ET, then sit in on one customer call. Bring one deal you want to apply it to.\n\n${mg.first}`,links:[]};
+}
+function openFlag(u,f){
+  const a=PEOPLE[u], F=FLAG[f], k=fkey(u,f), res=flagResolved(u,f), exs=EXAMPLES[f], thread=ST.msgs.filter(x=>x.to===u).sort((x,y)=>y.ts-x.ts);
+  let cur={kind:null,links:[]};
+  openDrawer(`<div class="dh"><span class="av lg">${initials(a.name)}</span><div class="t"><div class="k">Red flag · <button class="linkbtn" type="button" id="toProfile">${esc(a.name)}</button> · <span class="mono">${a.u}</span></div><h2>${esc(F.name)}</h2><div class="row wrapf mt8"><span class="badge ${F.sev==='high'?'red':'amber'}">${F.sev==='high'?'High':'Medium'} impact</span><span class="badge">${esc(flagMetric(a,f))}</span>${res?`<span class="badge green">Plan made ${fmtTs(res.resolved)}</span>`:''}</div></div><button class="iconbtn" type="button" data-close="drawer" aria-label="Close">${ICON.x}</button></div>
+  <div class="db">
+    <p class="small muted" style="margin-bottom:12px">${esc(F.desc)}</p>
+    <div class="section-t">5 examples from Quinn's reviews of ${esc(a.first)}'s calls and emails</div>
+    <div class="exlist" id="exList5">${exs.map((ex,i)=>renderExample(ex,i,a)).join('')}</div>
+    <div class="section-t">Message ${esc(a.first)}</div>
+    <div class="card"><div class="cb">
+      <div class="tiny muted" style="margin-bottom:6px">Start from a template, then edit:</div>
+      <div class="tpls" id="tpls">${TPLS.map(([id,l])=>`<button class="tpl" type="button" data-tpl="${id}">${l}</button>`).join('')}</div>
+      <textarea class="input" id="composeBody" rows="9" placeholder="Write a message to ${esc(a.first)}, or click a template above."></textarea>
+      <div id="composeLinks" class="links row wrapf mt8"></div>
+      <div class="row between mt12 wrapf"><span class="tiny muted">Demo: posts to ${esc(a.first)}'s Quinn inbox in this app. No real email is sent.</span><button class="btn primary" type="button" id="sendMsg">Send to ${esc(a.first)}'s Quinn inbox</button></div>
+      <div class="thread" id="flagThread">${thread.map(x=>msgHtml(x,false)).join('')}</div>
+    </div></div>
+    <div class="section-t">Coaching plan</div>
+    <label class="planbox ${res?'done':''}" id="planBox"><input type="checkbox" class="ck" id="planMade" ${res?'checked':''}><span style="flex:1"><b>Plan made</b><div class="tiny muted">${res?`Marked ${fmtTs(res.resolved)} by ${esc(res.by)}. Uncheck to reopen.`:'Check when you and '+esc(a.first)+' have agreed on a plan. The flag moves to Plans made.'}</div></span></label>
+    <input class="input mt8" id="planNote" placeholder="Optional: the plan in one line (e.g. 1:1 Tuesday + CFO roleplay by Friday)" value="${res?esc(res.note||''):''}">
+  </div>`,d=>{
+    wirePlayers(d); drawerCleanup=stopPlayers;
+    $('#toProfile').addEventListener('click',()=>openProfile(u));
+    $$('#tpls [data-tpl]',d).forEach(b=>b.addEventListener('click',()=>{const t=tplText(b.dataset.tpl,a,f);cur={kind:b.dataset.tpl,label:b.textContent,links:t.links};$('#composeBody').value=t.body;$$('#tpls .tpl').forEach(x=>x.classList.toggle('on',x===b));
+      $('#composeLinks').innerHTML=t.links.map(id=>{const c=CONTENT.find(x=>x.id===id);return `<span class="badge blue">Attached: ${esc(c.title)}</span>`;}).join('');}));
+    $('#sendMsg').addEventListener('click',()=>{const body=$('#composeBody').value.trim();if(!body){toast('Write a message first','Or click one of the templates.');return;}
+      const msg={id:'m'+Date.now()+Math.floor(Math.random()*1000),to:u,from:ME.u,flag:f,body,ts:Date.now(),read:false,links:cur.links||[],tplLabel:cur.label||'Message'};
+      ST.msgs.push(msg);save();$('#flagThread').insertAdjacentHTML('afterbegin',msgHtml(msg,false));$('#composeBody').value='';$('#composeLinks').innerHTML='';cur={kind:null,links:[]};$$('#tpls .tpl').forEach(x=>x.classList.remove('on'));
+      toast('Message sent (demo)',`Delivered to ${a.first}'s Quinn dashboard`); if($('#flagList')) renderFlagList(); renderCoverage();});
+    $('#planMade').addEventListener('change',e=>{setPlan(u,f,e.target.checked,$('#planNote').value.trim());const r=flagResolved(u,f);$('#planBox').classList.toggle('done',!!r);$('#planBox .tiny').textContent=r?`Marked ${fmtTs(r.resolved)} by ${r.by}. Uncheck to reopen.`:'Check when you have agreed on a plan.';});
+  });
+}
+
+/* ===================== TEAM TABLE ===================== */
+function renderTeam(){
+  const m=ME, t=m.team_.slice().sort((x,y)=>y.score-x.score);
+  $('#teamRoot').innerHTML=`<div class="phead"><div><div class="eyebrow">Morgan · Team</div><h1>${esc(m.team)} · ${t.length} Account Executives</h1><p>Every AE reporting to you, measured on value behaviors. ACS has about 300 AEs across 35 frontline managers, so each manager coaches 8–9 AEs. Click a row to open a profile.</p></div></div>
+  <div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Account Executive</th><th class="num">Win rate</th><th>Buying-group coverage</th><th class="num">Account plans</th><th class="num">Emails w/ context</th><th class="num">Saved time reinvested</th><th class="num">Emails / wk</th><th class="num">Reviewed (calls · emails)</th><th class="num">Contacts today · week · total</th><th>Red flags</th></tr></thead><tbody>
+  ${t.map(a=>{const ps=prosStats(a.u),of=a.flags.filter(f=>!flagResolved(a.u,f));return `<tr class="click" data-prof="${a.u}"><td><div class="who"><span class="av">${initials(a.name)}</span><span><b>${esc(a.name)} ${a.top?'<span class="badge green">Top 10%</span>':''}</b><small>${a.u}</small></span></div></td>
+  <td class="num">${a.win}%</td><td><div class="row"><span class="nowrap" style="width:28px">${a.bg}</span>${bar(a.bg/6*100,barCls(a.bg,2.5,4))}</div></td><td class="num">${a.plans}%</td><td class="num">${a.personal}%</td><td class="num">${a.reinvest}%</td><td class="num">${a.emailsWk}</td><td class="num">${a.calls30} · ${a.emails30}</td><td class="num">${ps.today} · ${ps.week} · ${fmtN(ps.total)}</td>
+  <td>${of.length?of.map(f=>`<span class="badge red" style="margin:1px">${esc(FLAG[f].short)}</span>`).join(''):'<span class="badge">None open</span>'}</td></tr>`;}).join('')}
+  </tbody></table></div></div><p class="demo mt12">Sample team data. All names are fictional.</p>`;
+  $$('#teamRoot [data-prof]').forEach(r=>r.addEventListener('click',()=>openProfile(r.dataset.prof)));
+}
+
+/* ===================== ISSUES ===================== */
+let curIssue=FLAGS[0];
+function issueRows(){
+  const t=ME.team_; return FLAGS.map(F=>{const reps=t.filter(a=>a.flags.includes(F.id));return {F,reps,calls:reps.reduce((s,a)=>s+Math.round(a.calls30*.3),0),emails:reps.reduce((s,a)=>s+Math.round(a.emails30*.25),0),trend:((hashSeed(F.id+ME.u)%9)-3)};}).sort((a,b)=>b.reps.length-a.reps.length||(b.calls+b.emails)-(a.calls+a.emails));
+}
+function renderIssues(){
+  const ts=teamStats(ME.u);
+  $('#issuesSub').textContent=`Compiled by Morgan from Quinn's reviews of ${fmtN(ts.calls)} recorded calls and ${fmtN(ts.emails)} outbound emails from your ${ts.n} AEs over the last 30 days, ranked most common to least.`;
+  $('#issueList').innerHTML=`<div class="ch"><h3>Ranked issues</h3><span class="demo">Sample data</span></div>`+issueRows().map((r,i)=>`<div class="issue"><span class="rk">${i+1}</span><div><div class="row wrapf"><b>${esc(r.F.name)}</b><span class="badge ${r.F.sev==='high'?'red':'amber'}">${r.reps.length} of ${ts.n} AEs</span><span class="badge">${r.calls} calls · ${r.emails} emails flagged</span><span class="delta ${r.trend>0?'dn':'up'}">${r.trend>0?'▲ +':'▼ '}${r.trend} vs last month</span></div><p class="small muted mt8">${esc(r.F.desc)}</p><div class="ev">${esc(r.F.ev)}</div>
+    <div class="acts"><button class="btn sm" type="button" data-iflag="${r.F.id}">See red flags</button><button class="btn sm" type="button" data-itrain="${r.F.id}">Build a training</button><button class="btn sm" type="button" data-idrill="${r.F.id}">Try the drill</button></div></div><span></span></div>`).join('');
+  $$('[data-iflag]').forEach(b=>b.addEventListener('click',()=>{flagFilter=b.dataset.iflag;location.hash='#home';}));
+  $$('[data-itrain]').forEach(b=>b.addEventListener('click',()=>{curIssue=FLAG[b.dataset.itrain];location.hash='#trainings';}));
+  $$('[data-idrill]').forEach(b=>b.addEventListener('click',()=>openDrill(b.dataset.idrill)));
+  if(!summaryLoaded){summaryLoaded=true;loadSummary();}
+}
+async function loadSummary(){
+  const el=document.getElementById('issueSummary'); el.innerHTML=TYPING;
+  await askMorgan([{role:'user',content:"Give me your read on this month's issues across calls and emails: the 3 key takeaways and one recommendation. Under 120 words."}], t=>el.innerHTML=md(t)||TYPING, {summary:true});
+}
+document.getElementById('refreshSummary').addEventListener('click', loadSummary);
+
+/* ===================== TRAININGS + COACHING LIBRARY ===================== */
+const KIND={video:'Micro-video script',curriculum:'Curriculum',roleplay:'AI roleplay'};
+let genText='';
+function renderTrainings(){
+  const mgr=ME.role==='mgr', mgU=mgr?ME.u:ME.mgr;
+  $('#genBlock').classList.toggle('hidden',!mgr);
+  $('#trEyebrow').textContent=mgr?'Morgan · Trainings':'Quinn · Coaching';
+  $('#trTitle').textContent=mgr?'Trainings':'Coaching library';
+  $('#trSub').textContent=mgr?'Pick an issue and Morgan builds the training on the spot. Below is the coaching library Quinn draws from for your team.':`Videos, roleplays, curriculums, templates and talk tracks curated by ${PEOPLE[ME.mgr].name}. Items for your red flags come first.`;
+  if(mgr){ $('#issuePick').innerHTML=FLAGS.map(f=>`<button class="fchip ${f.id===curIssue.id?'on':''}" type="button" data-pick="${f.id}">${esc(f.short)}</button>`).join('');
+    $$('#issuePick [data-pick]').forEach(b=>b.addEventListener('click',()=>{curIssue=FLAG[b.dataset.pick];$$('#issuePick .fchip').forEach(x=>x.classList.toggle('on',x===b));})); }
+  let items=mgr?CONTENT.slice():enabledContent(mgU).slice();
+  if(!mgr) items.sort((x,y)=>(ME.flags.includes(y.flag)?1:0)-(ME.flags.includes(x.flag)?1:0));
+  const pr=mgr?null:progressOf(ME.u);
+  $('#libHead').textContent=mgr?`Coaching library · ${enabledContent(mgU).length} of ${CONTENT.length} active for Quinn`:'Coaching library';
+  $('#libList').innerHTML=items.map(c=>{const st=cState(mgU,c.id);return `<div class="libitem ${pr&&pr.done[c.id]?'done':''}" data-cid="${c.id}"><div class="row"><span class="typeic">${TYPE_ICON[c.type]||ICON.doc}</span><div style="min-width:0"><b class="small">${esc(c.title)}</b><div class="tiny muted">${esc(c.type)} · ${esc(c.dur)}</div></div></div><p>${esc(c.desc)}</p><div class="row between wrapf"><span class="badge ${!mgr&&ME.flags.includes(c.flag)?'red':''}">${esc(FLAG[c.flag].short)}</span>${mgr?(st.off?`<a class="badge red" href="#admin">Off · ${esc(riskLabel(st.reason))}</a>`:'<span class="badge green">Active in Quinn</span>'):`<button class="btn sm ${pr.done[c.id]?'':'primary'}" type="button" data-start="${c.id}">${pr.done[c.id]?'Done ✓':'Start'}</button>`}</div></div>`;}).join('');
+  $$('#libList [data-start]').forEach(b=>b.addEventListener('click',()=>startContent(b.dataset.start)));
+}
+document.querySelectorAll('[data-gen]').forEach(b=>b.addEventListener('click', async()=>{
+  const kind=b.dataset.gen, out=$('#genOut'), body=$('#genBody'), issue=curIssue;
+  $('#genTitle').textContent=`${KIND[kind]}: ${issue.name}`; out.classList.remove('hidden'); body.innerHTML=TYPING; out.scrollIntoView({behavior:'smooth',block:'start'});
+  $$('[data-gen]').forEach(x=>x.disabled=true);
+  const prompts={
+    video:`Create a ~6 minute training micro-video script for my AEs on the issue "${issue.name}". Use scenes with timestamps, on-screen text, and the talk track. Use Quinn's call and email evidence. Up to 280 words.`,
+    curriculum:`Create a 3-session, 2-week training curriculum for the issue "${issue.name}". Include goals, exercises per session, and how Quinn will measure improvement in later calls and emails. Up to 280 words.`,
+    roleplay:`Create an AI roleplay for AEs to practice the issue "${issue.name}" with a supply-chain buyer (manufacturing, retail or 3PL). Include a buyer persona, the scenario, what the buyer will say or do, the AE's goal, and a 0–10 scoring guide. Up to 280 words.`};
+  genText=await askMorgan([{role:'user',content:prompts[kind]}],t=>body.innerHTML=md(t)||TYPING,{gen:kind,issue,tier:'default'});
+  $$('[data-gen]').forEach(x=>x.disabled=false);
+}));
+$('#copyGen').addEventListener('click',e=>copy(genText,e.target));
+function startContent(cid){
+  const c=CONTENT.find(x=>x.id===cid); if(!c) return; const mgU=ME.role==='mgr'?ME.u:ME.mgr;
+  if(!contentOn(mgU,cid)){toast('Not available','Your manager turned this item off.');return;}
+  openModal(`<div class="mh"><div class="tiny muted">${esc(c.type)} · ${esc(c.dur)} · ${esc(FLAG[c.flag].short)}</div><h2 style="font-size:17px;margin-top:2px">${esc(c.title)}</h2></div><div class="mb"><p class="small">${esc(c.desc)}</p><div class="qnote"><span class="av q">Q</span><span>Sample content preview. Finish with a 2-question check to mark it complete.</span></div></div><div class="mf"><button class="btn" type="button" data-close="modal">Later</button><button class="btn primary" type="button" id="goDrill">Start the check</button></div>`,()=>{$('#goDrill').addEventListener('click',()=>openDrill(c.flag,cid));});
+}
+
+/* ===================== PRACTICE DRILL ===================== */
+function openDrill(f,cid){
+  const qs=DRILLS[f]; let i=0, right=0;
+  const draw=()=>{const d=qs[i];openModal(`<div class="mh"><div class="tiny muted">Practice · ${esc(FLAG[f].short)} · question ${i+1} of ${qs.length}</div><h2 style="font-size:17px;margin-top:2px">${esc(d.q)}</h2></div><div class="mb quiz"><div class="say">${esc(d.say)}</div>${d.opts.map((o,k)=>`<button class="opt" type="button" data-k="${k}">${esc(o)}</button>`).join('')}<div id="why" class="qnote hidden"></div></div><div class="mf"><button class="btn" type="button" data-close="modal">Close</button><button class="btn primary" type="button" id="nextQ" disabled>${i<qs.length-1?'Next':'Finish'}</button></div>`,mo=>{
+      $$('.opt',mo).forEach(b=>b.addEventListener('click',()=>{if(!$('#nextQ').disabled)return;const k=+b.dataset.k;if(k===d.a)right++;$$('.opt',mo).forEach(x=>{const xk=+x.dataset.k;if(xk===d.a)x.classList.add('right');else if(xk===k)x.classList.add('wrong');});$('#why').innerHTML=`<span class="av q">Q</span><span>${k===d.a?'<b>Right.</b> ':'<b>Not quite.</b> '}${esc(d.why)}</span>`;$('#why').classList.remove('hidden');$('#nextQ').disabled=false;}));
+      $('#nextQ').addEventListener('click',()=>{i++;if(i<qs.length)draw();else{closeModal();if(ME.role==='ae'){const pr=progressOf(ME.u);pr.drills[f]=right;if(cid)pr.done[cid]=Date.now();save();refresh();}toast('Practice complete',`${right} of ${qs.length} correct${cid?' · marked done':''}`);}});
+    });};
+  draw();
+}
+
+/* ===================== ADMIN (manager) ===================== */
+function renderAdmin(){
+  const m=ME, on=enabledContent(m.u).length, log=ST.audit.filter(x=>x.mgr===m.u).sort((a,b)=>b.ts-a.ts);
+  $('#adminRoot').innerHTML=`<div class="phead"><div><div class="eyebrow">Morgan · Admin</div><h1>Coaching content Quinn uses</h1><p>Control what Quinn recommends to your ${m.team_.length} AEs. Turning an item off hides it from their Quinn dashboards right away, and you must record the specific risk.</p></div></div>
+  <div class="kpis"><div class="kpi"><div class="k">Active in Quinn</div><div class="v" id="admOn">${on}</div><div class="s">of ${CONTENT.length} items</div></div><div class="kpi"><div class="k">Turned off</div><div class="v" id="admOff">${CONTENT.length-on}</div><div class="s">hidden from your AEs</div></div><div class="kpi"><div class="k">Changes logged</div><div class="v">${log.length}</div><div class="s">audit trail below</div></div></div>
+  <div class="card"><div class="ch"><div><h3>Content library</h3><p>Training videos, micro-videos, roleplays, curriculums, email templates and talk tracks.</p></div></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th style="width:60px">Active</th><th>Content</th><th>Type</th><th>Linked red flag</th><th>Status</th></tr></thead><tbody>
+  ${CONTENT.map(c=>{const st=cState(m.u,c.id);return `<tr class="${st.off?'off':''}" data-row="${c.id}"><td><label class="switch" title="${st.off?'Turn on':'Turn off'}"><input type="checkbox" data-cid="${c.id}" ${st.off?'':'checked'} aria-label="${esc(c.title)} active"><span></span></label></td><td><b class="ctitle small">${esc(c.title)}</b><div class="tiny muted">${esc(c.desc)}</div></td><td class="nowrap"><span class="row" style="gap:6px"><span class="typeic" style="width:24px;height:24px">${TYPE_ICON[c.type]}</span>${esc(c.type)}</span></td><td><span class="badge">${esc(FLAG[c.flag].short)}</span></td><td>${st.off?`<span class="badge red">Off · ${esc(riskLabel(st.reason))}${st.reason==='other'&&st.other?': '+esc(st.other):''}</span>${st.note?`<div class="tiny muted mt8">"${esc(st.note)}"</div>`:''}`:'<span class="badge green">Active</span>'}</td></tr>`;}).join('')}
+  </tbody></table></div></div>
+  <div class="card mt16"><div class="ch"><div><h3>Audit log</h3><p>Who turned what off or on, why, and when.</p></div></div><div class="tbl-wrap"><table class="tbl" id="auditTbl"><thead><tr><th>When</th><th>Who</th><th>Action</th><th>Content</th><th>Risk</th><th>Note</th></tr></thead><tbody>
+  ${log.length?log.map(x=>{const c=CONTENT.find(y=>y.id===x.cid)||{title:x.cid};return `<tr><td class="nowrap">${fmtTs(x.ts)}</td><td class="nowrap">${esc(x.by)}</td><td><span class="badge ${x.action==='Turned off'?'red':'green'}">${esc(x.action)}</span></td><td>${esc(c.title)}</td><td>${x.reason?esc(riskLabel(x.reason))+(x.other?': '+esc(x.other):''):'—'}</td><td class="small muted">${esc(x.note||'')}</td></tr>`;}).join(''):'<tr><td colspan="6" class="muted">No changes yet.</td></tr>'}
+  </tbody></table></div></div>`;
+  $$('#adminRoot [data-cid]').forEach(inp=>inp.addEventListener('change',()=>{
+    const cid=inp.dataset.cid;
+    if(inp.checked){(ST.content[m.u]||(ST.content[m.u]={}))[cid]={off:false};ST.audit.push({mgr:m.u,ts:Date.now(),by:m.name,action:'Turned on',cid});save();renderAdmin();toast('Turned on','Visible to your AEs in Quinn again.');}
+    else{inp.checked=true;askRisk(cid);}
+  }));
+}
+function askRisk(cid){
+  const c=CONTENT.find(x=>x.id===cid);
+  openModal(`<div class="mh"><div class="tiny muted">Turn off · ${esc(c.type)}</div><h2 style="font-size:17px;margin-top:2px">${esc(c.title)}</h2><p class="small muted mt8">Pick the specific risk. Quinn will stop recommending this to your AEs.</p></div>
+  <div class="mb"><div id="riskList">${RISKS.map(r=>`<label class="radio"><input type="radio" name="risk" value="${r.id}"><span><b>${esc(r.l)}</b><small>${esc(r.d)}</small></span></label>`).join('')}</div>
+  <input class="input hidden" id="riskOther" placeholder="Describe the risk">
+  <label class="small" style="display:block;margin:12px 0 6px;font-weight:550">Note (optional)</label><textarea class="input" id="riskNote" rows="2" placeholder="e.g. Buyers at Halvorsen complained about this exact template."></textarea></div>
+  <div class="mf"><button class="btn" type="button" data-close="modal">Cancel</button><button class="btn primary" type="button" id="riskConfirm" disabled>Turn off</button></div>`,mo=>{
+    const upd=()=>{const r=$('input[name=risk]:checked',mo);$('#riskOther').classList.toggle('hidden',!(r&&r.value==='other'));$('#riskConfirm').disabled=!r||(r.value==='other'&&!$('#riskOther').value.trim());};
+    $$('input[name=risk]',mo).forEach(r=>r.addEventListener('change',upd)); $('#riskOther').addEventListener('input',upd);
+    $('#riskConfirm').addEventListener('click',()=>{const r=$('input[name=risk]:checked',mo).value, other=$('#riskOther').value.trim(), note=$('#riskNote').value.trim();
+      (ST.content[ME.u]||(ST.content[ME.u]={}))[cid]={off:true,reason:r,other,note,ts:Date.now(),by:ME.name};
+      ST.audit.push({mgr:ME.u,ts:Date.now(),by:ME.name,action:'Turned off',cid,reason:r,other,note});save();closeModal();renderAdmin();toast('Turned off',`${c.title} · ${riskLabel(r)}`);});
+  });
+}
+
+/* ===================== LEADERBOARD ===================== */
+function renderLeaderboard(){
+  const mgU=ME.role==='mgr'?ME.u:ME.mgr, m=PEOPLE[mgU], t=m.team_.slice().sort((x,y)=>y.score-x.score), mgr=ME.role==='mgr';
+  $('#lbRoot').innerHTML=`<div class="phead"><div><div class="eyebrow">${mgr?'Morgan':'Quinn'} · Leaderboard</div><h1>Value leaderboard · ${esc(m.team)}</h1><p>Ranked by value score: buying-group coverage, account plans, specific outreach, reinvested time and decision rehearsal. Emails and calls sent earn no points, so the board never rewards volume.${mgr?'':' Coworkers\' red flags stay private.'}</p></div></div>
+  <div class="card"><div class="tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th>Account Executive</th><th>Value score</th><th class="num">Win rate</th><th class="num">Buying-group coverage</th><th class="num">Account plans</th><th class="num">Contacts this week</th>${mgr?'<th>Open flags</th>':''}</tr></thead><tbody>
+  ${t.map((a,i)=>{const of=a.flags.filter(f=>!flagResolved(a.u,f)).length;return `<tr class="${mgr?'click':''}" ${mgr?`data-prof="${a.u}"`:''} style="${!mgr&&a.u===ME.u?'background:var(--accentbg)':''}"><td><b>${i+1}</b></td><td><div class="who"><span class="av ${!mgr&&a.u===ME.u?'q':''}">${initials(a.name)}</span><span><b>${esc(a.name)}${!mgr&&a.u===ME.u?' (you)':''} ${a.top?'<span class="badge green">Top 10%</span>':''}</b><small>${a.u}</small></span></div></td><td><div class="row"><b style="width:26px">${a.score}</b>${bar(a.score,barCls(a.score,45,65))}</div></td><td class="num">${a.win}%</td><td class="num">${a.bg}</td><td class="num">${a.plans}%</td><td class="num">${prosStats(a.u).week}</td>${mgr?`<td>${of?`<span class="badge red">${of}</span>`:'<span class="badge">0</span>'}</td>`:''}</tr>`;}).join('')}
+  </tbody></table></div></div><p class="demo mt12">Sample team data for demonstration.</p>`;
+  $$('#lbRoot [data-prof]').forEach(r=>r.addEventListener('click',()=>openProfile(r.dataset.prof)));
+}
+
+/* ===================== HOW IT WORKS ===================== */
+function renderHow(){
+  const mgr=ME.role==='mgr';
+  $('#howRoot').innerHTML=`<div class="phead"><div><div class="eyebrow">${mgr?'How Morgan and Quinn work together':'How Quinn works'}</div><h1>${mgr?'AI that coaches value, not volume':'Your private AI coach for calls and emails'}</h1><p>Aetheris rolled out Copilot six months ago: 78% adoption and 4.8 hours saved per rep per week. Email volume rose 35%, but pipeline grew only 4% and win rate is flat at 18.2%. Morgan and Quinn make every AE reinvest saved time the way ACS's top 10% do.</p></div></div>
+  <div class="card"><div class="cb"><div class="flow">
+    <div class="step"><div class="n">STEP 1 · QUINN</div><h4>Reviews every call and email</h4><p>Flags generic outreach, single-threaded deals, pushy closes, missing account plans and unrehearsed exec meetings, with evidence.</p></div>
+    <div class="step"><div class="n">STEP 2 · QUINN</div><h4>Queues today's prospects</h4><p>A checklist of who to contact, with phone, email and a supply-chain-specific angle that fills a buying-group gap.</p></div>
+    <div class="step"><div class="n">STEP 3 · MORGAN</div><h4>Turns flags into coaching</h4><p>A red-flag checklist with 5 examples each, message templates for the manager, and plans tracked to resolution.</p></div>
+    <div class="step"><div class="n">STEP 4 · BOTH</div><h4>Close the loop</h4><p>Quinn re-scores the next calls and emails. Managers control which content Quinn uses, with a risk-tagged audit log.</p></div>
+  </div></div></div>
+  <div class="grid g2 mt16">
+    <div class="card"><div class="ch"><div class="row"><span class="av m">M</span><h3>Morgan · Sales Manager</h3></div></div><div class="cb"><ul class="bullets"><li>Shows the manager's own team of 8–9 AEs (300 AEs ÷ 35 managers)</li><li>Red-flag checklist with 5 call and email examples per concern</li><li>Templates: meet with me, try the trainings, motivation and support, shadow a top performer</li><li>Admin controls with risk reasons and an audit log</li><li>Answers the 82% of managers who don't know how to coach AI-assisted selling</li></ul></div></div>
+    <div class="card"><div class="ch"><div class="row"><span class="av q">Q</span><h3>Quinn · Account Executive</h3></div></div><div class="cb"><ul class="bullets"><li>Daily prospecting checklist with supply-chain angles</li><li>Reviews recorded calls and outbound emails, with rewrites</li><li>Manager messages and assigned coaching in one inbox</li><li>2-minute practice drills for each red flag</li><li>Scores value behaviors, not activity volume</li></ul></div></div>
+  </div>
+  <div class="card mt16"><div class="ch"><h3>The $10K pilot</h3></div><div class="cb"><div class="kpis" style="margin:0">
+    <div class="kpi"><div class="k">Scope</div><div class="v" style="font-size:17px">3 managers · 90 days</div><div class="s">vs. a matched control group</div></div>
+    <div class="kpi"><div class="k">Budget</div><div class="v" style="font-size:17px">≤ $10K</div><div class="s">built on existing tools</div></div>
+    <div class="kpi"><div class="k">Measure</div><div class="v" style="font-size:17px">Win rate · coverage</div><div class="s">pipeline, buyer complaints</div></div>
+    <div class="kpi"><div class="k">Payoff</div><div class="v" style="font-size:17px">≈ $816K ARR</div><div class="s">per 100 opps at 18.2% → 25%</div></div>
+  </div></div></div>`;
+}
+
+/* ===================== CHAT ===================== */
+const history_ = [];
+const msgsEl=document.getElementById('msgs'), chatQ=document.getElementById('chatQ'), chatForm=document.getElementById('chatForm'), chatSend=document.getElementById('chatSend');
+const loopQuinn=document.getElementById('loopQuinn');
+loopQuinn.addEventListener('change',()=>document.getElementById('quinnState').textContent = loopQuinn.checked?'Call and email reviewer · on':'Call and email reviewer · paused');
+enterSubmits(chatQ, chatForm);
+function bubble(role, html){
+  const me=role==='user'; const d=document.createElement('div'); d.className='cm'+(me?' me':'');
+  d.innerHTML = me ? `<div class="bub">${html}</div>` : `<span class="av m">M</span><div style="min-width:0"><div class="who2">Morgan</div><div class="bub md">${html}</div></div>`;
+  msgsEl.appendChild(d); msgsEl.scrollTop=msgsEl.scrollHeight; return d.querySelector('.bub');
+}
+function renderChat(){
+  msgsEl.innerHTML=''; if(!ME||ME.role!=='mgr') return; const ts=teamStats(ME.u);
+  bubble('assistant', md(`Hi ${ME.first}. Quinn finished reviewing **${fmtN(ts.calls)} calls and ${fmtN(ts.emails)} emails** from your ${ts.n} AEs. Activity is high (${ts.emailsWk} emails per AE per week), but buying-group coverage averages only **${ts.bg} contacts per deal**. What do you want to work on?`));
+  history_.forEach(m=> bubble(m.role, m.role==='user'?esc(m.content):md(m.content)));
+}
+chatForm.addEventListener('submit', async e=>{
+  e.preventDefault();
+  const q=chatQ.value.trim(); if(!q||chatSend.disabled) return;
+  chatQ.value=''; autosize(chatQ); chatSend.disabled=true;
+  bubble('user', esc(q)); history_.push({role:'user',content:q});
+  const b = bubble('assistant', TYPING);
+  const withQuinn = loopQuinn.checked;
+  const extra = withQuinn ? `\nQuinn is looped into this chat. Begin your reply with ONE line starting exactly with "**Quinn →**" giving a specific piece of call or email evidence or a stat from Quinn's data that's relevant to the question, then give Morgan's answer.` : '';
+  const ans = await askMorgan(history_.slice(-9), t=>{ b.innerHTML=md(t)||TYPING; msgsEl.scrollTop=msgsEl.scrollHeight; }, {extra, quinn:withQuinn});
+  history_.push({role:'assistant',content:ans}); chatSend.disabled=false; chatQ.focus();
+});
+document.querySelectorAll('#sideChips .chip').forEach(c=>c.addEventListener('click',()=>{ chatQ.value=c.textContent; chatForm.requestSubmit(); }));
+document.getElementById('clearChat').addEventListener('click',()=>{ history_.length=0; renderChat(); });
+
+/* ===================== BOOT ===================== */
+(function boot(){
+  if(ST.session&&PEOPLE[ST.session]){ ME=PEOPLE[ST.session]; renderChrome(); renderChat(); if(!location.hash||location.hash==='#login') location.hash='#home'; }
+  else { ME=null; if(location.hash!=='#login') history.replaceState(null,'','#login'); showLoginStep1(); }
+  route();
+})();
+
+</script>
+</body>
+</html>
