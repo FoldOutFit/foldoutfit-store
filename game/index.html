@@ -497,8 +497,233 @@
   }
   @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
-</head>
-<body>
+<style>
+  /* ---------- path switcher in top bar ---------- */
+  .pathpill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:900;padding:6px 11px;border-radius:999px;background:rgba(28,176,246,.18);color:#BDEBFF;white-space:nowrap;border:1.5px solid rgba(28,176,246,.5)}
+  body.mode-morgan .pathpill{background:rgba(255,200,0,.14);color:#FFE38A;border-color:rgba(255,200,0,.45)}
+  .switchbtn{border:0;border-radius:12px;background:#fff;color:var(--navy);font-weight:900;font-size:12px;padding:8px 12px;box-shadow:0 3px 0 #9DB3D6;white-space:nowrap}
+  .switchbtn:active{transform:translateY(3px);box-shadow:none}
+  body.mode-quinn .brand .mark{background:linear-gradient(135deg,#22B8CF,#0B7A8F);box-shadow:0 3px 0 #075C6B}
+
+  /* ---------- choose your path ---------- */
+  #pathOv{z-index:120}
+  .pathscreen{position:fixed;inset:0;overflow:auto;background:radial-gradient(900px 500px at 15% 0%,rgba(34,184,207,.35),transparent 60%),radial-gradient(900px 500px at 85% 100%,rgba(255,200,0,.18),transparent 60%),linear-gradient(180deg,#00193A,#002856);color:#fff;animation:fade .3s ease}
+  .pclose{position:absolute;right:16px;top:16px;color:#9DB3D6}
+  .pclose:hover{background:rgba(255,255,255,.1);color:#fff}
+  .pathin{max-width:1040px;margin:0 auto;padding:46px 24px 30px}
+  .pathtitle{text-align:center;font-size:52px;margin:8px 0 6px;letter-spacing:-.03em}
+  .pathsub{text-align:center;color:#BFD0EC;margin:0 0 28px;font-size:16px}
+  .pathcards{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .pcard{display:grid;grid-template-columns:150px 1fr;gap:14px;background:#fff;color:var(--ink);border-radius:26px;padding:20px;border:3px solid transparent;box-shadow:0 8px 0 rgba(0,0,0,.25);cursor:pointer;transition:transform .15s,border-color .15s}
+  .pcard:hover,.pcard:focus{transform:translateY(-4px);outline:none}
+  .pcard.q:hover,.pcard.q:focus,.pcard.q.sel{border-color:#22B8CF}
+  .pcard.m:hover,.pcard.m:focus,.pcard.m.sel{border-color:var(--gold)}
+  .pcfig{background:linear-gradient(180deg,#E7F8FB,#F7FCFD);border-radius:18px;display:grid;place-items:end center;padding-top:8px;overflow:hidden;min-height:250px}
+  .pcard.m .pcfig{background:linear-gradient(180deg,#FFF6D6,#FFFDF5)}
+  .pcfig svg{width:130px;height:auto;display:block}
+  .pctag{font-size:11.5px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#0B7A8F}
+  .pcard.m .pctag{color:#A27200}
+  .pcbody h2{margin:2px 0 6px;font-size:30px}
+  .pcbody p{margin:0 0 12px;color:var(--muted);font-size:14px;line-height:1.5}
+  .replabel{font-size:11.5px;font-weight:900;color:#AFAFAF;text-transform:uppercase;letter-spacing:.06em}
+  .repselect{width:100%;margin-top:4px;font:inherit;font-weight:800;font-size:14px;padding:10px 12px;border-radius:12px;border:2px solid var(--gray);box-shadow:0 3px 0 var(--gray);background:#fff;color:var(--ink)}
+  .mgrnote{font-size:12.5px;font-weight:800;color:#A27200;background:#FFF8DB;border:2px solid #F5D778;border-radius:12px;padding:10px 12px}
+
+  /* ---------- muse-style characters ---------- */
+  .muse{overflow:visible}
+  .muse .bob{animation:bob 3.4s ease-in-out infinite;transform-origin:80px 290px}
+  .muse .breathe{animation:breathe 3.4s ease-in-out infinite;transform-origin:80px 175px}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+  @keyframes breathe{0%,100%{transform:scale(1,1)}50%{transform:scale(1.012,1.022)}}
+
+  /* ---------- Quinn home ---------- */
+  .qhero{background:radial-gradient(900px 380px at 85% -10%,rgba(34,184,207,.45),transparent 60%),linear-gradient(180deg,#00193A,#073B52)}
+  .qhead{background:linear-gradient(180deg,#00193A,#073B52)}
+  .qgrid{display:grid;grid-template-columns:minmax(300px,440px) 1fr;gap:20px;align-items:start}
+  .qcol{display:flex;flex-direction:column;gap:18px}
+  .charcard{padding:18px}
+  .charhead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
+  .charhead h3{margin:2px 0 0;font-size:19px}
+  .kk{font-size:11.5px;font-weight:900;letter-spacing:.1em;color:#0B7A8F;text-transform:uppercase}
+  .legend2{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:800;color:var(--muted);flex-wrap:wrap}
+  .lg{width:10px;height:10px;border-radius:50%;display:inline-block;margin-left:4px}
+  .lg.c{background:var(--gold)} .lg.g{background:#AFAFAF} .lg.r{background:var(--red)}
+  .stage{position:relative;width:100%;max-width:380px;margin:6px auto 0;aspect-ratio:160/300;background:radial-gradient(60% 40% at 50% 88%,rgba(0,40,86,.12),transparent 70%),linear-gradient(180deg,#F0FAFC,#fff 70%);border-radius:22px}
+  .stage > svg.muse{position:absolute;inset:0;width:100%;height:100%}
+  .btool{position:absolute;width:14.5%;aspect-ratio:1;transform:translate(-50%,-50%);border:0;padding:3px;border-radius:50%;background:#fff;box-shadow:0 3px 0 rgba(0,0,0,.18),0 0 0 2.5px #8D6E52;cursor:pointer;transition:transform .15s,box-shadow .2s;z-index:2}
+  .btool:hover,.btool:focus-visible{transform:translate(-50%,-50%) scale(1.18);z-index:3;outline:none}
+  .btool .tf{width:100%;height:100%;display:block}
+  .btool.full{box-shadow:0 3px 0 rgba(0,0,0,.18),0 0 0 3px var(--gold),0 0 14px rgba(255,200,0,.6)}
+  .btool.low{box-shadow:0 3px 0 rgba(0,0,0,.18),0 0 0 3px var(--red),0 0 16px rgba(255,75,75,.75);animation:redpulse 1.6s ease-in-out infinite}
+  @keyframes redpulse{50%{box-shadow:0 3px 0 rgba(0,0,0,.18),0 0 0 3px var(--red),0 0 24px rgba(255,75,75,.95)}}
+  .btool .bpct{position:absolute;left:50%;bottom:-11px;transform:translateX(-50%);font-size:9.5px;font-weight:900;background:#1E2530;color:#fff;border-radius:999px;padding:1px 5px;white-space:nowrap}
+  .btool.low .bpct{background:var(--red)}
+  .btool.full .bpct{background:var(--gold);color:#5A3E00}
+  .tip-hint{text-align:center;font-size:12.5px;margin:10px 0 0}
+  .effrow{display:grid;grid-template-columns:34px 1fr 64px;gap:10px;align-items:center;padding:8px 0;border-bottom:2px solid #F2F2F2;cursor:pointer}
+  .effrow:last-child{border-bottom:0}
+  .effrow .tf{width:34px;height:34px}
+  .effrow b{font-size:13.5px;display:block}
+  .effrow small{font-size:11.5px;color:var(--muted);font-weight:700}
+  .effrow .val{font-weight:900;font-size:17px;text-align:right}
+  .effbar{height:10px;border-radius:99px;background:var(--gray);overflow:hidden;margin-top:5px}
+  .effbar i{display:block;height:100%;border-radius:99px;background:var(--g);transition:width .8s}
+  .effrow.low .val{color:var(--red)} .effrow.low .effbar i{background:var(--red)} .effrow.low b{color:var(--redd)}
+  .redbadge{display:inline-block;font-size:10px;font-weight:900;color:#fff;background:var(--red);border-radius:999px;padding:2px 7px;margin-left:6px;letter-spacing:.04em;vertical-align:middle}
+  .privtag{font-size:11px;font-weight:900;color:#B0262A;background:#FFE4E4;border-radius:999px;padding:3px 9px}
+  .trow{border:2px solid var(--gray);border-radius:16px;padding:12px;margin-bottom:10px}
+  .trow.low{border-color:#FFB2B2;background:#FFF6F6}
+  .trow .th{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .trow .th .tf{width:30px;height:30px}
+  .trow .th b{font-size:14px}
+  .trow .th small{display:block;color:var(--muted);font-size:11.5px;font-weight:700}
+  .tbtns{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .tbtn{border:2px solid var(--gray);background:#fff;border-radius:12px;padding:8px 6px;font-size:11.5px;font-weight:900;color:var(--navy);box-shadow:0 3px 0 var(--gray);display:flex;flex-direction:column;align-items:center;gap:3px;line-height:1.15}
+  .tbtn:active{transform:translateY(3px);box-shadow:none}
+  .tbtn.done{border-color:#A5ED6E;background:#F2FFE8;color:var(--gd)}
+  .tbtn em{font-style:normal;font-size:10px;color:#A560E0}
+  .assigned{display:inline-block;font-size:10px;font-weight:900;color:#5A3E00;background:#FFE680;border-radius:999px;padding:2px 7px;margin-left:6px}
+
+  /* ---------- leaderboard with orbital skill rings ---------- */
+  .orbit{position:relative;width:118px;height:118px;flex:none}
+  .orbit .ring0{position:absolute;inset:18px;border-radius:50%;background:radial-gradient(circle at 50% 35%,#fff,#E9F1FB);border:2px solid var(--line);overflow:hidden}
+  .orbit .ring0 svg{position:absolute;left:50%;top:6px;width:62px;transform:translateX(-50%)}
+  .orbit.me .ring0{border-color:#84D8FF;background:radial-gradient(circle at 50% 35%,#fff,#DDF4FF)}
+  .otool{position:absolute;width:26px;height:26px;transform:translate(-50%,-50%);border-radius:50%;background:#fff;padding:2px;box-shadow:0 0 0 2px #CBD5E4;border:0;cursor:help}
+  .otool .tf{width:100%;height:100%;display:block}
+  .otool.full{box-shadow:0 0 0 2px var(--gold),0 0 8px rgba(255,200,0,.55)}
+  .otool.low{box-shadow:0 0 0 2.5px var(--red),0 0 10px rgba(255,75,75,.7)}
+  .orbit.sm{width:84px;height:84px}
+  .orbit.sm .ring0{inset:14px}
+  .orbit.sm .ring0 svg{width:40px;top:4px}
+  .orbit.sm .otool{width:19px;height:19px;padding:1.5px}
+  .lbhead{display:grid;grid-template-columns:44px 1fr 200px 220px 110px;gap:12px;font-size:11px;font-weight:900;color:#AFAFAF;text-transform:uppercase;letter-spacing:.07em;padding:0 10px 8px;border-bottom:2px solid var(--line)}
+  .brow{display:grid;grid-template-columns:44px 1fr 200px 220px 110px;gap:12px;align-items:center;padding:10px;border-bottom:2px solid #F2F2F2;border-radius:14px;cursor:pointer;transition:background .15s}
+  .brow:hover{background:#F7FAFF}
+  .brow.me{background:#E8F8FF;border:2px solid #84D8FF}
+  .brow .rk{font-size:20px;font-weight:900;color:#AFAFAF;text-align:center}
+  .brow.top .rk{color:var(--goldd)}
+  .brow .who2{display:flex;align-items:center;gap:12px;min-width:0}
+  .brow .who2 b{font-size:15px;display:block}
+  .brow .who2 small{color:var(--muted);font-size:12px;font-weight:700}
+  .rscore b{font-size:22px;font-weight:900;color:var(--navy)}
+  .rscore small{display:block;font-size:12px;color:var(--muted);font-weight:700}
+  .minis{display:flex;flex-wrap:wrap;gap:4px}
+  .minis span{font-size:11px;font-weight:900;padding:3px 6px;border-radius:8px;background:#F2F4F8;color:#4B5566}
+  .minis span.low{background:#FFE4E4;color:var(--redd)}
+  .inspbtn{white-space:nowrap}
+  .miniboard .mrow{display:flex;align-items:center;gap:10px;padding:6px;border-radius:14px;cursor:pointer;border:2px solid transparent}
+  .miniboard .mrow:hover{background:#F7FAFF}
+  .miniboard .mrow.me{background:#E8F8FF;border-color:#84D8FF}
+  .miniboard .mrk{width:22px;text-align:center;font-weight:900;color:#AFAFAF}
+  .miniboard .mtx{flex:1;min-width:0}
+  .miniboard .mtx b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .miniboard .mtx small{font-size:11.5px;color:var(--muted);font-weight:700}
+  .miniboard .msc{font-weight:900;color:var(--navy)}
+  .alertdot{display:inline-block;min-width:18px;text-align:center;font-size:10px;font-weight:900;color:#fff;background:var(--red);border-radius:999px;padding:1px 5px;margin-left:4px}
+
+  /* ---------- inspector ---------- */
+  #inspectOv,#videoOv{z-index:110}
+  .inspector{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(1060px,96vw);max-height:92vh;overflow:auto;background:#fff;border-radius:24px;box-shadow:0 30px 80px rgba(0,0,0,.35);animation:fade .25s ease}
+  .inspector.small{width:min(480px,94vw)}
+  .ihead{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 22px;background:linear-gradient(180deg,#00193A,#002856);color:#fff;position:sticky;top:0;z-index:5}
+  .ihead h2{margin:0;font-size:22px}
+  .ihead small{color:#9DB3D6;font-weight:700}
+  .ihead .xbtn{color:#9DB3D6}
+  .ibody{display:grid;grid-template-columns:330px 1fr;gap:20px;padding:20px 22px 24px}
+  .inspector.small .ibody{grid-template-columns:1fr}
+  .ibody h3{margin:0 0 10px;font-size:16px}
+  .cmp{display:grid;grid-template-columns:150px 1fr 120px;gap:10px;align-items:center;padding:7px 0;border-bottom:2px solid #F2F2F2;font-size:13px}
+  .cmp:last-child{border-bottom:0}
+  .cmp .nm{display:flex;align-items:center;gap:7px;font-weight:800}
+  .cmp .nm .tf{width:24px;height:24px}
+  .dual{display:flex;flex-direction:column;gap:3px}
+  .dual i{display:block;height:9px;border-radius:99px}
+  .dual .a{background:var(--b)} .dual .t{background:#CBD5E4} .dual .p{background:var(--gold)}
+  .cmp.low .dual .a{background:var(--red)}
+  .delta{font-weight:900;text-align:right;line-height:1.25}
+  .delta .up{color:var(--gd)} .delta .dn{color:var(--redd)}
+  .lowtag{display:inline-block;font-size:9.5px;font-weight:900;background:var(--red);color:#fff;border-radius:6px;padding:2px 5px;margin-top:2px}
+  .ilegend{display:flex;gap:12px;font-size:11.5px;font-weight:800;color:var(--muted);margin-bottom:6px;flex-wrap:wrap}
+  .ilegend i{display:inline-block;width:12px;height:8px;border-radius:9px;margin-right:4px;vertical-align:middle}
+  .scorebig{display:flex;align-items:baseline;gap:8px;margin:6px 0 12px}
+  .scorebig b{font-size:40px;font-weight:900;color:var(--navy)}
+  .assignbox{margin-top:14px;background:#FFF8DB;border:2px solid #F5D778;border-radius:16px;padding:12px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+  .assignbox p{margin:0;font-size:13px;font-weight:800;color:#A27200}
+
+  /* ---------- micro-video player ---------- */
+  .vmodal{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(820px,96vw);max-height:94vh;overflow:auto;background:#fff;border-radius:22px;box-shadow:0 30px 80px rgba(0,0,0,.35);animation:fade .25s ease}
+  .vmhead{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:2px solid var(--gray)}
+  .vmhead h3{margin:0;font-size:17px}
+  .vmbody{padding:16px 18px 20px}
+  .player{background:#0B1B33;border-radius:18px;overflow:hidden;box-shadow:0 6px 0 #00122A}
+  .player canvas{display:block;width:100%;aspect-ratio:16/9;height:auto}
+  .vctrl{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#0F2442;color:#fff}
+  .vbtn{border:0;background:var(--b);color:#fff;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;box-shadow:0 3px 0 var(--bd);flex:none}
+  .vbtn:active{transform:translateY(3px);box-shadow:none}
+  .vbtn.ghost{background:rgba(255,255,255,.12);box-shadow:none}
+  .vscrub{flex:1;min-width:60px;accent-color:#58CC02;height:6px}
+  .vtime{font-variant-numeric:tabular-nums;font-weight:900;font-size:13px;white-space:nowrap;color:#BFD0EC}
+  .vmarks{display:flex;gap:6px;flex-wrap:wrap;padding:8px 12px 12px;background:#0F2442}
+  .vmark{border:1.5px solid rgba(255,255,255,.2);background:transparent;color:#BFD0EC;font-size:11.5px;font-weight:800;border-radius:999px;padding:4px 10px}
+  .vmark.on{background:#58CC02;border-color:#58CC02;color:#fff}
+  .vdone{display:none;margin-top:10px;background:#D7FFB8;border:2px solid #A5ED6E;color:var(--gd);font-weight:900;border-radius:14px;padding:10px 12px;font-size:14px}
+  .vdone.show{display:block}
+  details.script{margin-top:12px;border:2px solid var(--gray);border-radius:14px;padding:10px 14px}
+  details.script summary{cursor:pointer;font-weight:900;color:var(--navy)}
+  #vidHost:empty{display:none}
+
+  /* ---------- help pages ---------- */
+  .helpgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+  .hcard{border:2px solid var(--gray);border-radius:18px;padding:16px;background:#fff;box-shadow:0 4px 0 var(--gray)}
+  .hcard .hi{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;margin-bottom:10px}
+  .hcard .hi .tf,.hcard .hi svg{width:34px;height:34px}
+  .hcard h4{margin:0 0 4px;font-size:15px}
+  .hcard p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.5}
+
+  /* ---------- tooltip ---------- */
+  .tip{position:fixed;z-index:300;pointer-events:none;background:#0B1B33;color:#fff;border-radius:12px;padding:8px 11px;font-size:12.5px;line-height:1.4;max-width:260px;box-shadow:0 10px 24px rgba(0,0,0,.25);opacity:0;transform:translateY(4px);transition:opacity .12s,transform .12s}
+  .tip.show{opacity:1;transform:none}
+  .tip b{display:block;font-size:13px}
+  .tip .r{color:#FF8A8A;font-weight:900}
+  .tip .g{color:#FFD84D;font-weight:900}
+  .tip .n{color:#AEB9C8;font-weight:800}
+
+  @media (max-width:980px){
+    .qgrid,.ibody,.pathcards{grid-template-columns:1fr}
+    .helpgrid{grid-template-columns:1fr 1fr}
+    .lbhead,.brow{grid-template-columns:34px 1fr 120px}
+    .brow .minis,.brow .inspbtn,.lbhead .hide-sm,.lbhead span:last-child{display:none}
+    .pathpill{display:none}
+  }
+  @media (max-width:640px){
+    .pathtitle{font-size:36px}
+    .pcard{grid-template-columns:1fr}
+    .pcfig{min-height:200px}
+    .helpgrid{grid-template-columns:1fr}
+    .tbtns{grid-template-columns:repeat(2,1fr)}
+    .lbhead,.brow{grid-template-columns:28px 1fr 84px;gap:8px}
+    .brow .orbit{width:84px;height:84px}
+    .brow .orbit .ring0{inset:14px}.brow .orbit .ring0 svg{width:40px;top:4px}
+    .brow .orbit .otool{width:19px;height:19px}
+    .brow .who2{gap:6px}
+    .brow .who2 b{font-size:13px}
+    .rscore b{font-size:17px}
+    .cmp{grid-template-columns:110px 1fr 80px;font-size:12px}
+    .switchbtn{padding:7px 9px}
+    .vctrl{gap:6px}
+  }
+  .homegrid>*,.qgrid>*,.side-col,.side-col>*{min-width:0}
+  .miniboard,.mini-row,.mrow{min-width:0;overflow:hidden}
+  /* nav on its own row so every page link always fits */
+  .topbar .in{flex-wrap:wrap;row-gap:6px}
+  .topbar .nav{order:3;width:100%;margin-left:0;padding-top:2px}
+  .topbar .pathpill{margin-left:auto}
+  body:has(#inspectOv.show) #toasts, body:has(#videoOv.show) #toasts{right:auto;left:16px}
+  @media (min-width:641px){ #toasts{top:150px} }
+</style>
+
+</head><body>
 <!-- shared gradients for the inline SVG tools -->
 <svg class="sr" aria-hidden="true" focusable="false"><defs>
   <linearGradient id="gMetal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F7F9FC"/><stop offset=".5" stop-color="#AEB8C6"/><stop offset="1" stop-color="#E3E8EF"/></linearGradient>
@@ -516,16 +741,11 @@
 <!-- ============ HEADER: TOP BAR + GAME HUD ============ -->
 <div class="header">
 <div class="topbar"><div class="in">
-  <a class="brand" href="#home"><span class="mark">M</span>Morgan<small>AI Sales Manager</small></a>
-  <nav class="nav" id="nav">
-    <a href="#home" data-v="home">Quest Map</a>
-    <a href="#toolbelt" data-v="toolbelt">Tool Belt</a>
-    <a href="#issues" data-v="issues">Issues</a>
-    <a href="#trainings" data-v="trainings">Trainings</a>
-    <a href="#chat" data-v="chat">Chat</a>
-    <a href="#morgan" data-v="morgan">How It Works</a>
-  </nav>
+  <a class="brand" href="#home" id="brand"><span class="mark" id="brandMark">M</span><span id="brandName">Morgan</span><small id="brandSub">AI Sales Manager</small></a>
+  <nav class="nav" id="nav"></nav>
   <div class="spacer"></div>
+  <span class="pathpill" id="pathPill" title="The workspace you're signed in to">Morgan · Sales Manager</span>
+  <button class="switchbtn" id="switchPath" type="button">Switch Path</button>
   <span class="pill q" title="Quinn is the rep-side AI that reviews sales calls and feeds Morgan"><span class="dot live"></span>Quinn synced · 214 calls</span>
   <span class="pill" id="aiStatus"><span class="dot"></span>Connecting…</span>
   <div class="avatar" id="initials" title="Edit your name on the Quest Map">SM</div>
@@ -595,10 +815,10 @@
       </div>
       <div class="side-col">
         <div class="card">
-          <h3 class="ct"><span id="leagueTitle">Weekly Gold League</span> <span class="tag" style="background:#FFF4D1;color:#A27200">3 days left</span></h3>
-          <div class="tiers" id="tiers"></div>
-          <div class="lb" id="leaderboard"></div>
-          <p class="demo-note" style="margin-top:8px">Sample team data. Squad slots are placeholders, not real reps.</p>
+          <h3 class="ct">Results Leaderboard <a class="b3d sm blue" href="#leaderboard">Full board</a></h3>
+          <p class="muted" style="margin:-6px 0 10px;font-size:12.5px">Ranked by call results from Quinn's reviews. Click a rep to inspect them. <b style="color:var(--red)">Red</b> = skill under 60%.</p>
+          <div class="miniboard" id="miniBoardM"></div>
+          <p class="demo-note" style="margin-top:8px">Sample team data for demonstration. Sample roster labels, not real people.</p>
         </div>
         <div class="card">
           <h3 class="ct">Daily Quests <span class="muted" style="font-size:12px;font-weight:800">+10 gems each</span></h3>
@@ -641,10 +861,10 @@
 </section>
 
 <!-- ============ HOW IT WORKS (MORGAN) ============ -->
-<section class="view" id="v-morgan">
+<section class="view" id="v-morgan-help">
   <div class="page-head"><div class="in">
     <a class="back" href="#home">← Quest Map</a>
-    <h1>Meet Morgan</h1>
+    <h1>How Morgan Helps</h1>
     <p>The manager-side AI. Morgan turns Quinn's call reviews into ranked coaching priorities and ready-to-run training.</p>
   </div></div>
   <main>
@@ -666,6 +886,11 @@
         <ul><li>Ranks team-wide issues by frequency and impact</li><li>Recommends trainings for each issue</li><li>Writes video scripts, curriculums and AI roleplays</li><li>Answers manager questions instantly</li><li>Fully customizable to your team's process</li></ul></div></div>
       <div class="card"><div class="bot q">Q</div><div><h3 style="margin:0">Quinn · Sales Rep</h3>
         <ul><li>Reviews each rep's sales calls</li><li>Points out poor closing, missed root issues, being too pushy</li><li>Backs each flag with moments from the call</li><li>Coaches the rep one-on-one after each call</li><li>Sends patterns up to Morgan automatically</li></ul></div></div>
+    </div>
+    <div class="card" style="margin-top:18px">
+      <h3 style="margin:0 0 4px">Everything Morgan does for sales managers</h3>
+      <p class="muted" style="margin:0;font-size:14px">One copilot that turns hundreds of recorded calls into a coaching plan for the whole team.</p>
+      <div class="helpgrid" id="morganHelpGrid"></div>
     </div>
     <div class="card" style="margin-top:18px">
       <h3 style="margin:0 0 4px">How Quest Mode works</h3>
@@ -730,7 +955,8 @@
     </div>
     <div class="card output" id="genOut">
       <div class="head"><div style="display:flex;align-items:center;gap:10px"><div class="bot m" style="width:30px;height:30px;border-radius:9px;font-size:12px">M</div><b id="genTitle">Training</b></div><button class="btn" id="copyGen">Copy</button></div>
-      <div class="md" id="genBody"></div>
+      <div id="vidHost"></div>
+      <details class="script" id="genDetails" open><summary id="genSummary">Full output</summary><div class="md" id="genBody"></div></details>
     </div>
   </main>
 </section>
@@ -807,6 +1033,146 @@
 </div>
 
 <div id="toasts" aria-live="polite"></div>
+
+<!-- ============ QUINN · MY TOOLBELT (REP HOME) ============ -->
+<section class="view" id="v-qhome">
+  <div class="hero qhero"><div class="in">
+    <div class="eyebrow" style="color:#7FE3F2">Quinn · Your personal AI call coach</div>
+    <h1 id="qHello">Hi Jordan</h1>
+    <p class="sub" id="qSub">Quinn reviewed your recorded calls.</p>
+    <div class="kpis" id="qKpis"></div>
+  </div></div>
+  <main>
+    <div class="lift">
+      <div class="qgrid">
+        <div class="card charcard">
+          <div class="charhead"><div><div class="kk">My Toolbelt</div><h3 id="qRepName">Rep 01 — Jordan P.</h3></div><span class="legend2"><i class="lg c"></i>Colored <i class="lg g"></i>Untested <i class="lg r"></i>Needs coaching</span></div>
+          <div class="stage" id="qStage"></div>
+          <p class="muted tip-hint">Hover over a tool on your belt to see the full skill. Click it to train.</p>
+        </div>
+        <div class="qcol">
+          <div class="card">
+            <h3 class="ct">Skill effectiveness on recorded calls <span class="privtag" title="Red alerts are private: only you and Morgan can see them">Private · you + Morgan</span></h3>
+            <div id="qEff"></div>
+          </div>
+          <div class="card">
+            <h3 class="ct">Active Trainings <span class="muted" style="font-size:12px;font-weight:800">Weakest skills first</span></h3>
+            <div id="qTrain"></div>
+          </div>
+        </div>
+      </div>
+      <div class="homegrid">
+        <div class="card" style="padding:18px;overflow:hidden">
+          <div class="unit"><div><div class="unit-k">UNIT 1 · YOUR RECORDED CALLS</div><h3>Skill Quests</h3><p>Clear each drill to test a skill and start coloring in its tool.</p></div><a class="b3d sm" href="#quinn-help">How Quinn helps</a></div>
+          <div class="path" id="qPath"></div>
+        </div>
+        <div class="side-col">
+          <div class="card">
+            <h3 class="ct">Results Leaderboard <a class="b3d sm blue" href="#leaderboard">Full board</a></h3>
+            <p class="muted" style="margin:-6px 0 10px;font-size:12.5px">Ranked by call results. Your red alerts are private, and coworkers' skills never show red to you.</p>
+            <div class="miniboard" id="miniBoardQ"></div>
+          </div>
+          <div class="card"><h3 class="ct">Daily Quests <span class="muted" style="font-size:12px;font-weight:800">+10 gems each</span></h3><div id="dailyQuestsQ"></div></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ============ RESULTS LEADERBOARD (BOTH PATHS) ============ -->
+<section class="view" id="v-leaderboard">
+  <div class="page-head"><div class="in">
+    <a class="back" href="#home">← Home</a>
+    <h1>Results Leaderboard</h1>
+    <p id="lbSub">Ranked only by call results from Quinn's reviews, not XP.</p>
+  </div></div>
+  <main>
+    <div class="card" style="margin-top:22px">
+      <div class="lbhead"><span>Rank</span><span>Rep &amp; skills</span><span>Results Score</span><span class="hide-sm">Call results</span><span></span></div>
+      <div id="bigBoard"></div>
+      <p class="demo-note">Sample team data for demonstration. Rep labels are a sample roster, not real people. Results Score = average of 6 call metrics: Next-Step Booked Rate, Root Pain Uncovered, AI Objection Survival, Balanced Talk Ratio, VP/CFO Multi-Thread Rate and 48h Recap Speed.</p>
+    </div>
+  </main>
+</section>
+
+<!-- ============ HOW QUINN HELPS ============ -->
+<section class="view" id="v-quinn-help">
+  <div class="page-head qhead"><div class="in">
+    <a class="back" href="#home">← My Toolbelt</a>
+    <h1>How Quinn Helps</h1>
+    <p>Quinn is the rep-side AI. It reviews every recorded call, coaches you one-on-one, and helps you color in your toolbelt.</p>
+  </div></div>
+  <main>
+    <div class="card" style="margin-top:22px">
+      <h3 style="margin:0 0 4px">Everything Quinn does for sales reps</h3>
+      <p class="muted" style="margin:0;font-size:14px">Private coaching that turns every recorded call into your next improvement.</p>
+      <div class="helpgrid" id="quinnHelpGrid"></div>
+    </div>
+    <div class="card" style="margin-top:18px">
+      <h3 style="margin:0 0 10px">A week with Quinn</h3>
+      <div class="flow">
+        <div class="step"><div class="n">AFTER EVERY CALL</div><h4>Automatic review</h4><p>Quinn scores the 6 skills and pins the exact timestamps where the deal turned.</p></div>
+        <div class="arrow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="step"><div class="n">SAME DAY</div><h4>Private 1-on-1</h4><p>You get the fix for your weakest skill. Red alerts stay between you and Morgan.</p></div>
+        <div class="arrow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="step"><div class="n">5 MINUTES</div><h4>Drill + 30s video</h4><p>Run a 3-question drill and watch a 30-second micro-video. Your tool colors in.</p></div>
+        <div class="arrow"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <div class="step"><div class="n">NEXT CALLS</div><h4>Climb the board</h4><p>Quinn re-scores your next calls. Better results move you up the leaderboard.</p></div>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ============ CHOOSE YOUR PATH ============ -->
+<div class="overlay" id="pathOv" role="dialog" aria-modal="true" aria-label="Choose your path">
+  <div class="pathscreen">
+    <button class="xbtn pclose" id="pathClose" type="button" aria-label="Close"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+    <div class="pathin">
+      <div class="eyebrow" style="text-align:center">Morgan &amp; Quinn · AI sales coaching</div>
+      <h1 class="pathtitle">Choose your path</h1>
+      <p class="pathsub">Two bots, one team. Pick the workspace you're signing in to.</p>
+      <div class="pathcards">
+        <div class="pcard q" id="pcQuinn" tabindex="0">
+          <div class="pcfig" id="pcQuinnFig"></div>
+          <div class="pcbody">
+            <div class="pctag">Quinn · Sales Rep's Bot</div>
+            <h2>Quinn</h2>
+            <p>Your personal AI call coach. Review your recorded calls, level up your toolbelt, run 30s trainings, and climb the results leaderboard.</p>
+            <label class="replabel" for="repSelect">Signed in as</label>
+            <select id="repSelect" class="repselect"></select>
+            <button class="b3d blue" id="enterQuinn" type="button" style="width:100%;margin-top:12px">Enter as Quinn</button>
+          </div>
+        </div>
+        <div class="pcard m" id="pcMorgan" tabindex="0">
+          <div class="pcfig" id="pcMorganFig"></div>
+          <div class="pcbody">
+            <div class="pctag">Morgan · Sales Manager's Bot</div>
+            <h2>Morgan</h2>
+            <p>Your AI sales manager copilot. Inspect any rep's zoomed-in toolbelt, spot red low-effectiveness skills, compare results vs. coworkers, and deploy trainings.</p>
+            <div class="mgrnote">Manager view · all 12 reps · red alerts visible</div>
+            <button class="b3d navy" id="enterMorgan" type="button" style="width:100%;margin-top:12px">Enter as Morgan</button>
+          </div>
+        </div>
+      </div>
+      <p class="demo-note" style="text-align:center;color:#9DB3D6">Sample team data for demonstration. The rep roster uses sample labels, not real people.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ REP INSPECTOR (MORGAN) / PUBLIC CARD (QUINN) ============ -->
+<div class="overlay" id="inspectOv" role="dialog" aria-modal="true" aria-label="Rep details">
+  <div class="scrim" id="inspectScrim"></div>
+  <div class="inspector" id="inspector"></div>
+</div>
+
+<!-- ============ 30s MICRO-VIDEO ============ -->
+<div class="overlay" id="videoOv" role="dialog" aria-modal="true" aria-label="30-second micro-video">
+  <div class="scrim" id="videoScrim"></div>
+  <div class="vmodal" id="vmodal"></div>
+</div>
+
+<div class="tip" id="tip" role="tooltip"></div>
+
 <script>
 /* ===================== DATA (sample team data from Quinn) ===================== */
 const ISSUES = [
@@ -830,7 +1196,7 @@ You work with Quinn, the rep-side AI, which reviews every sales call and flags p
 Here is Quinn's latest data, compiled by you from ${TEAM.calls} calls over the ${TEAM.window}, ranked most common to least:
 ${ISSUES.map((i,n)=>`${n+1}. ${i.name}: ${i.calls} calls, ${i.reps} reps affected, trend ${i.trend>0?'+':''}${i.trend} vs last month. ${i.desc} Evidence: ${i.ev}`).join('\n')}
 You can recommend and create trainings: micro-video scripts, multi-session curriculums, and AI roleplays.
-Style: confident, practical, specific to the data above. Keep answers tight (under ~180 words unless asked to build a training). Use short markdown: **bold**, bullet lists, numbered steps, and "#### " for small headings. No tables. Don't invent rep names; refer to "3 reps" etc.`;
+Style: confident, practical, specific to the data above. Keep answers tight (under ~180 words unless asked to build a training). Use short markdown: **bold**, bullet lists, numbered steps, and "#### " for small headings. No tables. Don't invent real people's names; refer to "3 reps" etc., or to the sample roster labels (e.g. "Rep 04") when asked about a specific rep.`;
 
 /* ===================== AI ===================== */
 let sampleFn = null, aiReady = false;
@@ -944,6 +1310,7 @@ function md(text){
 }
 const TYPING = '<div class="typing"><i></i><i></i><i></i></div>';
 
+
 /* ===================== GAME DATA: 3-question call drills (built from Quinn's flags) ===================== */
 const DRILLS = {
   close:[
@@ -1044,8 +1411,9 @@ const TOOL_SVG = {
 /* Each tool renders as a grayscale copy with a full-color copy on top, clipped bottom-to-top to its % complete.
    PREV holds the last rendered % so fresh markup starts there and animates to the new value (see applyFills). */
 const PREV = {};
-function toolSvg(id, cls='t'){
-  const p = toolPct(id), from = (id in PREV) ? PREV[id] : p;
+function toolSvg(id, cls='t', pctOverride){
+  const own = pctOverride===undefined;
+  const p = own ? toolPct(id) : pctOverride, from = own && (id in PREV) ? PREV[id] : p;
   return `<span class="tf ${cls}" data-tid="${id}" data-pct="${p}" aria-hidden="true"><svg class="tf-g" viewBox="0 0 64 64">${TOOL_SVG[id]}</svg><svg class="tf-c" viewBox="0 0 64 64" style="clip-path:inset(${100-from}% 0 0 0)">${TOOL_SVG[id]}</svg><i class="tf-line" style="bottom:${from}%;opacity:${from>0&&from<100?1:0}"></i></span>`;
 }
 function applyFills(){
@@ -1081,15 +1449,33 @@ function emblem(i, cls='em'){
 }
 const BUCKLE_SVG = `<svg class="buckle" viewBox="0 0 50 70" aria-hidden="true"><rect x="3" y="3" width="44" height="64" rx="10" fill="none" stroke="url(#gGold)" stroke-width="7"/><rect x="3" y="3" width="44" height="64" rx="10" fill="none" stroke="#B88400" stroke-width="1.2"/><rect x="21" y="10" width="7" height="50" rx="3.5" fill="url(#gMetal)" stroke="#5B6B82"/></svg>`;
 
-/* ===================== SAMPLE WEEKLY LEAGUE (team squad slots, sample data) ===================== */
-const SQUAD = [
-  ['Rep Slot 01','Northeast Squad',412],['Rep Slot 02','Enterprise Squad',368],['Rep Slot 03','Mid-Market Squad',331],
-  ['Rep Slot 04','Northeast Squad',296],['Rep Slot 05','Public Sector Squad',262],['Rep Slot 06','Enterprise Squad',231],
-  ['Rep Slot 07','Mid-Market Squad',204],['Rep Slot 08','Public Sector Squad',176],['Rep Slot 09','Northeast Squad',149],
-  ['Rep Slot 10','Enterprise Squad',118],['Rep Slot 11','Mid-Market Squad',87]
+/* ===================== SAMPLE ROSTER (sample team data, not real people) ===================== */
+const SKILL_IDS = ['close','root','ai','pushy','thread','follow'];
+const METRICS = [
+  {id:'close',  name:'Next-Step Booked Rate',    a:.85, b:4},
+  {id:'root',   name:'Root Pain Uncovered',      a:.9,  b:2},
+  {id:'ai',     name:'AI Objection Survival',    a:.8,  b:10},
+  {id:'pushy',  name:'Balanced Talk Ratio',      a:.95, b:0},
+  {id:'thread', name:'VP/CFO Multi-Thread Rate', a:.75, b:6},
+  {id:'follow', name:'48h Recap Speed',          a:.9,  b:8}
 ];
-const AV_COLORS = ['#1CB0F6','#58CC02','#FF9600','#CE82FF','#FF4B4B','#2B70C9','#00C2A8','#E0A800','#7A4B26','#0B7A8F','#A560E0'];
-const LEAGUE_TIERS = [['Bronze','#CD7F32'],['Silver','#A8B2BD'],['Gold','#FFC800'],['Diamond','#7FD6FF']];
+const LOW = 60; // skills under 60% effectiveness are flagged red (only to the rep themself and to Morgan)
+const ROSTER = [
+  {n:'Jordan P.', role:'Account Exec · Northeast', eff:[48,76,55,82,64,71], calls:18, look:{skin:'#E8B48F',hair:'#2B1B12',style:'side',blazer:'#1F4E8C',shirt:'#FFFFFF',pants:'#1E2530',tie:'#FF4B4B',headset:true}},
+  {n:'Taylor M.', role:'Account Exec · Enterprise', eff:[72,58,66,88,52,80], calls:20, look:{skin:'#F5D0B5',hair:'#C9822B',style:'long',blazer:'#7A2E4A',shirt:'#FDF2E9',pants:'#2B2B35',tie:null,headset:true}},
+  {n:'Casey R.',  role:'Senior AE · Mid-Market', eff:[85,81,74,70,78,90], calls:22, look:{skin:'#8D5524',hair:'#111111',style:'curly',blazer:'#2E6B4F',shirt:'#EAF6EF',pants:'#1E2530',tie:null,headset:true}},
+  {n:'Riley K.',  role:'Account Exec · Public Sector', eff:[41,52,47,61,45,58], calls:16, look:{skin:'#F1C27D',hair:'#5A3A1E',style:'short',blazer:'#3B3F4A',shirt:'#DDF4FF',pants:'#2A2F3A',tie:'#1CB0F6',headset:false}},
+  {n:'Avery S.',  role:'Account Exec · Enterprise', eff:[66,70,79,75,69,62], calls:19, look:{skin:'#C68642',hair:'#2B1B12',style:'bun',blazer:'#002856',shirt:'#FFFFFF',pants:'#1E2530',tie:null,headset:true}},
+  {n:'Jamie L.',  role:'SDR · Northeast', eff:[55,63,44,90,58,73], calls:17, look:{skin:'#F5D0B5',hair:'#E6C27A',style:'buzz',blazer:'#5B3E8F',shirt:'#F5E6FF',pants:'#22222C',tie:'#FFC800',headset:true}},
+  {n:'Drew C.',   role:'Senior AE · Northeast', eff:[78,88,71,58,82,85], calls:21, look:{skin:'#5C3A21',hair:'#0E0E0E',style:'short',blazer:'#8A5A2B',shirt:'#FFF8DB',pants:'#2B2B2B',tie:'#002856',headset:false}},
+  {n:'Parker N.', role:'SDR · Mid-Market', eff:[52,45,61,67,40,49], calls:15, look:{skin:'#E8B48F',hair:'#8B2E16',style:'long',blazer:'#0B7A8F',shirt:'#E7F8FB',pants:'#1E2530',tie:null,headset:true}},
+  {n:'Sam T.',    role:'Account Exec · Public Sector', eff:[69,74,83,80,73,77], calls:20, look:{skin:'#C68642',hair:'#3A2A1A',style:'side',blazer:'#A33B3B',shirt:'#FFFFFF',pants:'#22222C',tie:'#1E2530',headset:true}},
+  {n:'Reese H.',  role:'SDR · Enterprise', eff:[38,60,57,54,50,66], calls:14, look:{skin:'#F1C27D',hair:'#1A1A1A',style:'bun',blazer:'#4B5566',shirt:'#FFE4E4',pants:'#2A2F3A',tie:null,headset:true}},
+  {n:'Cameron D.',role:'Account Exec · Mid-Market', eff:[74,67,52,85,76,81], calls:18, look:{skin:'#8D5524',hair:'#2B1B12',style:'buzz',blazer:'#1F4E8C',shirt:'#DDF4FF',pants:'#1E2530',tie:'#58CC02',headset:false}},
+  {n:'Skyler B.', role:'Account Exec · Northeast', eff:[61,79,68,72,63,59], calls:19, look:{skin:'#F5D0B5',hair:'#6B4423',style:'curly',blazer:'#2E6B4F',shirt:'#FFFFFF',pants:'#2B2B35',tie:null,headset:true}}
+];
+const repLabel = i => `Rep ${String(i+1).padStart(2,'0')} — ${ROSTER[i].n}`;
+const MANAGER_LOOK = {skin:'#E8B48F',hair:'#3A2A1A',style:'side',blazer:'#002856',shirt:'#FFFFFF',pants:'#1E2530',tie:'#FFC800',headset:false};
 
 /* keywords that count as "asking Morgan about" each issue */
 const ASK_RX = {
@@ -1109,7 +1495,8 @@ const ASK_Q = {
   follow:'How do we speed up slow follow-up and recaps?'
 };
 
-/* ===================== STATE (localStorage: morganGamifiedState) ===================== */
+/* ===================== STATE (localStorage: morganGamifiedState) =====================
+   One store holds a progress profile per seat: "manager" (Morgan) and "rep0".."rep11" (Quinn). */
 const SKEY = 'morganGamifiedState';
 const DAILY_GOAL = 50;
 const todayStr = ()=>{ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
@@ -1117,25 +1504,67 @@ function freshState(){
   return {v:1, xp:0, weekBase:140, streak:7, freeze:1, gems:500,
     daily:{date:todayStr(), xp:20, drills:0, gens:0, goalHit:false, claimed:{}},
     drills:{}, perfect:{}, trained:{}, asked:{}, gen:{video:0,curriculum:0,roleplay:0}, roleplayIssues:{},
-    quinnChats:0, chats:0, visitedIssues:false, boss:false, perfectAny:false, equipped:{}, level:0};
+    quinnChats:0, chats:0, visitedIssues:false, boss:false, perfectAny:false, equipped:{}, level:0,
+    videos:0, visitedHelp:false, visitedBoard:false};
 }
-let S = freshState();
-try{ const raw = localStorage.getItem(SKEY); if(raw){ const p = JSON.parse(raw); if(p && p.v===1) S = Object.assign(freshState(), p); } }catch(e){}
-if(!S.daily || S.daily.date!==todayStr()){
-  // new day: daily goal resets; if yesterday's goal was missed, the Streak Freeze is used up first
-  const hit = S.daily && S.daily.goalHit;
-  if(S.daily && !hit){ if(S.freeze>0) S.freeze--; else S.streak=0; }
-  S.daily = {date:todayStr(), xp:0, drills:0, gens:0, goalHit:false, claimed:{}};
+/* a rep's starting profile: skills already tested on recorded calls (eff >= 65) have their drill step done,
+   strong skills (eff >= 80) also have their micro-video watched */
+function seedState(i){
+  const s = freshState(); s.seed=true; s.daily.xp=0;
+  ROSTER[i].eff.forEach((e,k)=>{ const id=SKILL_IDS[k]; if(e>=65) s.drills[id]=true; if(e>=80){ s.trained[id]={video:true}; } });
+  s.videos = Object.keys(s.trained).length;
+  return s;
 }
-function save(){ try{ localStorage.setItem(SKEY, JSON.stringify(S)); }catch(e){} }
+function freshStore(){ return {v:2, mode:null, repId:0, profiles:{}, assign:{}}; }
+let store = freshStore();
+try{
+  const raw = localStorage.getItem(SKEY);
+  if(raw){
+    const p = JSON.parse(raw);
+    if(p && p.v===2) store = Object.assign(freshStore(), p);
+    else if(p && p.v===1) store.profiles.manager = Object.assign(freshState(), p); // migrate the single-player save
+  }
+}catch(e){}
+let STEP_MODE = 'morgan';
+const profileKey = (mode, rep) => mode==='quinn' ? 'rep'+rep : 'manager';
+function rollDay(st){
+  if(!st.daily || st.daily.date!==todayStr()){
+    const hit = st.daily && st.daily.goalHit;
+    if(st.daily && !hit){ if(st.freeze>0) st.freeze--; else st.streak=0; }
+    st.daily = {date:todayStr(), xp:0, drills:0, gens:0, goalHit:false, claimed:{}};
+  }
+  return st;
+}
+function loadProfile(mode, rep){
+  const k = profileKey(mode, rep);
+  const base = mode==='quinn' ? seedState(rep) : freshState();
+  const st = store.profiles[k] ? Object.assign(base, store.profiles[k]) : base;
+  store.profiles[k] = rollDay(st);
+  return st;
+}
+let S = loadProfile(store.mode||'morgan', store.repId||0);
+STEP_MODE = store.mode==='quinn' ? 'quinn' : 'morgan';
+function save(){ try{ store.profiles[profileKey(store.mode||'morgan', store.repId)] = S; localStorage.setItem(SKEY, JSON.stringify(store)); }catch(e){} }
+/* evaluate tool progress for another seat's profile (e.g. Morgan viewing a rep) */
+function repState(i){
+  if(store.mode==='quinn' && i===store.repId) return S;
+  const k='rep'+i; return store.profiles[k] ? Object.assign(seedState(i), store.profiles[k]) : seedState(i);
+}
+function withState(st, mode, fn){ const oS=S, oM=STEP_MODE; S=st; STEP_MODE=mode; try{ return fn(); } finally{ S=oS; STEP_MODE=oM; } }
 
 /* ===================== TOOL REQUIREMENTS ===================== */
 function trainedAll3(){ return Object.values(S.trained).some(t=>t && t.video && t.curriculum && t.roleplay); }
 function nextQuestId(){ const n = ISSUES.find(i=>!S.drills[i.id]); return n ? n.id : ISSUES[0].id; }
 function toolSteps(id){
   const t = TOOL[id];
+  const q = STEP_MODE==='quinn';
   if(t.core){
     const iss = ISSUES.find(i=>i.id===id);
+    if(q) return [
+      {t:`Test it: complete the "${iss.name}" drill`, done:!!S.drills[id], label:'Start drill', go:()=>openLesson(id)},
+      {t:'Watch the 30-second micro-video', done:!!(S.trained[id] && S.trained[id].video), label:'Play video', go:()=>openVideo(id)},
+      {t:'Train it: finish a roleplay or curriculum', done:!!(S.trained[id] && (S.trained[id].roleplay || S.trained[id].curriculum)), label:'Open roleplay', go:()=>startTraining(id,'roleplay')}
+    ];
     return [
       {t:`Complete the "${iss.name}" drill`, done:!!S.drills[id], label:'Start drill', go:()=>openLesson(id)},
       {t:'Generate a training for this issue', done:!!(S.trained[id] && Object.keys(S.trained[id]).length), label:'Open Trainings', go:()=>{ selectIssue(id); location.hash='#trainings'; }},
@@ -1147,11 +1576,18 @@ function toolSteps(id){
     {t:'Complete 3 different issue drills', done:Object.keys(S.drills).length>=3, label:'Next drill', go:()=>openLesson(nextQuestId())},
     {t:'Earn 250 total XP', done:S.xp>=250, label:'Earn XP', go:()=>openLesson(nextQuestId())}
   ];
-  if(id==='quinn') return [
-    {t:'Open Current Issues and review Quinn\'s evidence', done:!!S.visitedIssues, label:'Open Issues', go:()=>{ location.hash='#issues'; }},
-    {t:'Send a chat message with Quinn looped in', done:S.quinnChats>=1, label:'Chat with Quinn', go:()=>askInChat('Which rep needs the most help with closing?', true)},
-    {t:'Send 3 chat messages with Quinn looped in', done:S.quinnChats>=3, label:'Chat with Quinn', go:()=>askInChat('What should I measure to know training worked?', true)}
-  ];
+  if(id==='quinn'){
+    if(q) return [
+      {t:'Read "How Quinn Helps"', done:!!S.visitedHelp, label:'Open page', go:()=>{ location.hash='#quinn-help'; }},
+      {t:'Check your spot on the results leaderboard', done:!!S.visitedBoard, label:'Open leaderboard', go:()=>{ location.hash='#leaderboard'; }},
+      {t:'Watch 2 micro-videos', done:(S.videos||0)>=2, label:'Play video', go:()=>openVideo(weakestSkill())}
+    ];
+    return [
+      {t:'Open Current Issues and review Quinn\'s evidence', done:!!S.visitedIssues, label:'Open Issues', go:()=>{ location.hash='#issues'; }},
+      {t:'Send a chat message with Quinn looped in', done:S.quinnChats>=1, label:'Chat with Quinn', go:()=>askInChat('Which rep needs the most help with closing?', true)},
+      {t:'Send 3 chat messages with Quinn looped in', done:S.quinnChats>=3, label:'Chat with Quinn', go:()=>askInChat('What should I measure to know training worked?', true)}
+    ];
+  }
   if(id==='roleplay') return [
     {t:'Generate an AI roleplay', done:S.gen.roleplay>=1, label:'Open Trainings', go:()=>{ location.hash='#trainings'; }},
     {t:'Generate roleplays for 3 different issues', done:Object.keys(S.roleplayIssues).length>=3, label:'Open Trainings', go:()=>{ location.hash='#trainings'; }},
@@ -1159,10 +1595,28 @@ function toolSteps(id){
   ];
   return [ // blueprint
     {t:'Generate a curriculum', done:S.gen.curriculum>=1, label:'Open Trainings', go:()=>{ location.hash='#trainings'; }},
-    {t:'Generate a micro-video script', done:S.gen.video>=1, label:'Open Trainings', go:()=>{ location.hash='#trainings'; }},
+    {t:'Generate or watch a micro-video', done:S.gen.video>=1 || (S.videos||0)>=1, label:'Open Trainings', go:()=>{ location.hash='#trainings'; }},
     {t:'Generate all 3 training types for one issue', done:trainedAll3(), label:'Open Trainings', go:()=>{ location.hash='#trainings'; }}
   ];
 }
+
+/* ===================== CALL RESULTS (effectiveness, metrics, Results Score) ===================== */
+function stepsDone(st, id){ return withState(st, 'quinn', ()=>toolSteps(id).filter(s=>s.done).length); }
+function repEff(i){
+  // recorded-call effectiveness per skill; each training step completed beyond the starting profile adds +5 (cap 97)
+  const st = repState(i), seed = seedState(i);
+  return SKILL_IDS.map((id,k)=>Math.min(97, ROSTER[i].eff[k] + 5*Math.max(0, stepsDone(st,id) - stepsDone(seed,id))));
+}
+function repMetrics(i){ const e=repEff(i); return METRICS.map((m,k)=>Math.max(5,Math.min(98,Math.round(e[k]*m.a+m.b)))); }
+function repResults(i){
+  const m=repMetrics(i), score=Math.round(m.reduce((a,b)=>a+b,0)/m.length);
+  return {score, calls:ROSTER[i].calls, converted:Math.round(ROSTER[i].calls*score/100), eff:repEff(i), metrics:m};
+}
+function rankedReps(){ return ROSTER.map((r,i)=>Object.assign({i}, repResults(i))).sort((a,b)=>b.score-a.score || a.i-b.i); }
+/* red visibility: Morgan sees every rep's red skills; a Quinn rep sees red only on their own skills */
+function canSeeRed(i){ return store.mode==='morgan' || (store.mode==='quinn' && i===store.repId); }
+function repToolPct(i, id){ return withState(repState(i), 'quinn', ()=>toolPct(id)); }
+function weakestSkill(){ if(store.mode!=='quinn') return 'close'; const e=repEff(store.repId); let k=0; e.forEach((v,j)=>{ if(v<e[k]) k=j; }); return SKILL_IDS[k]; }
 function toolState(id){ const st=toolSteps(id), total=st.length; let n=st.filter(s=>s.done).length; if(S.equipped[id]) n=total; return {n, total, pct:Math.round(n/total*100), state: S.equipped[id] ? 'equipped' : n===0 ? 'locked' : n>=total ? 'equipped' : 'forging'}; }
 function toolPct(id){ return toolState(id).pct; }
 const equippedCount = ()=>TOOLS.filter(t=>S.equipped[t.id]).length;
@@ -1172,6 +1626,7 @@ function levelIndex(){
   LEVELS.forEach((L,i)=>{ if(S.xp>=L.xp && equippedCount()>=L.tools && (!L.core || coreEquipped()>=L.core)) lv=i; });
   return lv;
 }
+
 
 /* ===================== FEEDBACK: toasts, XP pops, confetti ===================== */
 const toastsEl = document.getElementById('toasts');
@@ -1253,7 +1708,8 @@ function renderHUD(){
   document.getElementById('goalTxt').textContent=`${g}/${DAILY_GOAL} XP${S.daily.goalHit?' ✓':''}`;
   document.getElementById('goalFill').style.width=(g/DAILY_GOAL*100)+'%';
   document.getElementById('lvlTxt').textContent=LEVELS[S.level].name;
-  document.getElementById('leagueTxt').textContent='Gold League · #'+myRank();
+  const rk = rankedReps();
+  document.getElementById('leagueTxt').textContent = store.mode==='quinn' ? `Results Rank #${rk.findIndex(r=>r.i===store.repId)+1} of 12` : `Team results ${Math.round(rk.reduce((a,r)=>a+r.score,0)/rk.length)}% avg`;
 }
 
 /* ===================== RENDER: QUEST MAP ===================== */
@@ -1283,7 +1739,8 @@ function renderPath(){
     </div>
     <div class="plabel"><b>Boss Evaluation: Weekly Huddle</b><span>${bossOpen?'6 mixed scenarios, one from each issue':'Unlocks after 3 quests ('+Math.min(done,3)+'/3)'}</span>${bossOpen?`<button class="mini-drill" data-drill="boss">${S.boss?'Replay huddle':'Start huddle'}</button>`:''}</div>
   </div>`;
-  const path=document.getElementById('path'); path.innerHTML=h;
+  const pathM=document.getElementById('path'), pathQ=document.getElementById('qPath');
+  const path = store.mode==='quinn' ? pathQ : pathM; (store.mode==='quinn' ? pathM : pathQ).innerHTML=''; path.innerHTML=h;
   const mt=document.getElementById('mascotTxt');
   if(mt){ mt.textContent = firstOpen>=0 ? `Start with the ${TOOL[ISSUES[firstOpen].id].name}. ${ISSUES[firstOpen].calls} calls need it.` : S.boss ? 'Every quest is clear. Go finish forging your tools!' : 'All 6 quests are clear. Time for the Weekly Huddle!'; }
   path.querySelectorAll('[data-node],[data-drill]').forEach(b=>b.addEventListener('click',()=>{
@@ -1294,27 +1751,9 @@ function renderPath(){
 }
 
 /* ===================== RENDER: LEAGUE, DAILY QUESTS, BELT PREVIEW ===================== */
-function myWeekXp(){ return S.weekBase + S.xp; }
-function leagueRows(){
-  const rows = SQUAD.map((r,i)=>({name:r[0], squad:r[1], xp:r[2], c:AV_COLORS[i], me:false}));
-  const nm = (nameEl && nameEl.textContent.trim()) || 'Sales Manager';
-  rows.push({name:'You · '+nm, squad:'Manager', xp:myWeekXp(), c:'#002856', me:true});
-  return rows.sort((a,b)=>b.xp-a.xp || (a.me?-1:1));
-}
-function myRank(){ return leagueRows().findIndex(r=>r.me)+1; }
-function renderLeague(){
-  document.getElementById('tiers').innerHTML = LEAGUE_TIERS.map(([n,c],i)=>`<div class="tier ${i===2?'cur':''}"><svg width="34" height="38" viewBox="0 0 34 38"><path d="M17 1l15 6v11c0 10-7 16-15 19C9 34 2 28 2 18V7z" fill="${c}" stroke="rgba(0,0,0,.18)" stroke-width="1.5"/><path d="M17 7l9 4v7c0 6-4 10-9 12-5-2-9-6-9-12v-7z" fill="rgba(255,255,255,.35)"/></svg>${n}</div>`).join('');
-  const rows=leagueRows(); let h='';
-  rows.forEach((r,i)=>{
-    if(i===3) h+='<div class="zone up">▲ Promotion zone · Diamond</div>';
-    if(i===rows.length-3) h+='<div class="zone dn">▼ Demotion zone · Silver</div>';
-    const ini = r.me ? (document.getElementById('initials').textContent||'SM') : 'R'+r.name.slice(-2);
-    h+=`<div class="lbr ${i<3?'top':''} ${r.me?'me':''}"><span class="rk">${i+1}</span><span class="av" style="background:${r.c}">${esc(ini)}</span><div><b>${esc(r.name)}</b><small>${esc(r.squad)}</small></div><span class="x">${r.xp} XP</span></div>`;
-  });
-  document.getElementById('leaderboard').innerHTML=h;
-}
+function renderLeague(){ renderBoards(); }
 function renderDaily(){
-  document.getElementById('dailyQuests').innerHTML = dailyQuests().map(q=>`<div class="dq ${q.cur>=q.max?'done':''}"><div class="ic"><span style="width:26px;height:26px;display:block">${q.icon}</span></div><div><b>${q.t}<span>${q.cur>=q.max?'✓ Claimed':q.cur+' / '+q.max}</span></b><div class="pbar ${q.cls}"><i style="width:${q.cur/q.max*100}%"></i></div></div></div>`).join('');
+  document.getElementById('dailyQuests').innerHTML = document.getElementById('dailyQuestsQ').innerHTML = dailyQuests().map(q=>`<div class="dq ${q.cur>=q.max?'done':''}"><div class="ic"><span style="width:26px;height:26px;display:block">${q.icon}</span></div><div><b>${q.t}<span>${q.cur>=q.max?'✓ Claimed':q.cur+' / '+q.max}</span></b><div class="pbar ${q.cls}"><i style="width:${q.cur/q.max*100}%"></i></div></div></div>`).join('');
 }
 function nextLevelInfo(){
   const lv=S.level, nx=LEVELS[lv+1];
@@ -1494,25 +1933,449 @@ function wireReset(btn){
   btn.addEventListener('click',()=>{
     if(!armed){ armed=true; btn.classList.add('arm'); btn.textContent='Click again to reset'; timer=setTimeout(()=>{ armed=false; btn.classList.remove('arm'); btn.textContent='Reset demo progress'; },3500); return; }
     clearTimeout(timer); armed=false; btn.classList.remove('arm'); btn.textContent='Reset demo progress';
+    const m=store.mode, r=store.repId;
     try{ localStorage.removeItem(SKEY); }catch(e){}
-    S=freshState(); save(); renderAll(); closeTool();
+    store=freshStore(); store.mode=m; store.repId=r; S=loadProfile(m||'morgan', r); save(); renderAll(); closeTool();
     toast('Demo progress reset', 'Fresh start: 7-day streak, 0 XP, empty Starter Pouch.', CHEST_SVG);
   });
 }
 
-/* ===================== ROUTING ===================== */
-const VIEWS=['home','toolbelt','issues','trainings','chat','morgan'];
-const ALIASES={badges:'toolbelt', belt:'toolbelt', quest:'home', map:'home', how:'morgan'};
+
+/* ===================== MUSE-STYLE FULL-BODY CHARACTERS (inline SVG) ===================== */
+function shade(hex, amt){ const n=parseInt(hex.slice(1),16); let r=(n>>16)+amt, g=((n>>8)&255)+amt, b=(n&255)+amt; r=Math.max(0,Math.min(255,r)); g=Math.max(0,Math.min(255,g)); b=Math.max(0,Math.min(255,b)); return '#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1); }
+function hairSvg(L){
+  const h=L.hair, d=shade(h,-25);
+  switch(L.style){
+    case 'long': return `<path d="M57 58 Q54 28 80 29 Q106 28 103 58 L106 100 Q98 106 92 96 L97 56 Q90 42 80 42 Q70 42 63 56 L68 96 Q62 106 54 100 Z" fill="${h}"/><path d="M62 50 Q70 36 86 38" stroke="${d}" stroke-width="2" fill="none" opacity=".6"/>`;
+    case 'bun':  return `<circle cx="80" cy="27" r="10" fill="${h}"/><path d="M59 56 Q58 32 80 32 Q102 32 101 56 Q97 42 80 42 Q64 42 59 56 Z" fill="${h}"/>`;
+    case 'curly':return `<g fill="${h}"><circle cx="64" cy="44" r="8"/><circle cx="72" cy="35" r="9"/><circle cx="84" cy="33" r="9"/><circle cx="95" cy="40" r="8"/><circle cx="99" cy="51" r="6"/><circle cx="61" cy="54" r="6"/></g>`;
+    case 'buzz': return `<path d="M60 54 Q61 33 80 33 Q99 33 100 54 Q92 41 80 41 Q68 41 60 54Z" fill="${h}" opacity=".85"/>`;
+    case 'short':return `<path d="M59 56 Q58 31 80 31 Q102 31 101 56 Q97 43 85 42 Q70 41 59 56 Z" fill="${h}"/><path d="M66 40 Q78 34 94 40" stroke="${d}" stroke-width="2" fill="none" opacity=".5"/>`;
+    default:     return `<path d="M58 60 Q55 30 82 30 Q105 31 102 57 Q99 44 88 42 Q74 47 61 45 Z" fill="${h}"/><path d="M64 44 Q76 38 90 41" stroke="${d}" stroke-width="2" fill="none" opacity=".5"/>`;
+  }
+}
+/* full-body standing figure, viewBox 160x300; belt sits across the waist at y≈162 */
+function charSvg(L, opts={}){
+  const sk=L.skin, skd=shade(sk,-22), bz=L.blazer, bzd=shade(bz,-30), pn=L.pants, uid='c'+Math.random().toString(36).slice(2,8);
+  return `<svg class="muse" viewBox="0 0 160 300" aria-hidden="true"><defs><linearGradient id="${uid}b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${shade(bz,18)}"/><stop offset="1" stop-color="${bz}"/></linearGradient></defs>
+  <ellipse cx="80" cy="292" rx="40" ry="6" fill="rgba(0,25,58,.16)"/>
+  <g class="bob">
+    <rect x="58" y="168" width="21" height="110" rx="8" fill="${pn}"/><rect x="81" y="168" width="21" height="110" rx="8" fill="${shade(pn,10)}"/>
+    <path d="M79 172 L81 172 L81 268 L79 268Z" fill="${shade(pn,-15)}"/>
+    <path d="M52 276 Q52 270 60 270 L79 270 L80 286 L54 286 Q50 286 52 276Z" fill="#1A1A1A"/><path d="M108 276 Q108 270 100 270 L81 270 L80 286 L106 286 Q110 286 108 276Z" fill="#1A1A1A"/>
+    <g class="breathe">
+      <path d="M55 96 Q80 84 105 96 L111 168 Q80 176 49 168 Z" fill="url(#${uid}b)"/>
+      <path d="M70 90 L80 130 L90 90 Z" fill="${L.shirt}"/>
+      ${L.tie?`<path d="M78 98 L82 98 L85 124 L80 131 L75 124 Z" fill="${L.tie}"/><path d="M77 93 L83 93 L82 99 L78 99Z" fill="${shade(L.tie,-25)}"/>`:''}
+      <path d="M70 90 L79 130 L64 110 L67 96Z" fill="${bzd}"/><path d="M90 90 L81 130 L96 110 L93 96Z" fill="${bzd}"/>
+      <circle cx="80" cy="142" r="1.8" fill="${shade(bz,-45)}"/><circle cx="80" cy="152" r="1.8" fill="${shade(bz,-45)}"/>
+      <path d="M56 98 Q42 104 42 132 L45 168 L57 168 L59 130 Z" fill="${bz}"/><path d="M104 98 Q118 104 118 132 L115 168 L103 168 L101 130 Z" fill="${shade(bz,-8)}"/>
+      <circle cx="51" cy="173" r="7" fill="${sk}"/><circle cx="109" cy="173" r="7" fill="${skd}"/>
+      <rect x="73" y="74" width="14" height="18" rx="5" fill="${skd}"/>
+      <ellipse cx="80" cy="58" rx="20.5" ry="23" fill="${sk}"/>
+      <ellipse cx="59.5" cy="61" rx="3.5" ry="5" fill="${skd}"/><ellipse cx="100.5" cy="61" rx="3.5" ry="5" fill="${skd}"/>
+      ${hairSvg(L)}
+      <path d="M69 52 Q73 49.5 77 52" stroke="${shade(L.hair,-10)}" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M83 52 Q87 49.5 91 52" stroke="${shade(L.hair,-10)}" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="73" cy="59" rx="2.3" ry="2.8" fill="#1E2530"/><ellipse cx="87" cy="59" rx="2.3" ry="2.8" fill="#1E2530"/>
+      <circle cx="73.8" cy="58" r=".8" fill="#fff"/><circle cx="87.8" cy="58" r=".8" fill="#fff"/>
+      <ellipse cx="69" cy="66" rx="3" ry="1.8" fill="#FF8A8A" opacity=".35"/><ellipse cx="91" cy="66" rx="3" ry="1.8" fill="#FF8A8A" opacity=".35"/>
+      <path d="M74 68 Q80 73.5 86 68" stroke="#7A3B2E" stroke-width="2" fill="none" stroke-linecap="round"/>
+      ${L.headset?`<path d="M58 58 Q57 30 80 30 Q103 30 102 58" stroke="#1E2530" stroke-width="3.2" fill="none"/><rect x="54" y="53" width="8" height="14" rx="3.5" fill="#1E2530"/><rect x="98" y="53" width="8" height="14" rx="3.5" fill="#1E2530"/><path d="M58 66 Q60 77 71 75" stroke="#1E2530" stroke-width="2.2" fill="none"/><circle cx="72" cy="75" r="2.6" fill="#22B8CF"/>`:''}
+    </g>
+    ${opts.belt===false?'':`<rect x="47" y="157" width="66" height="12" rx="3" fill="url(#gLeather)"/><path d="M49 160 H111 M49 166 H111" stroke="rgba(255,214,160,.55)" stroke-width=".8" stroke-dasharray="2 2"/><rect x="74" y="155" width="12" height="16" rx="2.5" fill="none" stroke="url(#gGold)" stroke-width="2.6"/><rect x="79" y="158" width="2" height="10" fill="#C9A227"/>`}
+  </g></svg>`;
+}
+
+/* tool positions on the character's belt (percent of the 160x300 stage), hanging in a gentle arc */
+const BELT_POS = [[17,57.5],[31,61],[44,63.2],[56,63.2],[69,61],[83,57.5]];
+function skillTip(i, id, eff, pct){
+  const iss=ISSUES.find(x=>x.id===id), t=TOOL[id], red=canSeeRed(i) && eff<LOW;
+  const status = red ? '<span class="r">Needs Coaching</span>' : pct===0 ? '<span class="n">Untested</span>' : pct>=100 ? '<span class="g">Colored · 100%</span>' : `<span class="g">Colored · ${pct}%</span>`;
+  return `<b>${esc(iss.name)} — ${esc(t.name)}</b>${canSeeRed(i)||store.mode==='morgan'?`Call effectiveness: <b style="display:inline">${eff}%</b><br>`:''}Status: ${status}`;
+}
+function stageHtml(i, look){
+  const R=repResults(i);
+  return charSvg(look) + SKILL_IDS.map((id,k)=>{
+    const pct=repToolPct(i,id), eff=R.eff[k], red=canSeeRed(i) && eff<LOW;
+    return `<button class="btool ${red?'low':''} ${pct>=100?'full':''}" data-belt="${id}" data-rep="${i}" style="left:${BELT_POS[k][0]}%;top:${BELT_POS[k][1]}%" data-tip="${esc(skillTip(i,id,eff,pct))}" aria-label="${esc(TOOL[id].name)}">${toolSvg(id,'', pct)}<span class="bpct">${canSeeRed(i)||store.mode==='morgan'?eff+'%':pct+'%'}</span></button>`;
+  }).join('');
+}
+function orbitHtml(i, small){
+  const R=repResults(i), n=6, rad= small?36:50, c= small?42:59;
+  return `<div class="orbit ${small?'sm':''} ${store.mode==='quinn'&&i===store.repId?'me':''}"><div class="ring0">${charSvg(ROSTER[i].look,{belt:true})}</div>${SKILL_IDS.map((id,k)=>{
+    const a=-Math.PI/2 + k*2*Math.PI/n, x=c+rad*Math.cos(a), y=c+rad*Math.sin(a), pct=repToolPct(i,id), red=canSeeRed(i) && R.eff[k]<LOW;
+    return `<span class="otool ${red?'low':''} ${pct>=100?'full':''}" style="left:${x.toFixed(1)}px;top:${y.toFixed(1)}px" data-tip="${esc(skillTip(i,id,R.eff[k],pct))}">${toolSvg(id,'',pct)}</span>`;
+  }).join('')}</div>`;
+}
+
+/* ===================== TOOLTIP ===================== */
+const tipEl=document.getElementById('tip');
+function showTip(el){
+  tipEl.innerHTML = el.getAttribute('data-tip'); tipEl.classList.add('show');
+  const r=el.getBoundingClientRect(), tw=tipEl.offsetWidth, th=tipEl.offsetHeight;
+  let x=r.left+r.width/2-tw/2, y=r.top-th-10; if(y<6) y=r.bottom+10;
+  x=Math.max(6,Math.min(window.innerWidth-tw-6,x));
+  tipEl.style.left=x+'px'; tipEl.style.top=y+'px';
+}
+document.addEventListener('mouseover',e=>{ const el=e.target.closest && e.target.closest('[data-tip]'); if(el) showTip(el); else tipEl.classList.remove('show'); });
+document.addEventListener('focusin',e=>{ const el=e.target.closest && e.target.closest('[data-tip]'); if(el) showTip(el); });
+document.addEventListener('focusout',()=>tipEl.classList.remove('show'));
+window.addEventListener('scroll',()=>tipEl.classList.remove('show'),{passive:true});
+
+
+/* ===================== RESULTS LEADERBOARD (both paths) ===================== */
+const SHORT = {close:'Close', root:'Root pain', ai:'AI objection', pushy:'Talk ratio', thread:'Multi-thread', follow:'48h recap'};
+function redCount(i, R){ return canSeeRed(i) ? R.eff.filter(e=>e<LOW).length : 0; }
+function coloredCount(i){ return SKILL_IDS.filter(id=>repToolPct(i,id)>0).length; }
+function renderBoards(){
+  const rk = rankedReps(), me = store.mode==='quinn' ? store.repId : -1;
+  const mini = (list)=>list.map(r=>{ const pos=rk.indexOf(r)+1, rc=redCount(r.i,r);
+    return `<div class="mrow ${r.i===me?'me':''}" data-rep="${r.i}"><span class="mrk">${pos}</span>${orbitHtml(r.i,true)}<div class="mtx"><b>${esc(repLabel(r.i))}${r.i===me?' (You)':''}</b><small>${r.converted}/${r.calls} calls converted${rc?`<span class="alertdot" title="Skills under ${LOW}%">${rc} red</span>`:''}</small></div><span class="msc">${r.score}%</span></div>`; }).join('');
+  document.getElementById('miniBoardM').innerHTML = store.mode==='morgan' ? mini(rk.slice(0,6)) : '';
+  if(store.mode==='quinn'){
+    const top = rk.slice(0,5); if(!top.some(r=>r.i===me)) top.push(rk.find(r=>r.i===me));
+    document.getElementById('miniBoardQ').innerHTML = mini(top);
+  } else document.getElementById('miniBoardQ').innerHTML='';
+  document.getElementById('lbSub').textContent = store.mode==='morgan'
+    ? 'Ranked only by call results from Quinn\'s reviews, not XP. Click any rep to open the zoomed-in inspector. Red = skill under 60% effectiveness.'
+    : 'Ranked only by call results from Quinn\'s reviews, not XP. Red alerts are private: you see your own, and coworkers\' skills never show red to you.';
+  document.getElementById('bigBoard').innerHTML = rk.map((r,pos)=>{
+    const see = canSeeRed(r.i), rc=redCount(r.i,r);
+    const chips = see ? SKILL_IDS.map((id,k)=>`<span class="${r.eff[k]<LOW?'low':''}" data-tip="${esc(`<b>${ISSUES[k].name} — ${TOOL[id].name}</b>Call effectiveness: ${r.eff[k]}%${r.eff[k]<LOW?' <span class=r>· LOW</span>':''}`)}">${SHORT[id]} ${r.eff[k]}%</span>`).join('')
+      : `<span>${coloredCount(r.i)}/6 tools colored</span><span>Skill details private</span>`;
+    const btn = store.mode==='morgan' ? `<button class="btn primary inspbtn" data-inspect="${r.i}">Inspect Rep →</button>` : r.i===me ? `<a class="btn inspbtn" href="#home">My Toolbelt →</a>` : `<button class="btn inspbtn" data-inspect="${r.i}">View profile</button>`;
+    return `<div class="brow ${pos<3?'top':''} ${r.i===me?'me':''}" data-rep="${r.i}"><span class="rk">${pos+1}</span>
+      <div class="who2">${orbitHtml(r.i)}<div><b>${esc(repLabel(r.i))}${r.i===me?' (You)':''}</b><small>${esc(ROSTER[r.i].role)}</small>${rc?`<div><span class="redbadge">${rc} RED SKILL${rc>1?'S':''}</span></div>`:''}</div></div>
+      <div class="rscore"><b>${r.score}%</b><small>Results Score · ${r.converted}/${r.calls} calls converted</small><div class="effbar"><i style="width:${r.score}%;background:${r.score>=70?'var(--g)':r.score>=60?'var(--gold)':see?'var(--red)':'#AEB9C8'}"></i></div></div>
+      <div class="minis">${chips}</div>${btn}</div>`;
+  }).join('');
+  document.querySelectorAll('[data-rep].mrow,[data-rep].brow').forEach(el=>el.addEventListener('click',e=>{ if(e.target.closest('a')) return; repClick(+el.dataset.rep); }));
+}
+function repClick(i){
+  if(store.mode==='morgan') return openInspector(i);
+  if(i===store.repId){ location.hash='#home'; return; }
+  openPublic(i);
+}
+
+/* ===================== MORGAN-ONLY ZOOMED-IN REP INSPECTOR ===================== */
+const inspectOv=document.getElementById('inspectOv'), inspector=document.getElementById('inspector');
+function closeInspector(){ inspectOv.classList.remove('show'); }
+document.getElementById('inspectScrim').addEventListener('click', closeInspector);
+function avgOthers(i, fn){ const o=ROSTER.map((_,j)=>j).filter(j=>j!==i).map(fn); return o[0].map((_,k)=>Math.round(o.reduce((a,v)=>a+v[k],0)/o.length)); }
+function openInspector(i){
+  if(store.mode!=='morgan'){ openPublic(i); return; } // privacy: the deep-dive is manager-only
+  const R=repResults(i), rk=rankedReps(), pos=rk.findIndex(r=>r.i===i)+1;
+  const teamEff=avgOthers(i, j=>repEff(j)), teamMet=avgOthers(i, j=>repMetrics(j));
+  const topMet=METRICS.map((_,k)=>Math.max(...ROSTER.map((_,j)=>repMetrics(j)[k])));
+  const teamScore=Math.round(rk.filter(r=>r.i!==i).reduce((a,r)=>a+r.score,0)/11), topScore=rk[0].score;
+  const lows = SKILL_IDS.filter((_,k)=>R.eff[k]<LOW);
+  const weakK = R.eff.indexOf(Math.min(...R.eff)), weak=SKILL_IDS[weakK];
+  const assigned = (store.assign[i]||[]);
+  const d = (a,b)=>{ const v=a-b; return `<span class="${v>=0?'up':'dn'}">${v>=0?'+':''}${v}%</span>`; };
+  inspector.className='inspector';
+  inspector.innerHTML = `<div class="ihead"><div><small>Morgan · Zoomed-in rep inspector</small><h2>${esc(repLabel(i))}</h2><small>${esc(ROSTER[i].role)} · Rank #${pos} of 12</small></div><button class="xbtn" id="iClose" aria-label="Close"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div>
+  <div class="ibody">
+    <div>
+      <div class="stage" style="max-width:320px">${stageHtml(i, ROSTER[i].look)}</div>
+      <div class="scorebig"><b>${R.score}%</b><span class="muted" style="font-weight:800">Results Score · ${R.converted}/${R.calls} calls converted</span></div>
+      ${lows.length?`<div class="privtag" style="display:inline-block;margin-bottom:6px">${lows.length} red alert${lows.length>1?'s':''}: ${lows.map(id=>TOOL[id].name).join(', ')}</div>`:'<div class="tag low">No red alerts</div>'}
+      <p class="demo-note">Hover over any tool for the full skill name. Sample team data for demonstration.</p>
+    </div>
+    <div>
+      <h3>Tool effectiveness vs. coworkers</h3>
+      <div class="ilegend"><span><i style="background:var(--b)"></i>This rep</span><span><i style="background:#CBD5E4"></i>Team avg (11 coworkers)</span><span><i style="background:var(--red)"></i>Low (&lt; ${LOW}%)</span></div>
+      ${SKILL_IDS.map((id,k)=>`<div class="cmp ${R.eff[k]<LOW?'low':''}"><span class="nm" data-tip="${esc(`<b>${ISSUES[k].name} — ${TOOL[id].name}</b>`)}">${toolSvg(id,'',repToolPct(i,id))}${esc(TOOL[id].name)}</span>
+        <div class="dual"><i class="a" style="width:${R.eff[k]}%"></i><i class="t" style="width:${teamEff[k]}%"></i></div>
+        <div class="delta">${R.eff[k]}% vs ${teamEff[k]}%<br>${d(R.eff[k],teamEff[k])}${R.eff[k]<LOW?'<br><span class="lowtag">LOW · RED</span>':''}</div></div>`).join('')}
+      <h3 style="margin-top:18px">Call results vs. coworkers</h3>
+      <div class="ilegend"><span><i style="background:var(--b)"></i>This rep</span><span><i style="background:#CBD5E4"></i>Coworker avg</span><span><i style="background:var(--gold)"></i>Top rep</span></div>
+      ${METRICS.map((m,k)=>`<div class="cmp ${R.eff[k]<LOW?'low':''}"><span class="nm">${esc(m.name)}</span>
+        <div class="dual"><i class="a" style="width:${R.metrics[k]}%"></i><i class="t" style="width:${teamMet[k]}%"></i><i class="p" style="width:${topMet[k]}%"></i></div>
+        <div class="delta">${R.metrics[k]}% · avg ${teamMet[k]}%<br><span class="muted" style="font-weight:800">top ${topMet[k]}%</span> ${d(R.metrics[k],teamMet[k])}</div></div>`).join('')}
+      <div class="cmp"><span class="nm">Overall Call Results Score</span><div class="dual"><i class="a" style="width:${R.score}%"></i><i class="t" style="width:${teamScore}%"></i><i class="p" style="width:${topScore}%"></i></div><div class="delta">${R.score}% · avg ${teamScore}%<br><span class="muted" style="font-weight:800">top ${topScore}%</span> ${d(R.score,teamScore)}</div></div>
+      <div class="assignbox"><p>${assigned.length?`Assigned: ${assigned.map(a=>TOOL[a.skill].name+' drill + 30s video').join(', ')}`:`Suggested: ${esc(TOOL[weak].name)} drill + 30s micro-video (weakest skill, ${R.eff[weakK]}%)`}</p><button class="b3d gold sm" id="assignBtn">Assign Training to Rep</button></div>
+    </div>
+  </div>`;
+  inspector.querySelector('#iClose').addEventListener('click', closeInspector);
+  inspector.querySelector('#assignBtn').addEventListener('click',()=>{
+    store.assign[i] = (store.assign[i]||[]).filter(a=>a.skill!==weak).concat([{skill:weak, kinds:['drill','video'], at:Date.now()}]);
+    save(); toast('Training assigned', `${TOOL[weak].name} drill + 30s video sent to ${repLabel(i)}'s Quinn`, toolSvg(weak,'',100), 'gold');
+    award(5, null); openInspector(i);
+  });
+  inspectOv.classList.add('show'); applyFills();
+}
+function openPublic(i){
+  const R=repResults(i), pos=rankedReps().findIndex(r=>r.i===i)+1;
+  inspector.className='inspector small';
+  inspector.innerHTML = `<div class="ihead"><div><small>Public profile</small><h2>${esc(repLabel(i))}</h2><small>${esc(ROSTER[i].role)} · Rank #${pos} of 12</small></div><button class="xbtn" id="iClose" aria-label="Close"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div>
+    <div class="ibody"><div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">${orbitHtml(i)}<div><div class="scorebig" style="margin:0"><b>${R.score}%</b></div><div class="muted" style="font-weight:800">Results Score · ${R.converted}/${R.calls} calls converted</div><div class="muted" style="font-weight:800;margin-top:4px">${coloredCount(i)}/6 tools colored</div></div></div>
+    <div class="mgrnote" style="margin-top:6px">Skill-level effectiveness and coaching alerts are private to each rep and their manager. The zoomed-in rep inspector is available in Morgan (manager) only.</div></div>`;
+  inspector.querySelector('#iClose').addEventListener('click', closeInspector);
+  inspectOv.classList.add('show');
+}
+
+/* ===================== QUINN · MY TOOLBELT ===================== */
+function renderQuinnHome(){
+  if(store.mode!=='quinn') return;
+  const i=store.repId, R=repResults(i), rk=rankedReps(), pos=rk.findIndex(r=>r.i===i)+1, lows=SKILL_IDS.filter((_,k)=>R.eff[k]<LOW);
+  const first=ROSTER[i].n.split(' ')[0];
+  document.getElementById('qHello').textContent=`Hi ${first}`;
+  document.getElementById('qSub').textContent=`Quinn reviewed your ${R.calls} recorded calls from the last 30 days. Train your weakest skills to color in your toolbelt and raise your Results Score.`;
+  document.getElementById('qKpis').innerHTML=`<div class="kpi"><b>${R.score}%</b><span>Results Score</span></div><div class="kpi"><b>${R.converted}/${R.calls}</b><span>calls converted</span></div><div class="kpi"><b>#${pos}</b><span>of 12 on the leaderboard</span></div><div class="kpi"><b style="color:${lows.length?'#FF8A8A':'#89E219'}">${lows.length}</b><span>private red alerts</span></div>`;
+  document.getElementById('qRepName').textContent=repLabel(i);
+  document.getElementById('qStage').innerHTML=stageHtml(i, ROSTER[i].look);
+  document.getElementById('qEff').innerHTML = SKILL_IDS.map((id,k)=>{ const e=R.eff[k], low=e<LOW, pct=repToolPct(i,id);
+    return `<div class="effrow ${low?'low':''}" data-tool="${id}" data-tip="${esc(skillTip(i,id,e,pct))}">${toolSvg(id,'',pct)}<div><b>${esc(TOOL[id].name)}: ${e}% call effectiveness${low?'<span class="redbadge">LOW · NEEDS COACHING</span>':''}</b><small>${esc(ISSUES[k].name)} · tool ${pct}% colored</small><div class="effbar"><i style="width:${e}%"></i></div></div><span class="val">${e}%</span></div>`; }).join('');
+  const order = SKILL_IDS.map((id,k)=>({id,k,e:R.eff[k]})).sort((a,b)=>a.e-b.e);
+  const asg = (store.assign[i]||[]).map(a=>a.skill);
+  document.getElementById('qTrain').innerHTML = order.map(({id,k,e})=>{ const tr=S.trained[id]||{};
+    return `<div class="trow ${e<LOW?'low':''}"><div class="th">${toolSvg(id,'',repToolPct(i,id))}<div><b>${esc(TOOL[id].name)}${asg.includes(id)?'<span class="assigned">Assigned by Morgan</span>':''}</b><small>${esc(ISSUES[k].name)} · ${e}% effectiveness</small></div></div>
+      <div class="tbtns"><button class="tbtn ${S.drills[id]?'done':''}" data-qt="drill" data-id="${id}">${S.drills[id]?'✓ ':''}Drill<em>3 questions</em></button><button class="tbtn ${tr.video?'done':''}" data-qt="video" data-id="${id}">${tr.video?'✓ ':''}30s Video<em>animated</em></button><button class="tbtn ${tr.roleplay?'done':''}" data-qt="roleplay" data-id="${id}">${tr.roleplay?'✓ ':''}Roleplay<em>15 min</em></button><button class="tbtn ${tr.curriculum?'done':''}" data-qt="curriculum" data-id="${id}">${tr.curriculum?'✓ ':''}Curriculum<em>2 weeks</em></button></div></div>`; }).join('');
+  document.querySelectorAll('#qTrain [data-qt]').forEach(b=>b.addEventListener('click',()=>{ const k=b.dataset.qt, id=b.dataset.id; if(k==='drill') openLesson(id); else if(k==='video') openVideo(id); else startTraining(id,k); }));
+  document.querySelectorAll('#qEff [data-tool]').forEach(b=>b.addEventListener('click',()=>openTool(b.dataset.tool)));
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest && e.target.closest('.btool'); if(!b) return;
+  if(store.mode==='quinn' && +b.dataset.rep===store.repId && !inspectOv.classList.contains('show')) openTool(b.dataset.belt);
+});
+function startTraining(id, kind){
+  if(kind==='video') return openVideo(id);
+  closeTool(); selectIssue(id); location.hash='#trainings';
+  setTimeout(()=>{ const b=document.querySelector(`[data-gen="${kind}"]`); if(b && !b.disabled) b.click(); }, 350);
+}
+
+/* ===================== HELP PAGES ===================== */
+const HELP_Q = [
+  ['quinn','#E7F8FB','Automatic post-call reviews','Every recorded call is scored on the 6 skills: closing, root pain, the AI objection, talk ratio, multi-threading and follow-up.'],
+  ['follow','#DDF4FF','Exact call timestamps','Each flag links to the moment it happened, like "minute 6: pricing before pain", so you can replay it and fix it.'],
+  ['roleplay','#F5E6FF','Private 1-on-1 coaching','Quinn coaches you right after each call with one specific thing to try on the next one.'],
+  ['ai','#FFE4E4','Private red alerts','Skills under 60% show in red only to you and your manager. Coworkers never see your red alerts.'],
+  ['close','#FFF4D1','Drills + 30s micro-videos','3-question drills and 30-second animated videos built from real call moments, ready whenever you have five minutes.'],
+  ['blueprint','#FBF3EA','Color in your toolbelt','Every drill and training you finish fills a tool with color, until it\'s 100% and gold-plated.'],
+  ['thread','#D7FFB8','Climb the results leaderboard','The board ranks reps by call results, not busywork. Better calls move you up.']
+];
+const HELP_M = [
+  ['quinn','#E7F8FB','Aggregates Quinn across 12 reps','Morgan compiles every rep\'s call reviews into one team view: 214 calls over the last 30 days.'],
+  ['close','#FFE4E4','Ranks revenue-leaking issues','Issues are ordered by frequency and trend, so you fix what costs the most deals first.'],
+  ['root','#DDF4FF','Zoomed-in rep inspection','Open any rep to see their character, toolbelt and every skill\'s effectiveness from recorded calls.'],
+  ['pushy','#F2F4F8','Peer benchmarks','Each tool and call metric is compared with the coworker average and the top rep.'],
+  ['ai','#FFE4E4','Red alert triage','Every skill under 60% shows in red on the leaderboard and in the inspector, so you know who needs coaching first.'],
+  ['blueprint','#FBF3EA','One-click trainings','Generate micro-videos, curriculums and roleplays, or assign a drill + 30s video straight to a rep\'s Quinn.'],
+  ['roleplay','#F5E6FF','AI copilot chat','Ask Morgan anything about the team and bring in Quinn for call evidence.']
+];
+function renderHelp(){
+  const g=(list)=>list.map(([id,bg,h,p])=>`<div class="hcard"><div class="hi" style="background:${bg}">${toolSvg(id,'',100)}</div><h4>${esc(h)}</h4><p>${esc(p)}</p></div>`).join('');
+  document.getElementById('quinnHelpGrid').innerHTML=g(HELP_Q);
+  document.getElementById('morganHelpGrid').innerHTML=g(HELP_M);
+}
+
+/* ===================== CHOOSE YOUR PATH + MODES ===================== */
+const pathOv=document.getElementById('pathOv'), repSelect=document.getElementById('repSelect');
+repSelect.innerHTML = ROSTER.map((_,i)=>`<option value="${i}">${esc(repLabel(i))} · sample roster</option>`).join('');
+function pathPreview(){ document.getElementById('pcQuinnFig').innerHTML=charSvg(ROSTER[+repSelect.value].look); }
+repSelect.addEventListener('change', pathPreview);
+repSelect.addEventListener('click', e=>e.stopPropagation());
+document.getElementById('pcMorganFig').innerHTML=charSvg(MANAGER_LOOK);
+function openPath(){
+  repSelect.value=String(store.repId||0); pathPreview();
+  document.getElementById('pathClose').style.display = store.mode ? '' : 'none';
+  document.getElementById('pcQuinn').classList.toggle('sel', store.mode==='quinn');
+  document.getElementById('pcMorgan').classList.toggle('sel', store.mode==='morgan');
+  pathOv.classList.add('show'); closeTool(); closeInspector();
+}
+function closePath(){ if(store.mode) pathOv.classList.remove('show'); }
+document.getElementById('pathClose').addEventListener('click', closePath);
+document.getElementById('switchPath').addEventListener('click', openPath);
+document.getElementById('enterQuinn').addEventListener('click', e=>{ e.stopPropagation(); setMode('quinn', +repSelect.value); });
+document.getElementById('enterMorgan').addEventListener('click', e=>{ e.stopPropagation(); setMode('morgan'); });
+document.getElementById('pcQuinn').addEventListener('click', ()=>{ document.getElementById('pcQuinn').classList.add('sel'); document.getElementById('pcMorgan').classList.remove('sel'); });
+document.getElementById('pcMorgan').addEventListener('click', ()=>{ document.getElementById('pcMorgan').classList.add('sel'); document.getElementById('pcQuinn').classList.remove('sel'); });
+['pcQuinn','pcMorgan'].forEach(id=>document.getElementById(id).addEventListener('keydown',e=>{ if(e.key==='Enter' && e.target.id===id){ id==='pcQuinn'?setMode('quinn',+repSelect.value):setMode('morgan'); } }));
+const NAV = {
+  quinn:[['home','My Toolbelt'],['leaderboard','Leaderboard'],['toolbelt','Tool Belt'],['trainings','Trainings'],['quinn-help','How Quinn Helps']],
+  morgan:[['home','Quest Map'],['leaderboard','Leaderboard'],['toolbelt','Tool Belt'],['issues','Issues'],['trainings','Trainings'],['chat','Chat'],['morgan-help','How Morgan Helps']]
+};
+function renderChrome(){
+  const q = store.mode==='quinn';
+  document.body.classList.toggle('mode-quinn', q); document.body.classList.toggle('mode-morgan', !q);
+  document.getElementById('nav').innerHTML = NAV[q?'quinn':'morgan'].map(([v,l])=>`<a href="#${v}" data-v="${v}">${l}</a>`).join('');
+  document.getElementById('brandMark').textContent = q?'Q':'M';
+  document.getElementById('brandName').textContent = q?'Quinn':'Morgan';
+  document.getElementById('brandSub').textContent = q?'AI Call Coach':'AI Sales Manager';
+  document.getElementById('pathPill').textContent = q ? `Quinn · Sales Rep · ${repLabel(store.repId)}` : 'Morgan · Sales Manager';
+  if(q) document.getElementById('initials').textContent = ROSTER[store.repId].n.split(/\s+/).map(w=>w[0]).join('').replace('.','').slice(0,2).toUpperCase();
+  else setInitials();
+  document.getElementById('leaguePill').setAttribute('href','#leaderboard');
+  document.querySelectorAll('.back').forEach(a=>{ if(a.getAttribute('href')==='#home') a.textContent = q?'← My Toolbelt':'← Quest Map'; });
+}
+function setMode(mode, rep){
+  save();
+  store.mode=mode; if(mode==='quinn') store.repId = rep||0;
+  S = loadProfile(mode, store.repId); STEP_MODE = mode;
+  Object.keys(PREV).forEach(k=>delete PREV[k]);
+  pathOv.classList.remove('show'); closeTool(); closeInspector(); closeVideo();
+  save(); renderChrome(); renderAll();
+  if(location.hash==='#home' || !location.hash) route(); else location.hash='#home';
+  toast(mode==='quinn' ? `Signed in as ${repLabel(store.repId)}` : 'Signed in as Morgan', mode==='quinn' ? 'Quinn · Sales Rep workspace' : 'Morgan · Sales Manager workspace', mode==='quinn'?toolSvg('quinn','',100):toolSvg('blueprint','',100), mode==='quinn'?'green':'gold');
+}
+
+
+/* ===================== 30-SECOND ANIMATED MICRO-VIDEO (HTML5 canvas, exactly 30.0s) ===================== */
+const VSCENES = [[0,'Cost'],[7,'Quinn Clip'],[15,'The Fix'],[24,'Your Move']];
+const VIDEO = {
+  close:{meter:'Next-step booked rate', from:38, to:74, buyer:'"This is great. Send me some info and I\'ll take a look."', bad:'"Sounds good, I\'ll email it over today!"', good:'"Let\'s grab Thursday at 2:00 to walk through it together."', flag:'No next step booked', steps:['Summarize their pain','Ask for the next step','Lock in a date and time']},
+  root:{meter:'Root pain uncovered', from:41, to:79, buyer:'"Yeah, and like I said, we keep missing renewals."', bad:'"Great, let me show you the demo!"', good:'"You mentioned that twice. What happens when one slips?"', flag:'Pitched before the pain', steps:['Heard it twice? Stop.','Ask about business impact','Play it back in their words']},
+  ai:{meter:'AI objection → next meeting', from:19, to:80, buyer:'"Honestly, we\'ll just use our own AI tools."', bad:'"Here are 10 features AI can\'t match…"', good:'"Makes sense. Where don\'t you trust it yet?"', flag:'Features instead of value', steps:['Agree, then narrow','Find the trust gap','Close on a side-by-side test']},
+  pushy:{meter:'Buyer talk share', from:28, to:55, buyer:'"…so yeah, that\'s been tough for us."', bad:'"Great! So pricing starts at…"', good:'"Say more about that?"', flag:'Talk ratio 72/28', steps:['Aim for 45/55','Hold price until pain is confirmed','Pause 2 seconds, then ask']},
+  thread:{meter:'VP/CFO multi-thread rate', from:22, to:64, buyer:'"I\'ll have to run it by my VP."', bad:'"Great, let me know what they say."', good:'"Could we bring your VP into a 20-minute call?"', flag:'Single-threaded deal', steps:['Ask who else decides','Co-build the business case','Invite the VP with your champion']},
+  follow:{meter:'Recaps sent within 48h', from:35, to:88, buyer:'"Thanks, this was helpful. Talk soon!"', bad:'(recap email sent 3.1 days later)', good:'"Recap\'s in your inbox: your pain, next step, owners."', flag:'Recap took 3.1 days', steps:['Recap the same day','Pain, next step, owners','Follow up with value in 2–3 days']}
+};
+const BUYER_LOOK = {skin:'#F1C27D',hair:'#4B4B4B',style:'short',blazer:'#4B5566',shirt:'#FFFFFF',pants:'#222',tie:'#0A7FC0',headset:false};
+let activePlayer=null;
+const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v)), easeOut=x=>1-Math.pow(1-clamp(x),3), easeBack=x=>{x=clamp(x);const c=1.7;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2);};
+function rr(ctx,x,y,w,h,r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
+function wrap(ctx,text,x,y,maxW,lh){ const words=text.split(' '); let line='', yy=y; for(const w of words){ const t=line?line+' '+w:w; if(ctx.measureText(t).width>maxW && line){ ctx.fillText(line,x,yy); line=w; yy+=lh; } else line=t; } if(line) ctx.fillText(line,x,yy); return yy; }
+const F = (w,s)=>`${w} ${s}px Nunito, "Segoe UI", Arial, sans-serif`;
+function drawPerson(ctx,x,y,sc,L,talking,s,phase){
+  ctx.save(); ctx.translate(x, y+Math.sin(s*2+phase)*3); ctx.scale(sc,sc);
+  ctx.fillStyle=L.blazer; ctx.beginPath(); ctx.moveTo(-62,34); ctx.quadraticCurveTo(0,14,62,34); ctx.lineTo(88,210); ctx.lineTo(-88,210); ctx.closePath(); ctx.fill();
+  ctx.fillStyle=L.shirt; ctx.beginPath(); ctx.moveTo(-20,28); ctx.lineTo(0,92); ctx.lineTo(20,28); ctx.closePath(); ctx.fill();
+  if(L.tie){ ctx.fillStyle=L.tie; ctx.beginPath(); ctx.moveTo(-5,36); ctx.lineTo(5,36); ctx.lineTo(8,78); ctx.lineTo(0,88); ctx.lineTo(-8,78); ctx.closePath(); ctx.fill(); }
+  ctx.fillStyle=shade(L.skin,-22); rr(ctx,-13,-4,26,34,8); ctx.fill();
+  ctx.fillStyle=L.skin; ctx.beginPath(); ctx.ellipse(0,-42,46,52,0,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle=L.hair;
+  if(L.style==='curly'){ [[-34,-74,18],[-14,-90,20],[12,-92,20],[34,-78,18],[42,-56,13],[-42,-56,13]].forEach(([cx,cy,r])=>{ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fill();}); }
+  else { ctx.beginPath(); ctx.ellipse(0,-64,48,34,0,Math.PI,Math.PI*2); ctx.fill(); ctx.beginPath(); ctx.ellipse(0,-66,46,22,0,0,Math.PI); ctx.fill();
+    if(L.style==='long'){ rr(ctx,-52,-70,18,110,9); ctx.fill(); rr(ctx,34,-70,18,110,9); ctx.fill(); }
+    if(L.style==='bun'){ ctx.beginPath(); ctx.arc(0,-104,20,0,Math.PI*2); ctx.fill(); } }
+  const blink = (s+phase)%3.3<0.12;
+  ctx.fillStyle='#1E2530'; ctx.beginPath(); ctx.ellipse(-16,-40,5,blink?1:6,0,0,Math.PI*2); ctx.ellipse(16,-40,5,blink?1:6,0,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='#7A3B2E';
+  if(talking){ ctx.beginPath(); ctx.ellipse(0,-14,9,3+7*Math.abs(Math.sin(s*15+phase)),0,0,Math.PI*2); ctx.fill(); }
+  else { ctx.strokeStyle='#7A3B2E'; ctx.lineWidth=4; ctx.lineCap='round'; ctx.beginPath(); ctx.arc(0,-22,12,0.2*Math.PI,0.8*Math.PI); ctx.stroke(); }
+  if(L.headset){ ctx.strokeStyle='#1E2530'; ctx.lineWidth=7; ctx.beginPath(); ctx.arc(0,-46,50,Math.PI*1.05,Math.PI*1.95); ctx.stroke(); ctx.fillStyle='#1E2530'; rr(ctx,-58,-56,16,30,7); ctx.fill(); rr(ctx,42,-56,16,30,7); ctx.fill();
+    ctx.lineWidth=4; ctx.beginPath(); ctx.moveTo(-50,-28); ctx.quadraticCurveTo(-44,-4,-18,-8); ctx.stroke(); ctx.fillStyle='#22B8CF'; ctx.beginPath(); ctx.arc(-16,-8,6,0,Math.PI*2); ctx.fill(); }
+  ctx.restore();
+}
+function drawWave(ctx,x,y,w,on,s,color){ const n=26, bw=w/n; for(let k=0;k<n;k++){ const amp = on ? (0.25+0.75*Math.abs(Math.sin(s*9+k*0.7)*Math.cos(s*3.3+k*1.3))) : 0.08; const h=6+amp*46; ctx.fillStyle=color; rr(ctx,x+k*bw+2,y-h/2,bw-4,h,3); ctx.fill(); } }
+function bubble(ctx,x,y,w,text,color,txtColor,prog,tail){ ctx.save(); ctx.font=F(800,28); const shown=text.slice(0,Math.ceil(text.length*clamp(prog))); const lines=Math.max(1,Math.ceil(ctx.measureText(text).width/(w-40)))+ (text.length>40?0:0); const h=lines*36+30; ctx.globalAlpha=clamp(prog*4); ctx.fillStyle=color; rr(ctx,x,y,w,h,22); ctx.fill(); ctx.beginPath(); if(tail==='l'){ctx.moveTo(x+40,y+h);ctx.lineTo(x+30,y+h+22);ctx.lineTo(x+70,y+h);} else {ctx.moveTo(x+w-40,y+h);ctx.lineTo(x+w-30,y+h+22);ctx.lineTo(x+w-70,y+h);} ctx.fill(); ctx.fillStyle=txtColor; wrap(ctx,shown,x+20,y+42,w-40,36); ctx.restore(); }
+function drawFrame(ctx, s, id, look){
+  const W=1280,H=720, iss=ISSUES.find(i=>i.id===id), V=VIDEO[id], tool=TOOL[id];
+  const sc = s<7?0:s<15?1:s<24?2:3, start=VSCENES[sc][0], l=s-start;
+  const g=ctx.createLinearGradient(0,0,0,H); g.addColorStop(0,'#00193A'); g.addColorStop(1,sc===2?'#0B3D2E':sc===1?'#073B52':'#002856'); ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='rgba(255,255,255,.05)'; ctx.lineWidth=1; const off=(s*30)%60; for(let x=-60+off;x<W;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();} for(let y=0;y<H;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+  ctx.save(); ctx.globalAlpha=clamp(l/0.45);
+  // scene chip + brand
+  ctx.font=F(900,22); const chip=`${['0:00','0:07','0:15','0:24'][sc]} · ${VSCENES[sc][1].toUpperCase()}`; const cw=ctx.measureText(chip).width+36;
+  ctx.fillStyle=['#FF4B4B','#22B8CF','#58CC02','#FFC800'][sc]; rr(ctx,40,34,cw,44,22); ctx.fill(); ctx.fillStyle=sc===3?'#5A3E00':'#fff'; ctx.fillText(chip,58,64);
+  ctx.textAlign='right'; ctx.fillStyle='rgba(255,255,255,.7)'; ctx.font=F(800,20); ctx.fillText(`${tool.name} · 30s micro-training`, W-40, 64); ctx.textAlign='left';
+  if(sc===0){
+    const tx = -400+easeOut(l/0.8)*440; ctx.fillStyle='#fff'; ctx.font=F(900,54); ctx.fillText('What it\'s costing you', tx, 150);
+    const n=Math.round(easeOut(l/2.4)*iss.calls); ctx.fillStyle='#FF4B4B'; ctx.font=F(900,190); ctx.fillText(String(n),40,370);
+    ctx.fillStyle='#BFD0EC'; ctx.font=F(800,30); ctx.fillText('calls flagged by Quinn last month',46,420);
+    ctx.fillStyle='#fff'; ctx.font=F(900,32); wrap(ctx,iss.name,46,470,560,40);
+    const mx=Math.max(...ISSUES.map(i=>i.calls)); ISSUES.forEach((it,k)=>{ const p=easeOut((l-0.4-k*0.25)/1.2), bh=p*(it.calls/mx)*300, x=700+k*88; ctx.fillStyle= it.id===id ? '#FF4B4B' : 'rgba(157,179,214,.45)'; rr(ctx,x,560-bh,60,Math.max(bh,1),10); ctx.fill(); ctx.fillStyle='#BFD0EC'; ctx.font=F(800,16); ctx.textAlign='center'; ctx.fillText(SHORT[it.id],x+30,590); if(p>0.9){ ctx.fillStyle='#fff'; ctx.font=F(900,20); ctx.fillText(it.calls,x+30,548-bh);} ctx.textAlign='left'; });
+  } else if(sc===1){
+    ctx.fillStyle='rgba(255,255,255,.06)'; rr(ctx,40,100,590,470,26); ctx.fill(); rr(ctx,650,100,590,470,26); ctx.fill();
+    ctx.fillStyle='#7FE3F2'; ctx.font=F(900,20); ctx.fillText('REP',70,136); ctx.textAlign='right'; ctx.fillText('BUYER',1210,136); ctx.textAlign='left';
+    const buyerTalk = l<3.4, repTalk = l>=3.6 && l<6.6;
+    drawPerson(ctx,335,360,1.05,look,repTalk,s,0); drawPerson(ctx,945,360,1.05,BUYER_LOOK,buyerTalk,s,1.3);
+    drawWave(ctx,120,520,430,repTalk,s,'#22B8CF'); drawWave(ctx,730,520,430,buyerTalk,s,'#FFC800');
+    bubble(ctx,660,150,560,V.buyer,'#fff','#0B1B33',(l-0.2)/2.2,'l');
+    if(l>3.5) bubble(ctx,60,150,560,V.bad,'#FFDFE0','#B0262A',(l-3.6)/2.0,'r');
+    if(l>5.6){ const p=easeBack((l-5.6)/0.5); ctx.save(); ctx.translate(640,330); ctx.rotate(-0.08); ctx.scale(p,p); ctx.fillStyle='#FF4B4B'; rr(ctx,-250,-46,500,92,18); ctx.fill(); ctx.strokeStyle='#fff'; ctx.lineWidth=4; rr(ctx,-240,-36,480,72,14); ctx.stroke(); ctx.fillStyle='#fff'; ctx.font=F(900,32); ctx.textAlign='center'; ctx.fillText('QUINN FLAG: '+V.flag.toUpperCase().slice(0,22),0,12); ctx.restore(); ctx.textAlign='left'; }
+  } else if(sc===2){
+    ctx.fillStyle='#fff'; ctx.font=F(900,54); ctx.fillText('The fix', 40+(-300+easeOut(l/0.7)*300), 160);
+    V.steps.forEach((st,k)=>{ const p=easeOut((l-0.6-k*1.4)/0.6); if(p<=0) return; const y=230+k*96; ctx.globalAlpha=clamp(l/0.45)*p; ctx.fillStyle='#58CC02'; ctx.beginPath(); ctx.arc(80-(1-p)*60,y,26,0,Math.PI*2); ctx.fill(); ctx.strokeStyle='#fff'; ctx.lineWidth=6; ctx.lineCap='round'; ctx.beginPath(); ctx.moveTo(68-(1-p)*60,y); ctx.lineTo(77-(1-p)*60,y+9); ctx.lineTo(94-(1-p)*60,y-9); ctx.stroke(); ctx.fillStyle='#fff'; ctx.font=F(900,34); ctx.fillText(`${k+1}. ${st}`,124-(1-p)*60,y+12); ctx.globalAlpha=clamp(l/0.45); });
+    const mp=easeOut((l-4.2)/2.6), val=Math.round(V.from+(V.to-V.from)*mp), cx=960, cy=420, R=170;
+    ctx.lineWidth=34; ctx.lineCap='round'; ctx.strokeStyle='rgba(255,255,255,.12)'; ctx.beginPath(); ctx.arc(cx,cy,R,Math.PI,2*Math.PI); ctx.stroke();
+    ctx.strokeStyle= val<60?'#FFC800':'#58CC02'; ctx.beginPath(); ctx.arc(cx,cy,R,Math.PI,Math.PI+Math.PI*val/100); ctx.stroke();
+    const a=Math.PI+Math.PI*val/100; ctx.strokeStyle='#fff'; ctx.lineWidth=8; ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+Math.cos(a)*(R-30),cy+Math.sin(a)*(R-30)); ctx.stroke(); ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(cx,cy,14,0,Math.PI*2); ctx.fill();
+    ctx.textAlign='center'; ctx.font=F(900,76); ctx.fillStyle=val<60?'#FFC800':'#89E219'; ctx.fillText(val+'%',cx,cy-40); ctx.font=F(800,24); ctx.fillStyle='#BFD0EC'; ctx.fillText(V.meter,cx,cy+56); ctx.fillText(`before ${V.from}%  →  after ${V.to}%`,cx,cy+90); ctx.textAlign='left';
+    if(l>6.2) bubble(ctx,40,520,700,'Rep: '+V.good,'#D7FFB8','#2F6A06',(l-6.3)/1.6,'l');
+  } else {
+    const p=easeBack(l/0.6); ctx.save(); ctx.translate(640,240); ctx.scale(p,p); ctx.textAlign='center'; ctx.fillStyle='#FFC800'; ctx.font=F(900,96); ctx.fillText('Your move',0,0); ctx.restore(); ctx.textAlign='center';
+    ctx.fillStyle='#fff'; ctx.font=F(800,32); ctx.globalAlpha=clamp(l/0.45)*clamp((l-0.6)/0.5); ctx.fillText('Pick one live deal and use it on your next call this week.',640,310);
+    const ck=clamp((l-1.6)/0.5); ctx.globalAlpha=clamp(l/0.45)*clamp((l-1.2)/0.4); ctx.fillStyle='rgba(255,255,255,.08)'; rr(ctx,330,350,620,84,20); ctx.fill(); ctx.fillStyle=ck>0?'#58CC02':'rgba(255,255,255,.2)'; ctx.beginPath(); ctx.arc(388,392,24,0,Math.PI*2); ctx.fill(); if(ck>0){ ctx.strokeStyle='#fff'; ctx.lineWidth=6; ctx.beginPath(); ctx.moveTo(376,392); ctx.lineTo(385,401); ctx.lineTo(376+ (24*ck),383); ctx.stroke(); }
+    ctx.fillStyle='#fff'; ctx.font=F(900,30); ctx.textAlign='left'; ctx.fillText(V.steps[1],430,403); ctx.textAlign='center';
+    ctx.globalAlpha=clamp(l/0.45)*clamp((l-2.6)/0.5); ctx.fillStyle='#7FE3F2'; ctx.font=F(800,28); ctx.fillText('Quinn checks your next 3 calls and colors in your '+tool.name+'.',640,490);
+    if(l>4.2){ const e=easeBack((l-4.2)/0.6); ctx.globalAlpha=1; ctx.save(); ctx.translate(640,590); ctx.scale(e,e); ctx.fillStyle='#FFC800'; rr(ctx,-260,-42,520,84,42); ctx.fill(); ctx.fillStyle='#5A3E00'; ctx.font=F(900,30); ctx.fillText('+XP · Training complete',0,11); ctx.restore(); }
+    ctx.textAlign='left';
+  }
+  ctx.restore();
+  // kinetic lower-third captions
+  const caps=[`${iss.calls} calls · ${iss.reps} reps · trend ${iss.trend>0?'+':''}${iss.trend} vs last month`, `Quinn clip: ${V.flag}`, V.steps.join(' → '), 'Morgan & Quinn · NISC 2026 AI Revenue Challenge'];
+  const words=caps[sc].split(' '), nW=Math.min(words.length, Math.floor(l*6)+1);
+  ctx.fillStyle='rgba(0,0,0,.45)'; rr(ctx,40,630,1200,54,14); ctx.fill(); ctx.fillStyle='#fff'; ctx.font=F(800,24); ctx.fillText(words.slice(0,nW).join(' '),62,666);
+  ctx.fillStyle='rgba(255,255,255,.15)'; ctx.fillRect(0,H-6,W,6); ctx.fillStyle='#58CC02'; ctx.fillRect(0,H-6,W*s/30,6);
+}
+const fmt = ms=>{ const s=Math.floor(ms/1000); return '00:'+String(Math.min(s,30)).padStart(2,'0'); };
+const PLAY_I='<svg width="18" height="18" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z" fill="#fff"/></svg>', PAUSE_I='<svg width="18" height="18" viewBox="0 0 24 24"><rect x="5" y="4" width="5" height="16" rx="1.5" fill="#fff"/><rect x="14" y="4" width="5" height="16" rx="1.5" fill="#fff"/></svg>', REPLAY_I='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><path d="M4 12a8 8 0 1 0 3-6.2"/><path d="M4 4v5h5"/></svg>';
+function mountVideo(host, id, onDone){
+  if(activePlayer) activePlayer.stop();
+  const look = store.mode==='quinn' ? ROSTER[store.repId].look : ROSTER[0].look;
+  host.innerHTML = `<div class="player"><canvas width="1280" height="720" aria-label="30-second animated micro-video"></canvas>
+    <div class="vctrl"><button class="vbtn" data-a="play" aria-label="Play">${PLAY_I}</button><button class="vbtn ghost" data-a="replay" aria-label="Replay">${REPLAY_I}</button><input class="vscrub" type="range" min="0" max="30000" step="10" value="0" aria-label="Scrub"><span class="vtime">00:00 / 00:30</span></div>
+    <div class="vmarks">${VSCENES.map(([t,n])=>`<button class="vmark" data-t="${t}">0:${String(t).padStart(2,'0')} ${n}</button>`).join('')}</div></div>
+    <div class="vdone">✓ Video complete. The video step is checked off and XP is added.</div>`;
+  const cv=host.querySelector('canvas'), ctx=cv.getContext('2d'), scrub=host.querySelector('.vscrub'), time=host.querySelector('.vtime'), pb=host.querySelector('[data-a="play"]'), marks=[...host.querySelectorAll('.vmark')];
+  const P={t:0, playing:false, last:null, done:false, raf:0, alive:true, scenesSeen:new Set(), frames:0};
+  function complete(){ if(P.done) return; P.done=true; host.querySelector('.vdone').classList.add('show'); if(onDone) onDone(); }
+  function ui(){ scrub.value=P.t; time.textContent=`${fmt(P.t)} / 00:30`; pb.innerHTML=P.playing?PAUSE_I:PLAY_I; const s=P.t/1000, sc=s<7?0:s<15?1:s<24?2:3; P.scenesSeen.add(sc); marks.forEach((m,k)=>m.classList.toggle('on',k===sc)); }
+  function loop(ts){
+    if(!P.alive) return;
+    if(P.playing){ if(P.last!==null) P.t=Math.min(30000, P.t+Math.min(100, ts-P.last)); P.last=ts; if(P.t>=30000){ P.playing=false; P.last=null; complete(); } }
+    drawFrame(ctx, P.t/1000 + (P.playing?0:0), id, look); P.frames++; ui();
+    P.raf=requestAnimationFrame(loop);
+  }
+  pb.addEventListener('click',()=>{ if(P.t>=30000) P.t=0; P.playing=!P.playing; P.last=null; });
+  host.querySelector('[data-a="replay"]').addEventListener('click',()=>{ P.t=0; P.playing=true; P.last=null; });
+  scrub.addEventListener('input',()=>{ P.t=+scrub.value; P.last=null; if(P.t>=29990){ P.t=30000; P.playing=false; complete(); } });
+  marks.forEach(m=>m.addEventListener('click',()=>{ P.t=+m.dataset.t*1000; P.last=null; }));
+  P.raf=requestAnimationFrame(loop);
+  const api={ stop(){ P.alive=false; cancelAnimationFrame(P.raf); }, play(){ P.playing=true; P.last=null; }, seek(ms){ P.t=ms; P.last=null; if(ms>=29990){ P.t=30000; P.playing=false; complete(); } }, get state(){ return {t:P.t, playing:P.playing, done:P.done, scenes:[...P.scenesSeen], frames:P.frames}; } };
+  activePlayer=api; window.__activePlayer=api; return api;
+}
+function markVideo(id){
+  const isNew = !(S.trained[id] && S.trained[id].video);
+  S.trained[id] = Object.assign({}, S.trained[id], {video:true}); S.videos=(S.videos||0)+1;
+  award(isNew?15:5, `30s micro-video watched: ${TOOL[id].name}`);
+}
+const videoOv=document.getElementById('videoOv'), vmodal=document.getElementById('vmodal');
+function openVideo(id){
+  closeTool(); closeInspector();
+  const iss=ISSUES.find(i=>i.id===id);
+  vmodal.innerHTML = `<div class="vmhead"><h3>30-second micro-video · ${esc(TOOL[id].name)}: ${esc(iss.name)}</h3><button class="xbtn" id="vClose" aria-label="Close"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div>
+    <div class="vmbody"><div id="vHost"></div><details class="script"><summary>Full talk-track script</summary><div class="md">${md(genFallback('video', iss))}</div></details></div>`;
+  vmodal.querySelector('#vClose').addEventListener('click', closeVideo);
+  videoOv.classList.add('show');
+  mountVideo(vmodal.querySelector('#vHost'), id, ()=>markVideo(id)).play();
+}
+function closeVideo(){ if(activePlayer){ activePlayer.stop(); activePlayer=null; } videoOv.classList.remove('show'); }
+document.getElementById('videoScrim').addEventListener('click', closeVideo);
+
+
+/* ===================== ROUTING (per path) ===================== */
+const VIEWS_BY_MODE = {
+  quinn:['home','leaderboard','toolbelt','trainings','quinn-help'],
+  morgan:['home','leaderboard','toolbelt','issues','trainings','chat','morgan-help']
+};
+const ALIASES={badges:'toolbelt', belt:'toolbelt', quest:'home', map:'home', how:'morgan-help', morgan:'morgan-help', quinn:'quinn-help'};
 function route(){
   let v = (location.hash||'#home').slice(1);
   if(ALIASES[v]) v=ALIASES[v];
-  const view = VIEWS.includes(v)?v:'home';
-  document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on', s.id==='v-'+view));
+  const mode = store.mode==='quinn' ? 'quinn' : 'morgan';
+  const view = VIEWS_BY_MODE[mode].includes(v) ? v : 'home';
+  const el = view==='home' && mode==='quinn' ? 'qhome' : view;
+  document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on', s.id==='v-'+el));
   document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on', a.dataset.v===view));
   if(view==='issues'){
     requestAnimationFrame(()=>document.querySelectorAll('.bar i').forEach(b=>b.style.width=b.dataset.w));
     if(!S.visitedIssues){ S.visitedIssues=true; setTimeout(()=>award(5,'Reviewed Quinn\'s call evidence'),400); }
   }
+  if(view==='leaderboard' && !S.visitedBoard){ S.visitedBoard=true; setTimeout(()=>award(5,'Checked the results leaderboard'),400); }
+  if(view==='quinn-help' && !S.visitedHelp){ S.visitedHelp=true; setTimeout(()=>award(5,'Read How Quinn Helps'),400); }
+  if(view!=='trainings' && activePlayer && !videoOv.classList.contains('show')){ activePlayer.stop(); activePlayer=null; document.getElementById('vidHost').innerHTML=''; }
   window.scrollTo({top:0});
 }
 window.addEventListener('hashchange', route);
@@ -1600,6 +2463,9 @@ document.querySelectorAll('[data-gen]').forEach(b=>b.addEventListener('click', a
   const kind=b.dataset.gen, out=document.getElementById('genOut'), body=document.getElementById('genBody');
   const issue=curIssue;
   document.getElementById('genTitle').textContent = `${KIND[kind]}: ${issue.name}`;
+  const vh=document.getElementById('vidHost');
+  if(kind==='video'){ mountVideo(vh, issue.id, ()=>markVideo(issue.id)); document.getElementById('genSummary').textContent='Full talk-track script'; document.getElementById('genDetails').open=false; }
+  else { if(activePlayer && !videoOv.classList.contains('show')){ activePlayer.stop(); activePlayer=null; } vh.innerHTML=''; document.getElementById('genSummary').textContent='Full output'; document.getElementById('genDetails').open=true; }
   out.classList.add('show'); body.innerHTML=TYPING; out.scrollIntoView({behavior:'smooth',block:'start'});
   document.querySelectorAll('[data-gen]').forEach(x=>x.disabled=true);
   const prompts = {
@@ -1661,7 +2527,7 @@ function askInChat(q, quinn=true){
 
 /* ===================== BOOT ===================== */
 function renderAll(){
-  renderHUD(); renderPath(); renderLeague(); renderDaily(); renderBeltPreview(); renderToolbelt(); renderIssues(); renderPick();
+  renderHUD(); renderPath(); renderLeague(); renderDaily(); renderBeltPreview(); renderToolbelt(); renderIssues(); renderPick(); renderQuinnHome();
   if(curTool) renderDrawer();
   applyFills();
 }
@@ -1669,9 +2535,14 @@ wireReset(document.getElementById('resetHud'));
 wireReset(document.getElementById('resetFoot'));
 document.getElementById('hStreak').addEventListener('click',()=>toast(`${S.streak}-day streak`, S.daily.goalHit ? 'Today\'s goal is done. Your streak is safe!' : `Earn ${Math.max(DAILY_GOAL-S.daily.xp,0)} more XP today to extend it. Streak Freeze: ${S.freeze}`, FLAME_SVG, 'gold'));
 S.level = Math.max(S.level, levelIndex());
+renderHelp();
+renderChrome();
 save();
 renderAll();
 route();
+openPath(); // every visit starts at "Choose your path"
+
+
 </script>
 </body>
 </html>
